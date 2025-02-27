@@ -4,6 +4,8 @@ import { loginSuccess } from "../../redux/slices/userSlice";
 import { login } from "../../api/authApi";
 import {API_BASE_URL} from "../../components/env";
 import {useNavigate} from "react-router-dom";
+import {useLoading} from "../../contexts/LoadingContext";
+import {useNotification} from "../../contexts/NotificationContext";
 
 const LoginPage = () => {
     const [username, setUsername] = useState("");
@@ -12,6 +14,8 @@ const LoginPage = () => {
     const dispatch = useDispatch();
 
     const navigate = useNavigate();
+    const setLoading = useLoading();
+    const showNotification = useNotification();
 
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -36,6 +40,15 @@ const LoginPage = () => {
         navigate("/forgot-password")
     }
 
+    const handleLoading = () => {
+        setLoading(true)
+        showNotification("success", "Success", "This is a success message")
+    }
+
+    const handleNoti = () => {
+        showNotification("success", "Success", "This is a success message")
+    }
+
     return (
         <div>
             <h2>Login</h2>
@@ -54,9 +67,11 @@ const LoginPage = () => {
                     onChange={(e) => setPassword(e.target.value)}
                 />
                 <button type="submit">Login</button>
-                <button onClick={handleNavRegister}>nav register</button>
-                <button onClick={handleNavFW}>Forgot-pasword</button>
             </form>
+            <button onClick={handleNavRegister}>nav register</button>
+            <button onClick={handleNavFW}>Forgot-pasword</button>
+            <button onClick={handleLoading}>Loading</button>
+            <button onClick={handleNoti}>Noti</button>
         </div>
     );
 };
