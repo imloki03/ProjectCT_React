@@ -1,5 +1,5 @@
 import axios from "axios";
-import {API_BASE_URL} from "../components/env";
+import {API_BASE_URL} from "../constants/env";
 import {refreshToken} from "../api/authApi";
 import store from "../redux/store";
 import {logout} from "../redux/slices/userSlice";

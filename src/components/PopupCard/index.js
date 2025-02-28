@@ -1,0 +1,32 @@
+import React from "react";
+import { Card } from "primereact/card";
+import './index.css'
+import BasicButton from "../Button";
+
+const PopupCard = ({ title, subTitle, children, footer, style, onClose }) => {
+    return (
+        <div className="popup-container">
+            <Card
+                title={title}
+                subTitle={subTitle}
+                style={style}
+                className="custom-card"
+            >
+                <BasicButton
+                    icon="pi pi-times"
+                    className="p-button-rounded p-button-text close-button"
+                    onClick={onClose}
+                    style={{
+                        position: "absolute",
+                        top: "10px",
+                        right: "10px",
+                        zIndex: 1,
+                    }}
+                />
+                <div>{children}</div>
+            </Card>
+        </div>
+    );
+};
+
+export default PopupCard;
