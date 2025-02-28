@@ -3,12 +3,14 @@ import AuthLayout from "../layouts/AuthLayout";
 import LoginPage from "../pages/Login";
 import RegisterPage from "../pages/Register";
 import ForgotPasswordPage from "../pages/ForgotPassword";
+import TestPage from "../pages/Test";
 
 export const routeLink = {
     default: '/',
     login: '/login',
     register: '/register',
     forgotPassword: '/forgot-password',
+    test: "/test",
 }
 
 const createAppRoutes = (routes) => {
@@ -24,6 +26,7 @@ export const externalRoute = createAppRoutes([
             { path: routeLink.login, element: <LoginPage /> },
             { path: routeLink.register, element: <RegisterPage /> },
             { path: routeLink.forgotPassword, element: <ForgotPasswordPage /> },
+            { path: routeLink.test, element: <TestPage /> },
         ],
     },
 ]);

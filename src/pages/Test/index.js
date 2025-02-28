@@ -6,8 +6,14 @@ import {API_BASE_URL} from "../../constants/env";
 import {useNavigate} from "react-router-dom";
 import {useLoading} from "../../contexts/LoadingContext";
 import {useNotification} from "../../contexts/NotificationContext";
+import TextField from "../../components/TextField";
+import TextFieldArea from "../../components/TextFieldArea";
+import OtpField from "../../components/OtpField";
+import PasswordField from "../../components/PasswordField";
+import BasicButton from "../../components/Button";
+import PopupCard from "../../components/PopupCard";
 
-const LoginPage = () => {
+const TestPage = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState(null);
@@ -16,6 +22,12 @@ const LoginPage = () => {
     const navigate = useNavigate();
     const setLoading = useLoading();
     const showNotification = useNotification();
+
+    const [test, setTest] = useState("");
+
+    const [num, setNum] = useState("");
+
+    const [showPopup, setShowPopup] = useState(false);
 
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -72,8 +84,51 @@ const LoginPage = () => {
             <button onClick={handleNavFW}>Forgot-pasword</button>
             <button onClick={handleLoading}>Loading</button>
             <button onClick={handleNoti}>Noti</button>
+
+            <div style={{width: "300px", height: "400px", marginTop: "40px", marginLeft: "50px", display: "flex", flexDirection: "column", justifyContent: "space-between"}}>
+                <TextField
+                    label="Test field name"
+                    value={test}
+                    onChange={(e) => {setTest(e.target.value)}}
+                />
+                <TextFieldArea
+                    label="Test"
+                    value={test}
+                    rows="5"
+                    onChange={(e) => {setTest(e.target.value)}}
+                />
+                <OtpField
+                    value={num}
+                    onChange={(e) => {setNum(e.value)}}
+                    length="6"
+                />
+                <PasswordField
+                    label="Pass"
+                    value={test}
+                    onChange={(e) => {setTest(e.target.value)}}
+                />
+                <BasicButton
+                    label="Test"
+                    onClick={()=>{setShowPopup(true)}}
+                />
+            </div>
+            {showPopup &&
+                <PopupCard
+                    title="Test title"
+                    subTitle="Test subtitle"
+                    style={{width:"500px", margin: "auto" }}
+                    onClose={()=>{setShowPopup(false)}}
+                >
+                    <div>
+                        <p>This is content</p>
+                        <p>This is content</p>
+                        <p>This is content</p>
+                        <p>This is content</p>
+                    </div>
+                </PopupCard>
+            }
         </div>
     );
 };
 
-export default LoginPage;
+export default TestPage;
