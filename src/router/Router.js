@@ -4,6 +4,7 @@ import LoginPage from "../pages/Login";
 import RegisterPage from "../pages/Register";
 import ForgotPasswordPage from "../pages/ForgotPassword";
 import TestPage from "../pages/Test";
+import LandingPage from "../pages/LandingPage";
 
 export const routeLink = {
     default: '/',
@@ -11,6 +12,7 @@ export const routeLink = {
     register: '/register',
     forgotPassword: '/forgot-password',
     test: "/test",
+    landing: "/landing",
 }
 
 const createAppRoutes = (routes) => {
@@ -18,6 +20,10 @@ const createAppRoutes = (routes) => {
 };
 
 export const externalRoute = createAppRoutes([
+    {
+        path: routeLink.landing,
+        element: <LandingPage />,
+    },
     {
         path: routeLink.default,
         element: <AuthLayout />,
