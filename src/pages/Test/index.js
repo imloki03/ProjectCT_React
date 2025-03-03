@@ -12,12 +12,14 @@ import OtpField from "../../components/OtpField";
 import PasswordField from "../../components/PasswordField";
 import BasicButton from "../../components/Button";
 import PopupCard from "../../components/PopupCard";
+import {useTranslation} from "react-i18next";
 
 const TestPage = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState(null);
     const dispatch = useDispatch();
+    const { t } = useTranslation();
 
     const navigate = useNavigate();
     const setLoading = useLoading();
@@ -120,7 +122,7 @@ const TestPage = () => {
                     onClose={()=>{setShowPopup(false)}}
                 >
                     <div>
-                        <p>This is content</p>
+                        <p>{t("test")}</p>
                         <p>This is content</p>
                         <p>This is content</p>
                         <p>This is content</p>
