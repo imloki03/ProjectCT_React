@@ -29,8 +29,11 @@ axiosInstance.interceptors.response.use(
         if (error.response?.status === 401 && !originalRequest._retry && token) {
             try {
                 originalRequest._retry = true;
-                const response = await refreshToken(token);
-                const newToken = response.token;
+                const response = await axios.post("/auth/jwt/refresh", { token }, {
+                        headers: { Authorization: `Bearer ${localStorage.getItem("token") || ""}`
+                    }
+                });
+                const newToken = response.data.token;
                 localStorage.setItem("token", newToken);
                 originalRequest.headers['Authorization'] = `Bearer ${newToken}`;
                 return axiosInstance(originalRequest);
