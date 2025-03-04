@@ -1,0 +1,153 @@
+.forgetpassword-container{
+    background-image: url("../../assets/images/auth-background.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.forgetpassword-card{
+    background-image: url("../../assets/images/forgetpassword-card-background.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 70%;
+    height: 70%;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 10px 10px 10px rgba(0, 0, 0, 0.22);
+    padding-bottom: 3rem;
+}
+
+.custom-otp-input-sample {
+    width: 3rem;
+    height: 3rem;
+    font-size: 1.5rem;
+    appearance: none;
+    text-align: center;
+    border: 1px solid var(--surface-400);
+    background: transparent;
+    outline: none;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    transition: outline-color 0.3s, box-shadow 0.3s;
+    color: var(--text-color);
+}
+
+.custom-otp-input-sample:focus {
+    outline: 2px solid var(--primary-color);
+    box-shadow: 0 0 4px var(--primary-color);
+}
+
+/* Rounded corners for the first and last inputs */
+.custom-otp-input-sample:first-child {
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
+}
+
+.custom-otp-input-sample:last-child {
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
+}
+
+/* Ensure consistent spacing between inputs */
+.custom-otp-input-sample:not(:last-child) {
+    margin-right: 8px; /* Adjust the spacing between inputs */
+}
+
+/* Handle the separator case */
+.custom-otp-input-sample:nth-child(3) {
+    border-right: 1px solid var(--surface-400);
+}
+
+.custom-otp-input-sample:nth-child(4) {
+    border-left: 1px solid var(--surface-400);
+}
+
+.otp-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    text-align: center;
+}
+
+.otp-subtitle {
+    text-align: center;
+    color: black;
+    margin-bottom: 1.5rem;
+}
+
+.otp-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1.5rem;
+}
+
+.email-step, .otp-step {
+    text-align: center;
+}
+
+.email-input {
+    width: 100%;
+    margin: 1rem 0;
+    padding: 0.5rem;
+    font-size: 1rem;
+    border: 1px solid var(--surface-400);
+    border-radius: 6px;
+}
+
+.password-input{
+    width: 100%;
+    font-size: 1rem;
+    border: 1px solid var(--surface-400);
+    border-radius: 6px;
+}
+
+.next-button {
+    margin-top: 1rem;
+}
+
+.error-text {
+    color: var(--red-500);
+    font-size: 0.875rem;
+    margin-top: 0.5rem;
+}
+
+.otp-footer{
+    display: flex;
+    gap: 1rem;
+}
+
+
+.p-steps .p-steps-item {
+    margin-right: 1rem; /* Add spacing between step items */
+}
+
+.p-steps .p-steps-item:last-child {
+    margin-right: 0; /* Prevent extra margin on the last step */
+}
+
+.p-steps .p-steps-item::after {
+    content: "";
+    position: absolute;
+    top: 22.8%;
+    left: 100%;
+    width: 1rem; /* Match the gap to maintain continuity */
+    height: 0.5px;
+    opacity: 15%;
+    background-color: currentColor; /* Keep line consistent */
+    transform: translateY(-50%);
+}
+
+.p-steps .p-steps-item:last-child::after {
+    display: none; /* Hide line for last step */
+}

@@ -1,0 +1,43 @@
+/* Ensure the dropdown takes up full width */
+.p-dropdown {
+    width: 100% !important;  /* Force full width */
+    text-align: left !important;
+}
+
+.p-dropdown .p-dropdown-label {
+    width: 100% !important;  /* Ensure label is also full width */
+}
+
+/* Style the float label container */
+.p-float-label {
+    width: 100% !important;  /* Force float label container to be full width */
+}
+
+/* Optional: Add margin for spacing if needed */
+.p-dropdown-wrapper {
+    width: 100% !important;
+}
+
+/* Handle width adjustments for different screen sizes */
+@media screen and (max-width: 768px) {
+    /* Ensures dropdown is full width on smaller screens */
+    .p-dropdown {
+        width: 100% !important;
+    }
+
+    .p-dropdown-wrapper {
+        width: 100% !important;
+    }
+}
+
+@media screen and (min-width: 768px) {
+    /* Escape the class name properly */
+    .md\:w-14rem {
+        width: 100% !important;  /* Force full width */
+    }
+}
+
+div .md\:w-14rem {
+    width: 100% !important;
+}
+

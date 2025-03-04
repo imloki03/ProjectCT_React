@@ -6,12 +6,7 @@ const AuthLayout = () => {
     return (
         <NotificationProvider>
             <LoadingProvider>
-                <div className="auth-layout">
-                    <div className="auth-container">
-                        <h1>Welcome</h1>
-                        <Outlet />
-                    </div>
-                </div>
+                <Outlet />
             </LoadingProvider>
         </NotificationProvider>
     );

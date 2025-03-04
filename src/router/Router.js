@@ -1,15 +1,13 @@
 import {createBrowserRouter} from "react-router-dom";
 import AuthLayout from "../layouts/AuthLayout";
-import LoginPage from "../pages/Login";
-import RegisterPage from "../pages/Register";
 import ForgotPasswordPage from "../pages/ForgotPassword";
 import TestPage from "../pages/Test";
 import LandingPage from "../pages/LandingPage";
+import AuthPage from "../pages/AuthPage";
 
 export const routeLink = {
     default: '/',
-    login: '/login',
-    register: '/register',
+    auth: '/auth',
     forgotPassword: '/forgot-password',
     test: "/test",
     landing: "/landing",
@@ -28,9 +26,8 @@ export const externalRoute = createAppRoutes([
         path: routeLink.default,
         element: <AuthLayout />,
         children: [
-            { path: routeLink.default, element: <LoginPage /> },
-            { path: routeLink.login, element: <LoginPage /> },
-            { path: routeLink.register, element: <RegisterPage /> },
+            { path: routeLink.default, element: <AuthPage /> },
+            { path: routeLink.auth, element: <AuthPage /> },
             { path: routeLink.forgotPassword, element: <ForgotPasswordPage /> },
             { path: routeLink.test, element: <TestPage /> },
         ],
