@@ -3,15 +3,16 @@ import { Password } from 'primereact/password';
 import { FloatLabel } from 'primereact/floatlabel';
 import './index.css'
 
-const PasswordField = ({ label, value, onChange, header, footer, invalid, disabled, feedback }) => {
+const PasswordField = ({ label, name, value, onChange, header, footer, invalid, disabled, feedback }) => {
     const id = useId();
 
     return (
         <FloatLabel>
             <Password
                 inputId={id}
+                name={name}
                 value={value}
-                onChange={onChange}
+                onChange={(e) => onChange(e)}
                 toggleMask
                 header={header}
                 footer={footer}

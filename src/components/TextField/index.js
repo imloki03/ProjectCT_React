@@ -2,15 +2,16 @@ import React, {useId} from 'react';
 import { InputText } from 'primereact/inputtext';
 import { FloatLabel } from 'primereact/floatlabel';
 
-const TextField = ({ label, value, keyFilter, helpText, invalid, disabled, onChange }) => {
+const TextField = ({ label, name, value, keyFilter, helpText, invalid, disabled, onChange }) => {
     const id = useId();
 
     return (
         <FloatLabel>
             <InputText
                 id={id}
+                name={name}
                 value={value}
-                onChange={onChange}
+                onChange={(e) => onChange(e)}
                 keyfilter={keyFilter}
                 invalid={invalid}
                 disabled={disabled}
