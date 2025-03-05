@@ -70,10 +70,10 @@ const Header = () => {
                         valueTemplate={selectedTemplate}
                         showClear={false}
                     />
-                    <Link to="/login">
-                        <BasicButton label={t("landingPage.signin")} className="p-button-outlined p-button-sm text-white border-white" />
+                    <Link to="/auth">
+                        <BasicButton label={t("landingPage.signin")} className="p-button-outlined p-button-sm text-white border-white sign-in-btn" />
                     </Link>
-                    <Link to="/register">
+                    <Link to="/auth">
                         <BasicButton label={t("landingPage.signup")} className="p-button p-button-sm p-button-primary sign-up-btn" />
                     </Link>
                 </div>

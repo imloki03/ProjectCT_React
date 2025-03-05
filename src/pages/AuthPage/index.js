@@ -123,7 +123,7 @@ const AuthPage = () => {
                     localStorage.setItem("refresh_token", response.token.refresh_token);
                     localStorage.setItem("user", JSON.stringify(response.data));
                     dispatch(loginSuccess(response.data));
-                    // navigate("/workspace");
+                    navigate("/");  // chỗ này cứ nav về lại home là đc
                     // fix
                 }
             } catch (error) {
