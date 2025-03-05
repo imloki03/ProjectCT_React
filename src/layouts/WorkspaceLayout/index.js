@@ -49,7 +49,7 @@ const WorkspaceLayout = () => {
                 <span className={`mx-2 ${item.items && 'font-semibold'}`}>{item.label}</span>
             </div>
             <small className="pl-4">
-                To: {" "}
+                {t("workspaceLayout.to")}: {" "}
                 {item.dl
                     ? new Date(item.dl).toLocaleString("en-GB", {
                         month: "2-digit",
@@ -80,7 +80,7 @@ const WorkspaceLayout = () => {
 
     const dueTasks = [
         {
-            label: 'Due Tasks',
+            label: t("workspaceLayout.dueTasks"),
             icon: 'pi pi-calendar',
             template: itemRenderer,
             expanded: true,
@@ -124,7 +124,7 @@ const WorkspaceLayout = () => {
 
     const overDueTasks = [
         {
-            label: 'Overdue Tasks',
+            label: t("workspaceLayout.overdueTasks"),
             icon: 'pi pi-calendar-clock',
             template: itemRenderer,
             expanded: true,
@@ -182,7 +182,7 @@ const WorkspaceLayout = () => {
 
     const projectList = [
         {
-            label: 'Your Projects',
+            label: t("workspaceLayout.yourProjects"),
             icon: 'pi pi-folder-open',
             template: itemRenderer,
             expanded: true,
@@ -197,8 +197,8 @@ const WorkspaceLayout = () => {
     ];
 
     const menuItems = [
-        { label: "Edit Your Profile", icon: "pi pi-user-edit", command: () => console.log("Edit Profile") },
-        { label: "Logout", icon: "pi pi-sign-out", command: () => console.log("Logging out...") }
+        { label: t("workspaceLayout.editProfile"), icon: "pi pi-user-edit", command: () => console.log("Edit Profile") },
+        { label: t("workspaceLayout.logout"), icon: "pi pi-sign-out", command: () => console.log("Logging out...") }
     ];
 
     return (

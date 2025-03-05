@@ -6,8 +6,7 @@ import {RouterProvider} from "react-router-dom";
 import {externalRoute, internalRoute} from "./router/Router";
 import {useDispatch, useSelector} from "react-redux";
 import {useEffect, useState} from "react";
-import {useLoading} from "./contexts/LoadingContext";
-import {getUserInfo} from "./api/userApi";
+import {getUserInfoViaToken} from "./api/userApi";
 import {updateUser} from "./redux/slices/userSlice";
 
 function App() {
@@ -22,8 +21,9 @@ function App() {
     if (token) {
       (async () => {
         try {
-          const response = await getUserInfo(user.username);
+          const response = await getUserInfoViaToken();
           if (response) {
+            console.log(response.data)
             dispatch(updateUser(response.data));
           }
         } catch (error) {
