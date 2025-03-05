@@ -3,6 +3,7 @@ import AuthLayout from "../layouts/AuthLayout";
 import ForgotPasswordPage from "../pages/ForgotPassword";
 import TestPage from "../pages/Test";
 import LandingPage from "../pages/LandingPage";
+import WorkspaceLayout from "../layouts/WorkspaceLayout";
 import AuthPage from "../pages/AuthPage";
 
 export const routeLink = {
@@ -16,6 +17,20 @@ export const routeLink = {
 const createAppRoutes = (routes) => {
     return createBrowserRouter([...routes]);
 };
+
+export const internalRoute = createAppRoutes([
+    {
+        path: routeLink.default,
+        element: <WorkspaceLayout />,
+        children: [
+            { path: routeLink.default, element: <TestPage /> },
+            { path: routeLink.login, element: <LoginPage /> },
+            { path: routeLink.register, element: <RegisterPage /> },
+            { path: routeLink.forgotPassword, element: <ForgotPasswordPage /> },
+            { path: routeLink.test, element: <TestPage /> },
+        ],
+    },
+]);
 
 export const externalRoute = createAppRoutes([
     {
