@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import { useDispatch } from "react-redux";
 import { loginSuccess } from "../../redux/slices/userSlice";
 import { login } from "../../api/authApi";
@@ -13,6 +13,7 @@ import PasswordField from "../../components/PasswordField";
 import BasicButton from "../../components/Button";
 import PopupCard from "../../components/PopupCard";
 import {useTranslation} from "react-i18next";
+import {useBreadcrumb} from "../../contexts/BreadCrumbContext";
 
 const TestPage = () => {
     const [username, setUsername] = useState("");
@@ -30,6 +31,12 @@ const TestPage = () => {
     const [num, setNum] = useState("");
 
     const [showPopup, setShowPopup] = useState(false);
+
+    const { setBreadcrumbs } = useBreadcrumb();
+
+    useEffect(() => {
+        setBreadcrumbs([{ label: "Test", url: "/test"}]);
+    }, []);
 
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -87,7 +94,7 @@ const TestPage = () => {
             <button onClick={handleLoading}>Loading</button>
             <button onClick={handleNoti}>Noti</button>
 
-            <div style={{width: "300px", height: "400px", marginTop: "40px", marginLeft: "50px", display: "flex", flexDirection: "column", justifyContent: "space-between"}}>
+            <div style={{width: "300px", height: "600px", marginTop: "40px", marginLeft: "50px", display: "flex", flexDirection: "column", justifyContent: "space-between"}}>
                 <TextField
                     label="Test field name"
                     value={test}
