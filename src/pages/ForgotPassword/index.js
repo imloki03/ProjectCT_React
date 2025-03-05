@@ -4,12 +4,14 @@ import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
 import { Password } from "primereact/password";
 import { useNavigate } from "react-router-dom";
-import { changePassword } from "../../api/userApi";
+import {changePassword, getUserInfo} from "../../api/userApi";
 import { useNotification } from "../../contexts/NotificationContext";
 import { useTranslation } from "react-i18next";
 import {InputOtp} from "primereact/inputotp";
 import {Steps} from "primereact/steps";
 import {Divider} from "primereact/divider";
+import {sendOtp, verifyOtp} from "../../api/authApi";
+import logo from "../../assets/images/logo_with_name.png";
 
 const ForgotPasswordPage = () => {
     const { t } = useTranslation();
@@ -19,37 +21,16 @@ const ForgotPasswordPage = () => {
     const [newPassword, setNewPassword] = useState("");
     const navigate = useNavigate();
     const showNotification = useNotification();
-    const [isResettingPassword, setIsResettingPassword] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [user, setUser] = useState("")
 
-    const handleNext = () => {
-        setStep(step + 1);
-    };
-
-    const handleBack = () => {
-        setStep(step - 1);
-    };
-
-    const handleResetPassword = async () => {
-        if (newPassword) {
-            setIsResettingPassword(true);
-            const requestData = {
-                newPassword: newPassword
-            };
-            try {
-                const response = await changePassword("congphan", requestData);
-
-                if (response.status === 200) {
-                    navigate("/");
-                } else {
-                    showNotification("error", t("forgotPasswordPage.resetPasswordFailed"), response.desc);
-                }
-            } catch (error) {
-                showNotification("error", t("forgotPasswordPage.resetPasswordFailed"), t("forgotPasswordPage.unexpectedError"));
-            } finally {
-                setIsResettingPassword(false);
-            }
+    const validateEmail = (email) => {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (emailRegex.test(email)) {
+            return true;
         }
+        showNotification("error", "Invalid Email", "Please enter a valid email format");
+        return false;
     };
 
     const steps = [
@@ -73,22 +54,81 @@ const ForgotPasswordPage = () => {
         </>
     );
 
-    function handleSendOtp() {
+    const handleSendOtp = async () => {
+        if (validateEmail(email)) {
+            try {
+                const response = await getUserInfo(email);
+                if (response.status === 200) {
+                    setUser(response.data.username);
+                } else {
+                    showNotification("error", "Find user failed", response.desc);
+                }
+            } catch (error) {
+                showNotification("error", "Find user failed", "Unexpected error!!");
+                return;
+            }
 
+            try {
+                const response = await sendOtp(email);
+                if (response.status === 200) {
+                    setStep(step+1);
+                } else {
+                    showNotification("error", "Send OTP failed", t("forgotPasswordPage.unexpectedError"));
+                }
+            } catch (error) {
+                showNotification("error", "Send OTP failed", t("forgotPasswordPage.unexpectedError"));
+            }
+        }
     }
 
-    function handleVerifyOtp() {
-
+    const handleVerifyOtp = async () => {
+        if (otp.length === 6) {
+            setLoading(true)
+            try {
+                const response = await verifyOtp(email, otp);
+                if (response.status === 200) {
+                    setStep(step+1);
+                } else {
+                    showNotification("error", "Verify OTP failed", "Invalid OTP!!!");
+                }
+            } catch (error) {
+                showNotification("error", "Verify OTP failed", t("forgotPasswordPage.unexpectedError"));
+            }
+            finally {
+                setLoading(false);
+            }
+        }
     }
+
+    const handleResetPassword = async () => {
+        if (newPassword) {
+            setLoading(true);
+            const requestData = {
+                newPassword: newPassword
+            };
+            try {
+                const response = await changePassword(user, requestData);
+
+                if (response.status === 200) {
+                    navigate("/");
+                } else {
+                    showNotification("error", t("forgotPasswordPage.resetPasswordFailed"), response.desc);
+                }
+            } catch (error) {
+                showNotification("error", t("forgotPasswordPage.resetPasswordFailed"), t("forgotPasswordPage.unexpectedError"));
+            } finally {
+                setLoading(false);
+            }
+        }
+    };
 
     return (
         <div className="forgetpassword-container">
             <div className="text-slogan">
-                <div className="text-slogan-header">{t("forgotPasswordPage.appName")}</div>
-                <div>{t("forgotPasswordPage.letTheGearsSpeedingUp")}</div>
+                <img src={logo} alt="Logo" style={{width: "15rem", height: "auto"}}/>
             </div>
             <div className="forgetpassword-card">
-                <Steps model={steps} activeIndex={step} />
+                <Steps model={steps} activeIndex={step}/>
                 {/* Step 1: Enter Email */}
                 {step === 0 && (
                     <div className="email-step">
@@ -108,7 +148,7 @@ const ForgotPasswordPage = () => {
                             />
                             <Button
                                 label={loading ? "Sending..." : "Next"}
-                                onClick={handleNext}
+                                onClick={handleSendOtp}
                                 className="next-button"
                                 disabled={!email || loading}
                                 loading={loading}
@@ -139,7 +179,7 @@ const ForgotPasswordPage = () => {
                             <Button label="Resend Code" onClick={handleSendOtp} link disabled={loading}/>
                             <Button
                                 label={loading ? "Verifying..." : "Submit Code"}
-                                onClick={handleNext}
+                                onClick={handleVerifyOtp}
                                 disabled={!otp || loading}
                                 loading={loading}
                             />

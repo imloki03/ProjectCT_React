@@ -7,6 +7,7 @@ import { register } from "../../api/userApi";
 import { useNavigate } from "react-router-dom";
 import { useNotification } from "../../contexts/NotificationContext";
 import { useTranslation } from "react-i18next";
+import logo from "../../assets/images/logo_with_name.png"
 
 import TextField from "../../components/TextField";
 import PasswordField from "../../components/PasswordField";
@@ -123,6 +124,7 @@ const AuthPage = () => {
                     localStorage.setItem("user", JSON.stringify(response.data));
                     dispatch(loginSuccess(response.data));
                     // navigate("/workspace");
+                    // fix
                 }
             } catch (error) {
                 showNotification("error", t("authPage.loginFailed"), t("authPage.unexpectedError"));
@@ -141,8 +143,7 @@ const AuthPage = () => {
     return (
         <div className="auth-container">
             <div className="text-slogan">
-                <div className="text-slogan-header">{t("authPage.appName")}</div>
-                <div>{t("authPage.letTheGearsSpeedingUp")}</div>
+                <img src={logo} alt="Logo" style={{ width: "15rem", height: "auto" }}/>
             </div>
             <div className={`auth-sub-container ${isSignUp ? "right-panel-active" : ""}`}>
                 <div className="form-container sign-up-container">
@@ -151,30 +152,35 @@ const AuthPage = () => {
                     <TextField label={t("authPage.username")} name="username" value={registerData.username} onChange={handleRegisterChange} />
                     <TextField label={t("authPage.email")} name="email" value={registerData.email} onChange={handleRegisterChange} />
                     <PasswordField label={t("authPage.password")} name="password" value={registerData.password} onChange={handleRegisterChange} header={header} footer={footer} feedback={true} />
-                    <DropDownField label={t("authPage.gender")} name="gender" options={genderOptions} onChange={handleRegisterChange} selected={registerData.gender} />
-                    <BasicButton label={t("authPage.signUp")} onClick={handleSignUp} loading={isSigningUp} />
+                    <DropDownField label={t("authPage.gender")} name="gender" options={genderOptions} onChange={handleRegisterChange} selected={registerData.gender} style={{ width: '100%' }} />
+                    <BasicButton label={t("authPage.signUp")} className="auth-page-button" onClick={handleSignUp} loading={isSigningUp}  style={{ width: '100%' }}  width="100%" />
                 </div>
                 <div className="form-container sign-in-container">
                     <h1>{t("authPage.signIn")}</h1>
-                    <TextField label={t("authPage.emailOrUsername")} name="username" value={loginData.username} onChange={handleLoginChange} />
-                    <PasswordField label={t("authPage.password")} name="password" value={loginData.password} onChange={handleLoginChange} />
+                    <TextField label={t("authPage.emailOrUsername")} name="username" value={loginData.username}
+                               onChange={handleLoginChange}/>
+                    <PasswordField label={t("authPage.password")} name="password" value={loginData.password}
+                                   onChange={handleLoginChange}/>
+                    <BasicButton label={t("authPage.signIn")} className="auth-page-button" onClick={handleSignIn} loading={isLoggingIn}  style={{ width: '100%' }}  width="100%"   />
                     <p className="forgot-password" onClick={() => navigate("/forgot-password")}>{t("authPage.forgotPassword")}</p>
-                    <BasicButton label={t("authPage.signIn")} onClick={handleSignIn} loading={isLoggingIn} />
                 </div>
                 <div className="side-element-container">
                     <div className="side-element">
-                        <div className="side-element-panel side-element-left">
+                    <div className="side-element-panel side-element-left">
                             <h1>{t("authPage.hello")}</h1>
                             <p>{t("authPage.signUpPrompt")}</p>
-                            <BasicButton label={t("authPage.signIn")} className="ghost" onClick={() => setIsSignUp(false)} />
+                            <BasicButton label={t("authPage.signIn")} className="auth-page-button" onClick={() => setIsSignUp(false)} />
                         </div>
                         <div className="side-element-panel side-element-right">
                             <h1>{t("authPage.welcome")}</h1>
                             <p>{t("authPage.signInPrompt")}</p>
-                            <BasicButton label={t("authPage.signUp")} className="ghost" onClick={() => setIsSignUp(true)} />
+                            <BasicButton label={t("authPage.signUp")} className="auth-page-button" onClick={() => setIsSignUp(true)} />
                         </div>
                     </div>
                 </div>
+            </div>
+            <div className="text-footer text-center">
+                © 2025 <strong>ProjectCT</strong>. Graduation Project at HCMUTE.
             </div>
         </div>
     );

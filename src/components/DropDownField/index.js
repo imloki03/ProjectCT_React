@@ -3,10 +3,10 @@ import { Dropdown } from 'primereact/dropdown';
 import { FloatLabel } from 'primereact/floatlabel';
 import './index.css'
 //https://primereact.org/dropdown/
-const DropDownField = ({ label, name, selected, onChange, options, optionLabel, optionValue, placeholder, disabled, showClear, itemTemplate, valueTemplate }) => {
+const DropDownField = ({ label, name, selected, onChange, options, optionLabel, optionValue, placeholder, disabled, showClear, itemTemplate, valueTemplate, style }) => {
     return (
-        <div>
-            {label?(<FloatLabel style={{ marginTop: '1.4rem' }}>
+        <div style={style}>
+            {label?(<FloatLabel>
                     <Dropdown
                         id="dropdown"
                         name={name}
