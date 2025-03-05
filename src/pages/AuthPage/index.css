@@ -10,7 +10,7 @@ h2 {
 }
 
 .auth-container {
-    background-image: url("../../assets/images/auth-background.jpg");
+    background-image: url("../../assets/images/auth-background.png");
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -19,6 +19,8 @@ h2 {
     display: flex;
     justify-content: center;
     align-items: center;
+    overflow: hidden;
+    position: relative;
 }
 
 .auth-sub-container {
@@ -166,39 +168,37 @@ h2 {
     transform: translateX(20%);
 }
 
-footer {
-    background-color: #fff;
-    color: #333;
-    font-size: 1rem;
-    bottom: 0;
-    position: fixed;
-    left: 0;
-    right: 0;
-    text-align: center;
-    z-index: 1;
-}
-
-footer i {
-    color: red;
-}
-footer p {
-    margin: 0.2rem;
-}
-
-footer a {
-    color: #00ad82;
-    text-decoration: none;
-}
-
 .text-slogan{
-    color: white;
+    width: 100%;
+    color: black;
     position: absolute;
-    top: 1rem;
+    top: 2rem;
     left: 1rem;
 }
 
 .text-slogan .text-slogan-header{
-    color: white;
+    color: black;
     font-weight: bold;
     font-size: 2rem;
+}
+
+.text-footer
+{
+    color: white;
+    position: absolute;
+    bottom: 2rem;
+    display: flex;
+    font-size: 1.2rem;
+}
+
+
+/*Custome theme*/
+/* AuthPage.css */
+.auth-page-button.p-button {
+    background-color: #800080 !important; /* Dark Purple */
+    border-color: #800080 !important;
+}
+
+.auth-page-button.p-button:hover {
+    background-color: rgba(236, 42, 244, 0.97) !important; /* Slightly lighter purple */
 }
