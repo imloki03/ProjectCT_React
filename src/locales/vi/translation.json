@@ -86,5 +86,13 @@
     "resetPassword": "Đặt lại mật khẩu",
     "resetPasswordFailed": "Đặt lại mật khẩu thất bại",
     "unexpectedError": "Đã xảy ra lỗi không mong muốn"
+  },
+  "workspaceLayout": {
+    "dueTasks": "Nhiệm Vụ",
+    "overdueTasks": "Nhiệm Vụ Quá Hạn",
+    "to": "Đến",
+    "yourProjects": "Dự Án Của Bạn",
+    "editProfile": "Cập nhật hồ sơ",
+    "logout": "Đăng xuất"
   }
 }

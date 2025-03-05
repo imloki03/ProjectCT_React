@@ -86,5 +86,13 @@
     "resetPassword": "Reset Password",
     "resetPasswordFailed": "Reset Password Failed",
     "unexpectedError": "An unexpected error occurred"
+  },
+  "workspaceLayout": {
+    "dueTasks": "Due Tasks",
+    "overdueTasks": "Overdue Tasks",
+    "to": "To",
+    "yourProjects": "Your Projects",
+    "editProfile": "Edit Your Profile",
+    "logout": "Logout"
   }
 }

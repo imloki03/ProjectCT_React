@@ -5,6 +5,7 @@ import TestPage from "../pages/Test";
 import LandingPage from "../pages/LandingPage";
 import WorkspaceLayout from "../layouts/WorkspaceLayout";
 import AuthPage from "../pages/AuthPage";
+import ProjectLayout from "../layouts/ProjectLayout";
 
 export const routeLink = {
     default: '/',
@@ -12,6 +13,7 @@ export const routeLink = {
     forgotPassword: '/forgot-password',
     test: "/test",
     landing: "/landing",
+    project: "/project",
 }
 
 const createAppRoutes = (routes) => {
@@ -25,6 +27,13 @@ export const internalRoute = createAppRoutes([
         children: [
             { path: routeLink.default, element: <TestPage /> },
             { path: routeLink.test, element: <TestPage /> },
+        ],
+    },
+    {
+        path: routeLink.default,
+        element: <ProjectLayout />,
+        children: [
+            { path: routeLink.project, element: <TestPage /> },
         ],
     },
 ]);

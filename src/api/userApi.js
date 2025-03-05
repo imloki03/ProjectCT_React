@@ -13,7 +13,7 @@ export const editProfile = async (username, editProfileRequest) => {
 };
 
 export const getUserInfo = async (username) => {
-    const response = await axiosInstance.get(`${userPrefix}${username}`);
+    const response = await axiosInstance.get(`${userPrefix}u/${username}`);
     return response.data;
 };
 
@@ -24,5 +24,10 @@ export const changePassword = async (username, changePasswordRequest) => {
 
 export const activateUser = async (username) => {
     const response = await axiosInstance.patch(`${userPrefix}${username}/status`);
+    return response.data;
+};
+
+export const getUserInfoViaToken = async () => {
+    const response = await axiosInstance.get(`${userPrefix}t`);
     return response.data;
 };
