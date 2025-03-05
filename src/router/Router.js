@@ -24,9 +24,6 @@ export const internalRoute = createAppRoutes([
         element: <WorkspaceLayout />,
         children: [
             { path: routeLink.default, element: <TestPage /> },
-            { path: routeLink.login, element: <LoginPage /> },
-            { path: routeLink.register, element: <RegisterPage /> },
-            { path: routeLink.forgotPassword, element: <ForgotPasswordPage /> },
             { path: routeLink.test, element: <TestPage /> },
         ],
     },
@@ -34,14 +31,13 @@ export const internalRoute = createAppRoutes([
 
 export const externalRoute = createAppRoutes([
     {
-        path: routeLink.landing,
+        path: routeLink.default,
         element: <LandingPage />,
     },
     {
         path: routeLink.default,
         element: <AuthLayout />,
         children: [
-            { path: routeLink.default, element: <AuthPage /> },
             { path: routeLink.auth, element: <AuthPage /> },
             { path: routeLink.forgotPassword, element: <ForgotPasswordPage /> },
             { path: routeLink.test, element: <TestPage /> },
