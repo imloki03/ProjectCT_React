@@ -1,0 +1,101 @@
+.project_card {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch; /* Ensure all children stretch equally */
+    gap: 16px; /* Add some spacing between card sections */
+}
+
+.card_container{
+    cursor: pointer;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card_container:hover
+{
+    transform: translateY(-5px); /* Slight lift on hover */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); /* Intensify shadow on hover */
+}
+
+/* Avatar Section */
+.card_avatar {
+    flex: 0 0 auto; /* Prevent the avatar from shrinking */
+    height: auto; /* Match height dynamically */
+    display: flex;
+    align-items: center;
+    overflow-x:hidden;
+}
+
+.card_avatar img {
+    height: 100%; /* Stretch avatar to match parent height */
+    width: auto; /* Maintain aspect ratio */
+    object-fit: cover; /* Prevent image distortion */
+}
+
+/* Card Body */
+.card_body {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Space content evenly */
+    overflow: hidden; /* Prevent content overflow */
+}
+
+/* Truncate long names with ellipsis */
+.card_name {
+    font-size: 1.25rem;
+    font-weight: bold;
+    white-space: nowrap; /* Prevent text from wrapping */
+    overflow: hidden;
+    text-overflow: ellipsis; /* Add ellipsis for truncated text */
+    margin-bottom: 8px;
+}
+
+/* Collaboration Icons and Extra Count */
+.card_body div {
+    margin: 4px 0;
+}
+
+/* Collaboration Section */
+.collaboration-content {
+    display: inline-flex; /* Align icons and text horizontally */
+    align-items: center; /* Vertically center-align icons with text */
+    gap: 8px; /* Add spacing between icons and extra count */
+}
+
+.collaboration-content .extra-count {
+    font-size: 0.875rem; /* Optional: style for extra count */
+    color: #555; /* Add subtle color for extra count */
+}
+
+/* More Options Button */
+.card_more {
+    flex: 0 0 auto; /* Prevent the button from shrinking */
+    display: flex;
+    align-items: flex-start; /* Center the button vertically */
+    justify-content: center;
+}
+
+
+
+.delete-menu-item .pi-trash {
+    color: red !important; /* Ensure the trash icon is red */
+}
+
+.delete-menu-item span {
+    color: red !important; /* Ensure the text is also red */
+}
+
+.add-collaborator-button {
+    background: silver;
+    color: white;
+    width: 1.5rem;
+    height: 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%; /* Ensures the button stays round */
+    cursor: pointer;
+    border: none; /* Removes any default border */
+}

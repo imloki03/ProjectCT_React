@@ -202,3 +202,7 @@ h2 {
 .auth-page-button.p-button:hover {
     background-color: rgba(236, 42, 244, 0.97) !important; /* Slightly lighter purple */
 }
+
+.clickable-text{
+    cursor: pointer;
+}

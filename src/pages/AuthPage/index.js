@@ -96,14 +96,10 @@ const AuthPage = () => {
                 gender: registerData.gender
             };
             try {
-                const response = await register(requestData);
-                if (response.status === 200) {
-                    // navigate("/");
-                } else {
-                    showNotification("error", t("authPage.signUpFailed"), response.desc);
-                }
+                await register(requestData);
+                // navigate("/"); nav to workspace
             } catch (error) {
-                showNotification("error", t("authPage.signUpFailed"), t("authPage.unexpectedError"));
+                showNotification("error", t("authPage.signUpFailed"), error.response.data.desc);
             } finally {
                 setIsSigningUp(false);
             }
@@ -115,19 +111,12 @@ const AuthPage = () => {
             setIsLoggingIn(true);
             try {
                 const response = await login(loginData.username, loginData.password);
-
-                if (response.status === 401) {
-                    showNotification("error", t("authPage.loginFailed"), response.desc);
-                } else {
-                    localStorage.setItem("access_token", response.token.access_token);
-                    localStorage.setItem("refresh_token", response.token.refresh_token);
-                    localStorage.setItem("user", JSON.stringify(response.data));
-                    dispatch(loginSuccess(response.data));
-                    navigate("/");  // chỗ này cứ nav về lại home là đc
-                    // fix
-                }
+                localStorage.setItem("token", response.data.token.token);
+                dispatch(loginSuccess(response.data));
+                navigate("/");
             } catch (error) {
-                showNotification("error", t("authPage.loginFailed"), t("authPage.unexpectedError"));
+                console.log(error)
+                showNotification("error", t("authPage.loginFailed"), error.response.data.desc);
             } finally {
                 setIsLoggingIn(false);
             }
@@ -162,7 +151,7 @@ const AuthPage = () => {
                     <PasswordField label={t("authPage.password")} name="password" value={loginData.password}
                                    onChange={handleLoginChange}/>
                     <BasicButton label={t("authPage.signIn")} className="auth-page-button" onClick={handleSignIn} loading={isLoggingIn}  style={{ width: '100%' }}  width="100%"   />
-                    <p className="forgot-password" onClick={() => navigate("/forgot-password")}>{t("authPage.forgotPassword")}</p>
+                    <p className={"clickable-text"} onClick={() => navigate("/forgot-password")}>{t("authPage.forgotPassword")} </p>
                 </div>
                 <div className="side-element-container">
                     <div className="side-element">

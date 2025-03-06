@@ -3,9 +3,9 @@ import { Card } from "primereact/card";
 import './index.css'
 import BasicButton from "../Button";
 
-const PopupCard = ({ title, subTitle, children, footer, style, onClose }) => {
+const PopupCard = ({ title, subTitle, children, footer, style, onClose, className }) => {
     return (
-        <div className="popup-container">
+        <div className="popup-container ">
             <Card
                 title={title}
                 subTitle={subTitle}
@@ -23,7 +23,7 @@ const PopupCard = ({ title, subTitle, children, footer, style, onClose }) => {
                         zIndex: 1,
                     }}
                 />
-                <div>{children}</div>
+                <div className={className}>{children}</div>
             </Card>
         </div>
     );

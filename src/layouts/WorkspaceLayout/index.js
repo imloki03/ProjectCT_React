@@ -169,7 +169,6 @@ const WorkspaceLayout = () => {
     const getProjectList = async () => {
         try {
             const projects = await getAllProjects();
-            console.log(projects)
             setProjects(projects.data);
         } catch (e) {
             console.log(e);

@@ -1,0 +1,74 @@
+.workspace-container {
+    padding: 16px;
+}
+
+.workspace-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    position: sticky;
+    z-index: 1;
+    top: 0;
+    background-color: white;
+}
+
+.workspace-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.workspace-actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+
+@media (max-width: 768px) {
+    .workspace-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+    }
+
+    .search-bar {
+        width: 150px;
+    }
+}
+
+@media (max-width: 480px) {
+    .workspace-header {
+        flex-direction: column;
+        gap: 16px;
+    }
+}
+
+.workspace-grid {
+    display: grid;
+    justify-content: center;
+    grid-template-columns: repeat(2, 30rem);
+    gap: 2rem 6rem;
+}
+
+@media (max-width: 768px) {
+    .workspace-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .search-bar {
+        width: 150px;
+    }
+}
+
+@media (max-width: 480px) {
+    .workspace-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .workspace-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+}
