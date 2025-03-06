@@ -1,6 +1,6 @@
 import axiosInstance from "../config/ApiConfig";
 
-const userPrefix = "auth/users/";
+const userPrefix = "auth/users";
 
 export const register = async (registerRequest) => {
     const response = await axiosInstance.post(`${userPrefix}`, registerRequest);
@@ -13,21 +13,21 @@ export const editProfile = async (username, editProfileRequest) => {
 };
 
 export const getUserInfo = async (username) => {
-    const response = await axiosInstance.get(`${userPrefix}u/${username}`);
+    const response = await axiosInstance.get(`${userPrefix}/u/${username}`);
     return response.data;
 };
 
 export const changePassword = async (username, changePasswordRequest) => {
-    const response = await axiosInstance.patch(`${userPrefix}${username}`, changePasswordRequest);
+    const response = await axiosInstance.patch(`${userPrefix}/${username}`, changePasswordRequest);
     return response.data;
 };
 
 export const activateUser = async (username) => {
-    const response = await axiosInstance.patch(`${userPrefix}${username}/status`);
+    const response = await axiosInstance.patch(`${userPrefix}/${username}/status`);
     return response.data;
 };
 
 export const getUserInfoViaToken = async () => {
-    const response = await axiosInstance.get(`${userPrefix}t`);
+    const response = await axiosInstance.get(`${userPrefix}/t`);
     return response.data;
 };

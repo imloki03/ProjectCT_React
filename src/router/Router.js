@@ -6,6 +6,7 @@ import LandingPage from "../pages/LandingPage";
 import WorkspaceLayout from "../layouts/WorkspaceLayout";
 import AuthPage from "../pages/AuthPage";
 import ProjectLayout from "../layouts/ProjectLayout";
+import WorkSpacePage from "../pages/WorkSpace";
 
 export const routeLink = {
     default: '/',
@@ -25,8 +26,7 @@ export const internalRoute = createAppRoutes([
         path: routeLink.default,
         element: <WorkspaceLayout />,
         children: [
-            { path: routeLink.default, element: <TestPage /> },
-            { path: routeLink.test, element: <TestPage /> },
+            { path: routeLink.default, element: <WorkSpacePage/> },
         ],
     },
     {

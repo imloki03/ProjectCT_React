@@ -8,6 +8,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
+    overflow:hidden;
 }
 
 .forgetpassword-card{
@@ -134,6 +136,8 @@
 .otp-footer{
     display: flex;
     gap: 1rem;
+    align-items: center;
+    justify-content: center;
 }
 
 

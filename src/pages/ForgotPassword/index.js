@@ -58,25 +58,22 @@ const ForgotPasswordPage = () => {
         if (validateEmail(email)) {
             try {
                 const response = await getUserInfo(email);
-                if (response.status === 200) {
-                    setUser(response.data.username);
-                } else {
-                    showNotification("error", "Find user failed", response.desc);
-                }
+                setUser(response.data.username);
             } catch (error) {
-                showNotification("error", "Find user failed", "Unexpected error!!");
+                showNotification("error", "Find user failed", error.response.data.desc);
                 return;
             }
-
+            if (step === 0)
+                setLoading(true)
             try {
-                const response = await sendOtp(email);
-                if (response.status === 200) {
+                await sendOtp(email);
+                if (step === 0)
                     setStep(step+1);
-                } else {
-                    showNotification("error", "Send OTP failed", t("forgotPasswordPage.unexpectedError"));
-                }
             } catch (error) {
-                showNotification("error", "Send OTP failed", t("forgotPasswordPage.unexpectedError"));
+                showNotification("error", "Send OTP failed", error.response.data.desc);
+            }
+            finally {
+                setLoading(false)
             }
         }
     }
@@ -85,14 +82,10 @@ const ForgotPasswordPage = () => {
         if (otp.length === 6) {
             setLoading(true)
             try {
-                const response = await verifyOtp(email, otp);
-                if (response.status === 200) {
-                    setStep(step+1);
-                } else {
-                    showNotification("error", "Verify OTP failed", "Invalid OTP!!!");
-                }
+                await verifyOtp(email, otp);
+                setStep(step+1);
             } catch (error) {
-                showNotification("error", "Verify OTP failed", t("forgotPasswordPage.unexpectedError"));
+                showNotification("error", "Verify OTP failed", error.response.data.desc);
             }
             finally {
                 setLoading(false);
@@ -107,15 +100,10 @@ const ForgotPasswordPage = () => {
                 newPassword: newPassword
             };
             try {
-                const response = await changePassword(user, requestData);
-
-                if (response.status === 200) {
-                    navigate("/");
-                } else {
-                    showNotification("error", t("forgotPasswordPage.resetPasswordFailed"), response.desc);
-                }
+                await changePassword(user, requestData);
+                // navigate("/") set time to redirect;
             } catch (error) {
-                showNotification("error", t("forgotPasswordPage.resetPasswordFailed"), t("forgotPasswordPage.unexpectedError"));
+                showNotification("error", t("forgotPasswordPage.resetPasswordFailed"), error.response.data.desc);
             } finally {
                 setLoading(false);
             }
@@ -182,6 +170,7 @@ const ForgotPasswordPage = () => {
                                 onClick={handleVerifyOtp}
                                 disabled={!otp || loading}
                                 loading={loading}
+                                className={"next-button"}
                             />
                         </div>
                     </div>

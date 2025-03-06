@@ -5,7 +5,7 @@ import './index.css'
 //https://primereact.org/dropdown/
 const DropDownField = ({ label, name, selected, onChange, options, optionLabel, optionValue, placeholder, disabled, showClear, itemTemplate, valueTemplate, style }) => {
     return (
-        <div style={style}>
+        <div style={{width: '100%'}}>
             {label?(<FloatLabel>
                     <Dropdown
                         id="dropdown"
