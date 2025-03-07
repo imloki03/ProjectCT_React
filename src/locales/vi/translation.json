@@ -110,6 +110,17 @@
     "editProfile": "Cập nhật hồ sơ",
     "logout": "Đăng xuất"
   },
+  "userProfile": {
+    "uploadFailed": "Tải Lên Thất Bại",
+    "updateAvatar" : "Cập Nhật Ảnh Đại Diện",
+    "fullName": "Tên đầy đủ",
+    "username": "Tên người dùng",
+    "email": "Email",
+    "gender": "Giới tính",
+    "nameRequired": "Tên của bạn là bắt buộc",
+    "updateTag": "Cập nhật Tags",
+    "updateTagSuccess": "Các tag của bạn đã được cập nhật!"
+  },
   "workspacePage": {
     "searchPlaceholder": "Tìm kiếm",
     "sortBy": "Sắp xếp theo: ",

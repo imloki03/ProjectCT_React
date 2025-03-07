@@ -11,17 +11,26 @@ import {useEffect, useRef, useState} from "react";
 import {Menu} from "primereact/menu";
 import {getAllProjects} from "../../api/projectApi";
 import {useTranslation} from "react-i18next";
+import {logout} from "../../redux/slices/userSlice";
 import {routeLink} from "../../router/Router";
+import {useDispatch} from "react-redux";
 
 const ProjectLayout = () => {
     const menuRef = useRef(null);
     const [projects, setProjects] = useState([]);
     const { t } = useTranslation();
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+
+    const handleLogout = () => {
+        dispatch(logout());
+        localStorage.removeItem("token");
+        navigate(routeLink.default)
+    }
 
     const menuItems = [
-        { label: t("workspaceLayout.editProfile"), icon: "pi pi-user-edit", command: () => console.log("Edit Profile") },
-        { label: t("workspaceLayout.logout"), icon: "pi pi-sign-out", command: () => console.log("Logging out...") }
+        { label: t("workspaceLayout.editProfile"), icon: "pi pi-user-edit", command: () => navigate(routeLink.profile) },
+        { label: t("workspaceLayout.logout"), icon: "pi pi-sign-out", command: () => handleLogout() }
     ];
 
     const items = [
@@ -32,7 +41,6 @@ const ProjectLayout = () => {
         { label: "Storage", icon: "pi pi-folder", command: () => navigate(routeLink.projectTabs.storage) },
         { label: "Collaborators", icon: "pi pi-users", command: () => navigate(routeLink.projectTabs.collaborators) },
     ];
-
 
     return (
         <NotificationProvider>

@@ -7,8 +7,8 @@ export const register = async (registerRequest) => {
     return response.data;
 };
 
-export const editProfile = async (username, editProfileRequest) => {
-    const response = await axiosInstance.put(`${userPrefix}${username}`, editProfileRequest);
+export const editProfile = async (editProfileRequest) => {
+    const response = await axiosInstance.put(`${userPrefix}`, editProfileRequest);
     return response.data;
 };
 
