@@ -5,17 +5,21 @@ import {useDispatch} from "react-redux";
 import {useNavigate} from "react-router-dom";
 import Avatar from "../../../components/Avatar";
 import BasicButton from "../../../components/Button";
+import {updateCurrentProject} from "../../../redux/slices/projectSlice";
+import {routeLink} from "../../../router/Router";
+import {useTranslation} from "react-i18next";
 export const ProjectCard = ({ project }) => {
     const menuRef = useRef(null);
-
+    const {t} = useTranslation();
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const navigateToProjectManagement = () =>
-    {
-        // dispatch(updateCurrentProject(project))
-        // const urlName = project.urlName;
-        // navigate(`/project/${urlName}`);
-    }
+    const navigateToProjectManagement = () => {
+        dispatch(updateCurrentProject(project));
+        navigate(routeLink.project.replace(":ownerUsername", project.ownerUsername)
+                                    .replace(":projectName", project.name));
+
+    };
+
 
     const handleMenuClick = (e) => {
         e.stopPropagation();
@@ -43,14 +47,14 @@ export const ProjectCard = ({ project }) => {
                         {project.name}
                     </div>
                     <div>
-                        <strong>Project Owner:</strong> {project.ownerUsername}
+                        <strong>{t("workspacePage.projectCard.projectOwner")}</strong> {project.ownerUsername}
                     </div>
                     <div>
-                        <strong>Created Date:</strong>{" "}
+                        <strong>{t("workspacePage.projectCard.createdDate")}:</strong>{" "}
                         {new Date(project.createdDate).toLocaleDateString("en-GB")}
                     </div>
                     <div>
-                        <strong>Collaborators:</strong>{" "}
+                        <strong>{t("workspacePage.projectCard.collaborators")}</strong>{" "}
                         <span className="collaboration-content">
                             {project.collaborators?.length > 0 &&
                                 project.collaborators.slice(0, 3).map((collab, index) => (
@@ -74,7 +78,7 @@ export const ProjectCard = ({ project }) => {
                                     icon="pi pi-plus"
                                     className="p-button-rounded p-button-secondary p-button-outlined add-collaborator-button"
                                     onClick={handleAddCollaborator}
-                                    tooltip="Add Collaborator"
+                                    tooltip={t("workspacePage.projectCard.addCollaborator")}
                                     tooltipOptions={{ position: "top" }}
                                 />
                             </div>

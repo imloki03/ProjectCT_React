@@ -1,0 +1,24 @@
+.media-dialog{
+    display: flex;
+    gap: 1rem;
+    flex-direction: column;
+    width: 40rem;
+    margin-top:1rem;
+}
+
+.media-dialog-footer{
+    display: flex;
+    gap: 1rem;
+    flex-direction: row;
+    justify-content: end;
+}
+
+.custom-choose-button {
+    background-color: #800080 !important; /* Dark Purple */
+    border-color: #800080 !important;
+    color: white !important;
+}
+.custom-choose-button:hover {
+    background-color: rgba(236, 42, 244, 0.97) !important; /* Slightly lighter purple */
+    color: white !important;
+}

@@ -1,4 +1,4 @@
-import {Link, Outlet} from "react-router-dom";
+import {Link, Outlet, useNavigate} from "react-router-dom";
 import "./index.css"
 import {LoadingProvider} from "../../contexts/LoadingContext";
 import {NotificationProvider, useNotification} from "../../contexts/NotificationContext";
@@ -11,11 +11,13 @@ import {useEffect, useRef, useState} from "react";
 import {Menu} from "primereact/menu";
 import {getAllProjects} from "../../api/projectApi";
 import {useTranslation} from "react-i18next";
+import {routeLink} from "../../router/Router";
 
 const ProjectLayout = () => {
     const menuRef = useRef(null);
     const [projects, setProjects] = useState([]);
     const { t } = useTranslation();
+    const navigate = useNavigate();
 
     const menuItems = [
         { label: t("workspaceLayout.editProfile"), icon: "pi pi-user-edit", command: () => console.log("Edit Profile") },
@@ -23,13 +25,14 @@ const ProjectLayout = () => {
     ];
 
     const items = [
-        { label: "Dashboard", icon: "pi pi-th-large" },
-        { label: "Backlog", icon: "pi pi-list" },
-        { label: "Phase", icon: "pi pi-sitemap" },
-        { label: "Chatbox", icon: "pi pi-comments" },
-        { label: "Storage", icon: "pi pi-folder" },
-        { label: "Collaborators", icon: "pi pi-users" },
+        { label: "Dashboard", icon: "pi pi-th-large", command: () => navigate(routeLink.projectTabs.dashboard) },
+        { label: "Backlog", icon: "pi pi-list", command: () => navigate(routeLink.projectTabs.backlog) },
+        { label: "Phase", icon: "pi pi-sitemap", command: () => navigate(routeLink.projectTabs.phase) },
+        { label: "Chatbox", icon: "pi pi-comments", command: () => navigate(routeLink.projectTabs.chatbox) },
+        { label: "Storage", icon: "pi pi-folder", command: () => navigate(routeLink.projectTabs.storage) },
+        { label: "Collaborators", icon: "pi pi-users", command: () => navigate(routeLink.projectTabs.collaborators) },
     ];
+
 
     return (
         <NotificationProvider>

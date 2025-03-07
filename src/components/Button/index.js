@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button } from 'primereact/button';
+import './index.css'
 import { Toast } from 'primereact/toast';
 
 const BasicButton = ({ label, icon, loading, severity, onClick, className, disabled, outlined, size, width, style, type, rounded, text, raised=true, visible }) => {
@@ -11,7 +12,7 @@ const BasicButton = ({ label, icon, loading, severity, onClick, className, disab
                 loading={loading}
                 severity={severity}  //color default = primary or secondary, success, info, warning, help, danger
                 onClick={onClick}
-                className={className}
+                className={`purple-theme-button ${className || ''}`}
                 disabled={disabled}
                 outlined={outlined}
                 size={size}  // small, large

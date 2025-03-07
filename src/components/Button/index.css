@@ -1,0 +1,10 @@
+.purple-theme-button.p-button {
+    background-color: #800080 !important; /* Dark Purple */
+    border-color: #800080 !important;
+    color: white !important;
+}
+
+.purple-theme-button.p-button:hover {
+    background-color: rgba(236, 42, 244, 0.97) !important; /* Slightly lighter purple */
+    color: white !important;
+}
