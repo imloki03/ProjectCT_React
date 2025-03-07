@@ -11,6 +11,7 @@ import CreateProjectPopUp from "./CreateProjectPopUp";
 import BasicButton from "../../components/Button";
 import {ProjectCard} from "./ProjectCard";
 import {getAllCollabOfProject} from "../../api/collabApi";
+import TextFieldIcon from "../../components/TextFieldIcon";
 
 // import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 // import { library } from '@fortawesome/fontawesome-svg-core'
@@ -58,7 +59,6 @@ const WorkSpacePage = () => {
             const collabMap = {};
             for (const project of projects) {
                 const projectCollabs = await fetchCollaborators(project.id);
-                console.log(projectCollabs)
                 collabMap[project.id] = projectCollabs;
             }
             setCollaborators(collabMap);
@@ -127,13 +127,15 @@ const WorkSpacePage = () => {
                 <h1 className="workspace-title">Projects</h1>
                 <div className="workspace-actions">
                     <div className="search-container">
-                        <IconField iconPosition="left">
-                            <InputIcon className="pi pi-search"></InputIcon>
-                            <InputText
-                                placeholder="Search"
-                                onChange={(e) => setSearchQuery(e.target.value)}
-                            />
-                        </IconField>
+                        <TextFieldIcon
+                            label="Search"
+                            placeholder={"Search"}
+                            name="search"
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                            icon="pi-search"
+                            iconPosition="left"
+                        />
                     </div>
                     <div className="sort-container">
                         <Dropdown

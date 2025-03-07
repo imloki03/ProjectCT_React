@@ -7,10 +7,16 @@ import BasicButton from "../../../components/Button";
 import {createNewProject} from "../../../api/projectApi";
 import {useNotification} from "../../../contexts/NotificationContext";
 import {useNavigate} from "react-router-dom";
+import {updateCurrentProject} from "../../../redux/slices/projectSlice";
+import {useDispatch} from "react-redux";
+import {routeLink} from "../../../router/Router";
+import { useTranslation } from "react-i18next";
 
 const CreateProjectPopUp = ({onClose}) => {
+    const { t } = useTranslation();
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     const showNotification = useNotification();
     const [projectData, setProjectData] = useState({
         name: "",
@@ -29,30 +35,31 @@ const CreateProjectPopUp = ({onClose}) => {
                     projectName: projectData.name,
                     projectDescription: projectData.description,
                 }
-                await createNewProject(projectRequest);
+                const response = await createNewProject(projectRequest);
                 onClose()
                 setLoading(false)
-                return;
-                // navigate
+                dispatch(updateCurrentProject(response.data));
+                navigate(routeLink.project.replace(":ownerUsername", response.data.ownerUsername)
+                    .replace(":projectName",response.data.name));
             }
             catch(err) {
                 setLoading(false)
-                showNotification("error", "Create Project Failed", "Unexpected error occurred");
+                showNotification("error", t('workspacePage.createProjectPopUp.createFailed'), t('workspacePage.createProjectPopUp.unexpectedError'));
                 return;
             }
         }
         setLoading(false)
-        showNotification("error", "Validation Error", "All fields are required.");
+        showNotification("error", t('workspacePage.createProjectPopUp.validationError'), t('workspacePage.createProjectPopUp.allFieldsRequired'));
     }
 
     return (
         <div>
-            <PopupCard title="Create New Project"
-                       subTitle="Provide the details for your new project!"
-                        onClose={onClose} className={"create-project-popup"}>
-                <TextField name="name" label="Project Name" value={projectData.name} onChange={handleChange} />
-                <TextFieldArea name="description" label="Description" value={projectData.description} onChange={handleChange} />
-                <BasicButton label={"Create Project"} loading={loading} onClick={handleCreateProject} style={{width:'100%'}} width={"100%"} />
+            <PopupCard title={t('workspacePage.createProjectPopUp.title')}
+                       subTitle={t('workspacePage.createProjectPopUp.subTitle')}
+                       onClose={onClose} className={"create-project-popup"}>
+                <TextField name="name" label={t('workspacePage.createProjectPopUp.projectName')} value={projectData.name} onChange={handleChange} />
+                <TextFieldArea rows="5" name="description" label={t('workspacePage.createProjectPopUp.description')} value={projectData.description} onChange={handleChange} />
+                <BasicButton label={t('workspacePage.createProjectPopUp.createButton')} loading={loading} onClick={handleCreateProject} style={{width:'100%'}} width={"100%"} />
             </PopupCard>
         </div>
     );

@@ -1,0 +1,54 @@
+.media-container{
+    padding: 16px;
+}
+
+.media-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    position: sticky;
+    z-index: 1;
+    top: 0;
+    background-color: white;
+}
+
+.media-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.media-actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.action-buttons{
+    display: flex;
+    justify-content: flex-start;
+}
+
+.outdated-mark {
+    color: red;
+    font-weight: bold;
+    font-size: 0.9rem;
+    background-color: #f8d7da;
+    padding: 10px 10px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.updated-mark{
+    color: white;
+    font-weight: bold;
+    font-size: 0.9rem;
+    background-color: #94f889;
+    padding: 10px 10px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

@@ -7,6 +7,7 @@ import WorkspaceLayout from "../layouts/WorkspaceLayout";
 import AuthPage from "../pages/AuthPage";
 import ProjectLayout from "../layouts/ProjectLayout";
 import WorkSpacePage from "../pages/WorkSpace";
+import StoragePage from "../pages/StoragePage";
 
 export const routeLink = {
     default: '/',
@@ -14,7 +15,16 @@ export const routeLink = {
     forgotPassword: '/forgot-password',
     test: "/test",
     landing: "/landing",
-    project: "/project",
+    project: "/:ownerUsername/:projectName",
+    projectTabs: {
+        default: "",
+        dashboard: "dashboard",
+        backlog: "backlog",
+        phase: "phase",
+        chatbox: "chatbox",
+        storage: "storage",
+        collaborators: "collaborators",
+    },
 }
 
 const createAppRoutes = (routes) => {
@@ -30,10 +40,11 @@ export const internalRoute = createAppRoutes([
         ],
     },
     {
-        path: routeLink.default,
+        path: routeLink.project,
         element: <ProjectLayout />,
         children: [
-            { path: routeLink.project, element: <TestPage /> },
+            { path: routeLink.projectTabs.default, element: <TestPage /> },
+            { path: routeLink.projectTabs.storage, element: <StoragePage /> },
         ],
     },
 ]);
