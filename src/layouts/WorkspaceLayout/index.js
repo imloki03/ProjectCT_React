@@ -1,4 +1,4 @@
-import {Link, Outlet} from "react-router-dom";
+import {Link, Outlet, useNavigate} from "react-router-dom";
 import "./index.css"
 import {LoadingProvider} from "../../contexts/LoadingContext";
 import {NotificationProvider, useNotification} from "../../contexts/NotificationContext";
@@ -11,11 +11,16 @@ import {useEffect, useRef, useState} from "react";
 import {Menu} from "primereact/menu";
 import {getAllProjects} from "../../api/projectApi";
 import {useTranslation} from "react-i18next";
+import {routeLink} from "../../router/Router";
+import {useDispatch} from "react-redux";
+import {logout} from "../../redux/slices/userSlice";
 
 const WorkspaceLayout = () => {
     const menuRef = useRef(null);
     const [projects, setProjects] = useState([]);
     const { t } = useTranslation();
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const itemRenderer = (item, options) => (
         <a className="flex align-items-center cursor-pointer workspace-custom-menu-item" onClick={options.onClick}>
@@ -195,9 +200,15 @@ const WorkspaceLayout = () => {
         }
     ];
 
+    const handleLogout = () => {
+        dispatch(logout());
+        localStorage.removeItem("token");
+        navigate(routeLink.default)
+    }
+
     const menuItems = [
-        { label: t("workspaceLayout.editProfile"), icon: "pi pi-user-edit", command: () => console.log("Edit Profile") },
-        { label: t("workspaceLayout.logout"), icon: "pi pi-sign-out", command: () => console.log("Logging out...") }
+        { label: t("workspaceLayout.editProfile"), icon: "pi pi-user-edit", command: () => navigate(routeLink.profile) },
+        { label: t("workspaceLayout.logout"), icon: "pi pi-sign-out", command: () => handleLogout() }
     ];
 
     return (

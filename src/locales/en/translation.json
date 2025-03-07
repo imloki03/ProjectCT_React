@@ -110,6 +110,17 @@
     "editProfile": "Edit Your Profile",
     "logout": "Logout"
   },
+  "userProfile": {
+    "uploadFailed": "Upload Failed",
+    "updateAvatar" : "Update Avatar",
+    "fullName": "Full Name",
+    "username": "Username",
+    "email": "Email",
+    "gender": "Gender",
+    "nameRequired": "Your name is required!",
+    "updateTag": "Update Tags",
+    "updateTagSuccess": "Your tags are updated now!"
+  },
   "workspacePage": {
     "searchPlaceholder": "Search",
     "sortBy": "Sort by: ",

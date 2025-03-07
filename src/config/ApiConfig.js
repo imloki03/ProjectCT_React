@@ -29,16 +29,13 @@ axiosInstance.interceptors.response.use(
         if (error.response?.status === 401 && !originalRequest._retry && token) {
             try {
                 originalRequest._retry = true;
-                const response = await axios.post("/auth/jwt/refresh", { token }, {
-                        headers: { Authorization: `Bearer ${localStorage.getItem("token") || ""}`
-                    }
-                });
+                const response = await axios.post(`${API_BASE_URL}auth/jwt/refresh`, { token });
                 const newToken = response.data.token;
                 localStorage.setItem("token", newToken);
                 originalRequest.headers['Authorization'] = `Bearer ${newToken}`;
                 return axiosInstance(originalRequest);
             } catch (err) {
-                store.dispatch(logout());
+                // store.dispatch(logout());
                 return Promise.reject(err);
             }
         }

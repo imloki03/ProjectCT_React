@@ -11,9 +11,11 @@ import {updateUser} from "./redux/slices/userSlice";
 
 function App() {
   const user = useSelector((state) => state?.user?.currentUser || null);
-  const token = localStorage.getItem("token");
+  const token = useSelector((state) => state?.user?.token || null);
   const { t } = useTranslation();
   const dispatch = useDispatch();
+
+  const [routerKey, setRouterKey] = useState(0);
 
   const [router, setRouter] = useState(null);
 
@@ -23,7 +25,6 @@ function App() {
         try {
           const response = await getUserInfoViaToken();
           if (response) {
-            console.log(response.data)
             dispatch(updateUser(response.data));
           }
         } catch (error) {
@@ -31,27 +32,18 @@ function App() {
         }
       })();
     }
-  }, []);
+  }, [token]);
+
 
   const getRouter = () => {
-    console.log(token)
-    if (token !== null) {
-      return internalRoute;
-    }
-    else {
-      return externalRoute;
-    }
-  }
+    return user !== null || token !== null ? internalRoute : externalRoute;
+  };
 
   useEffect(() => {
-    const updatedRouter = getRouter();
-    setRouter(updatedRouter);
+    setRouterKey((prevKey) => prevKey + 1);
   }, [user, token]);
 
-
-  return <div>
-    {router && <RouterProvider key={router} router={router} />}
-  </div>;
+  return <RouterProvider key={routerKey} router={getRouter()} />;
 }
 
 export default App;
