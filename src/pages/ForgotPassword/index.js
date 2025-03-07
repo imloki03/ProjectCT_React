@@ -4,7 +4,7 @@ import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
 import { Password } from "primereact/password";
 import { useNavigate } from "react-router-dom";
-import { changePassword, getUserInfo } from "../../api/userApi";
+import {changePassword, checkUserExist, getUserInfo} from "../../api/userApi";
 import { useNotification } from "../../contexts/NotificationContext";
 import { useTranslation } from "react-i18next";
 import { InputOtp } from "primereact/inputotp";
@@ -12,6 +12,7 @@ import { Steps } from "primereact/steps";
 import { Divider } from "primereact/divider";
 import { sendOtp, verifyOtp } from "../../api/authApi";
 import logo from "../../assets/images/logo_with_name.png";
+import {routeLink} from "../../router/Router";
 
 const ForgotPasswordPage = () => {
     const { t } = useTranslation();
@@ -22,7 +23,6 @@ const ForgotPasswordPage = () => {
     const navigate = useNavigate();
     const showNotification = useNotification();
     const [loading, setLoading] = useState(false);
-    const [user, setUser] = useState("");
 
     const validateEmail = (email) => {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -42,9 +42,8 @@ const ForgotPasswordPage = () => {
     const handleSendOtp = async () => {
         if (validateEmail(email)) {
             try {
-                const response = await getUserInfo(email);
-                setUser(response.data.username);
                 setLoading(true);
+                await checkUserExist(email);
                 await sendOtp(email);
                 setStep(1);
             } catch (error) {
@@ -73,9 +72,14 @@ const ForgotPasswordPage = () => {
         if (newPassword) {
             setLoading(true);
             try {
-                await changePassword(user, { newPassword });
-                showNotification("success", t("forgotPasswordPage.resetPasswordSuccess"));
-                navigate("/");
+                const request = {
+                    "newPassword": newPassword
+                }
+                await changePassword(email, request);
+                showNotification("success", t("forgotPasswordPage.resetPasswordSuccess"), t("forgotPasswordPage.reDirecting"));
+                setTimeout(() => {
+                    navigate(routeLink.auth);
+                }, 4000); //
             } catch (error) {
                 showNotification("error", t("forgotPasswordPage.resetPasswordFailed"), error.response?.data?.desc || error.message);
             } finally {
@@ -111,7 +115,7 @@ const ForgotPasswordPage = () => {
                         <p className="otp-subtitle">{t("forgotPasswordPage.provideRegisteredEmail")}</p>
                         <InputText value={email} onChange={(e) => setEmail(e.target.value)} placeholder={t("forgotPasswordPage.emailPlaceholder")} className="email-input" />
                         <div className="otp-footer">
-                            <Button label={t("forgotPasswordPage.cancel")} onClick={() => navigate("/")} className="next-button" />
+                            <Button label={t("forgotPasswordPage.cancel")} onClick={() => navigate(routeLink.auth)} className="next-button" />
                             <Button label={loading ? t("forgotPasswordPage.sending") : t("forgotPasswordPage.next")} onClick={handleSendOtp} className="next-button" disabled={!email || loading} loading={loading} />
                         </div>
                     </div>
@@ -155,8 +159,8 @@ const ForgotPasswordPage = () => {
                     </div>
                 )}
             </div>
-                    </div>
-                    );
-                };
+    </div>
+    );
+};
 
-                export default ForgotPasswordPage;
+export default ForgotPasswordPage;

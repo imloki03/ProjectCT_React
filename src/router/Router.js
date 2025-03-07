@@ -25,7 +25,7 @@ export const routeLink = {
         phase: "phase",
         chatbox: "chatbox",
         storage: "storage",
-        collaborators: "collaborators",
+        collaborator: "collaborator",
     },
 }
 

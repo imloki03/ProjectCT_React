@@ -31,3 +31,8 @@ export const getUserInfoViaToken = async () => {
     const response = await axiosInstance.get(`${userPrefix}/t`);
     return response.data;
 };
+
+export const checkUserExist = async (username) => {
+    const response = await axiosInstance.patch(`${userPrefix}/exist/${username}`);
+    return response.data;
+};

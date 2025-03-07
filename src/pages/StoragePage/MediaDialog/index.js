@@ -133,7 +133,7 @@ const MediaDialog = ({ visible, onHide, projectId, mediaToEdit, onUploadSuccess 
 
     const dialogFooter = (
         <div className={"media-dialog-footer"}>
-            <BasicButton label={t("storagePage.mediaDialog.cancel")} icon="pi pi-times" onClick={onHide} className="p-button-text" />
+            <BasicButton label={t("storagePage.mediaDialog.cancel")} icon="pi pi-times" onClick={onHide} className="p-button-text cancel-button"  />
             <BasicButton
                 label={isSubmitting ? t("storagePage.mediaDialog.submitting") : t("storagePage.mediaDialog.submit")}
                 icon={isSubmitting ? "pi pi-spin pi-spinner" : "pi pi-check"}
