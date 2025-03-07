@@ -125,7 +125,7 @@ const UpdateMediaVersionDialog = ({ visible, onHide, projectId, selectedMedia, o
 
     const dialogFooter = (
         <div className={"media-dialog-footer"}>
-            <BasicButton label={t("storagePage.updateMediaVersionDialog.cancel")} icon="pi pi-times" onClick={onHide} className="p-button-text"/>
+            <BasicButton label={t("storagePage.updateMediaVersionDialog.cancel")} icon="pi pi-times" onClick={onHide} className="p-button-text cancel-button"/>
             <BasicButton
                 label={isSubmitting ? t("storagePage.updateMediaVersionDialog.updating") : t("storagePage.updateMediaVersionDialog.update")}
                 icon={isSubmitting ? "pi pi-spin pi-spinner" : "pi pi-check"}

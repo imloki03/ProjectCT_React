@@ -22,3 +22,15 @@
     background-color: rgba(236, 42, 244, 0.97) !important; /* Slightly lighter purple */
     color: white !important;
 }
+
+.purple-theme-button.p-button.cancel-button {
+    background-color: #A00000 !important; /* Darker red */
+    border-color: #A00000 !important;
+    color: white !important;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.purple-theme-button.p-button.cancel-button:hover {
+    background-color: #D32F2F !important; /* Lighter red */
+    border-color: #D32F2F !important;
+}

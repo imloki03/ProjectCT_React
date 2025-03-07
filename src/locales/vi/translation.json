@@ -80,6 +80,7 @@
     "verifyOtpFailed": "Xác minh OTP thất bại",
     "resetPasswordFailed": "Đặt lại mật khẩu thất bại",
     "resetPasswordSuccess": "Mật khẩu đã được đặt lại thành công.",
+    "reDirecting:": "Chúng tôi đang chuyển hướng bạn đến trang đăng nhập trong 4s nữa",
     "pickAPassword": "Chọn một mật khẩu",
     "suggestions": "Gợi ý",
     "lowercaseRequirement": "Ít nhất một chữ cái viết thường",

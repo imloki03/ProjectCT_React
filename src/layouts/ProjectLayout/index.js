@@ -39,7 +39,7 @@ const ProjectLayout = () => {
         { label: "Phase", icon: "pi pi-sitemap", command: () => navigate(routeLink.projectTabs.phase) },
         { label: "Chatbox", icon: "pi pi-comments", command: () => navigate(routeLink.projectTabs.chatbox) },
         { label: "Storage", icon: "pi pi-folder", command: () => navigate(routeLink.projectTabs.storage) },
-        { label: "Collaborators", icon: "pi pi-users", command: () => navigate(routeLink.projectTabs.collaborators) },
+        { label: "Collaborator", icon: "pi pi-users", command: () => navigate(routeLink.projectTabs.collaborator) },
     ];
 
     return (

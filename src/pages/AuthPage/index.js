@@ -24,7 +24,7 @@ const AuthPage = () => {
     const [isSigningUp, setIsSigningUp] = useState(false);
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
-    const [isSignUp, setIsSignUp] = useState(searchParams.get("m") === "sign-up");
+    const [isSignUp, setIsSignUp] = useState(searchParams.get("t") === "sign-up");
 
     const [loginData, setLoginData] = useState({
         username: "",
