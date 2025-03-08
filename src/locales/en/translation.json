@@ -120,7 +120,17 @@
     "gender": "Gender",
     "nameRequired": "Your name is required!",
     "updateTag": "Update Tags",
-    "updateTagSuccess": "Your tags are updated now!"
+    "updateTagSuccess": "Your tags are updated now!",
+    "skillsetTitle": "Let’s Improve Your Profile!",
+    "skillsetSubtitle": "Select your skills to tailor your experience.",
+    "roleTitle": "What’s your Preferred Role",
+    "roleSubtitle": "Choose a role to define your responsibilities.",
+    "profileWarning": "Please provide more information to personalize user profiles and streamline task assignments or collaborator selection.",
+    "noSkillset": "No skillset tags added. Click \"+Tag\" to include tags.",
+    "noRole": "No role tags added. Click \"+Tag\" to include tags.",
+    "update": "Update",
+    "save": "Save",
+    "confirm": "Confirm"
   },
   "workspacePage": {
     "searchPlaceholder": "Search",

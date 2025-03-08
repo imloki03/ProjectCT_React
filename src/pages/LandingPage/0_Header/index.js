@@ -7,6 +7,7 @@ import BasicButton from "../../../components/Button";
 import {useTranslation} from "react-i18next";
 import {changeLanguage} from "../../../config/i18n";
 import {Dropdown} from "primereact/dropdown";
+import {Button} from "primereact/button";
 
 const languages = [
     { name: "English", code: "en", flag: "https://flagcdn.com/w40/gb.png" },
@@ -71,7 +72,7 @@ const Header = () => {
                         showClear={false}
                     />
                     <Link to="/auth">
-                        <BasicButton label={t("landingPage.signin")} className="p-button-outlined p-button-sm text-white border-white sign-in-btn" />
+                        <Button label={t("landingPage.signin")} className="p-button-outlined p-button-sm text-white border-white sign-in-btn" />
                     </Link>
                     <Link to="/auth">
                         <BasicButton label={t("landingPage.signup")} className="p-button p-button-sm p-button-primary sign-up-btn" />

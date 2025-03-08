@@ -120,7 +120,17 @@
     "gender": "Giới tính",
     "nameRequired": "Tên của bạn là bắt buộc",
     "updateTag": "Cập nhật Tags",
-    "updateTagSuccess": "Các tag của bạn đã được cập nhật!"
+    "updateTagSuccess": "Các tag của bạn đã được cập nhật!",
+    "skillsetTitle": "Cùng Nâng Cấp Hồ Sơ Của Bạn Nào!",
+    "skillsetSubtitle": "Chọn những kĩ năng của bạn để nâng cao trải nghiệm.",
+    "roleTitle": "Vai Trò Yêu Thích Của Bạn!",
+    "roleSubtitle": "Chọn những vai trò phù hợp để thể hiện khả năng của bạn.",
+    "profileWarning": "Hãy cung cấp thêm thông tin để cá nhân hóa cho hồ sơ của bạn.",
+    "noSkillset": "Chưa có kỹ năng nào được thêm. Nhấn \"+Tag\" để thêm tags.",
+    "noRole": "Chưa có vai trò nào được thêm vào. Nhấn \"+Tag\" để thêm tags.",
+    "update": "Cập nhật",
+    "save": "Lưu",
+    "confirm": "Xác nhận"
   },
   "workspacePage": {
     "searchPlaceholder": "Tìm kiếm",
