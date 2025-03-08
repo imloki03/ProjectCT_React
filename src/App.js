@@ -17,8 +17,6 @@ function App() {
 
   const [routerKey, setRouterKey] = useState(0);
 
-  const [router, setRouter] = useState(null);
-
   useEffect(() => {
     if (token) {
       (async () => {
@@ -36,6 +34,7 @@ function App() {
 
 
   const getRouter = () => {
+    console.log("getRouter")
     return user !== null || token !== null ? internalRoute : externalRoute;
   };
 

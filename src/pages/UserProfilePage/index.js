@@ -85,7 +85,7 @@ const UserProfilePage = () => {
                 });
                 showNotification("success", t("userProfile.updateAvatar"), result.desc);
             } catch (e) {
-                showNotification("error", t("userProfile.updateAvatar"), e.data.desc);
+                showNotification("error", t("userProfile.updateAvatar"), e.response?.data?.desc);
             }
         } catch (e) {
             showNotification("error", t("userProfile.uploadFailed"), t("authPage.unexpectedError"));
@@ -103,7 +103,7 @@ const UserProfilePage = () => {
                 dispatch(updateUser(result.data));
             }
         } catch (e) {
-            showNotification("error", t("userProfile.updateAvatar"), e.data.desc);
+            showNotification("error", t("userProfile.updateAvatar"), e.response?.data?.desc);
         }
     }
 
@@ -121,8 +121,8 @@ const UserProfilePage = () => {
     };
 
     const tagSections = [
-        { type: 'SKILLSET', title: 'Let’s Improve Your Profile!', subtitle: 'Select your skills to tailor your experience in ProjectCT.' },
-        { type: 'ROLE', title: 'What’s your Preferred Role', subtitle: 'Choose a role to define your responsibilities.' },
+        { type: 'SKILLSET', title: t("userProfile.skillsetTitle"), subtitle: t("userProfile.skillsetSubtitle") },
+        { type: 'ROLE', title: t("userProfile.roleTitle"), subtitle: t("userProfile.roleSubtitle") },
     ];
 
     const saveSelectedTags = async () => {
@@ -134,7 +134,7 @@ const UserProfilePage = () => {
             showNotification("success", t("userProfile.updateTag"), t("userProfile.updateTagSuccess"));
         } catch (error) {
             console.error("Error save tag:", error);
-            showNotification("error", t("userProfile.updateTag"), error?.data?.desc);
+            showNotification("error", t("userProfile.updateTag"), error.response?.data?.desc);
         } finally {
             setTagDialogVisible(false);
             setIsLoading(false);
@@ -173,14 +173,14 @@ const UserProfilePage = () => {
 
         } catch (error) {
             console.error("Error save tag:", error);
-            showNotification("error", t("userProfile.updateTag"), error?.data?.desc);
+            showNotification("error", t("userProfile.updateTag"), error.response?.data?.desc);
         }
     };
 
     const genderOptions = [
-        { label: "Male", value: "MALE" },
-        { label: "Female", value: "FEMALE" },
-        { label: "Other", value: "OTHER" },
+        { label: t("authPage.male"), value: "MALE" },
+        { label: t("authPage.female"), value: "FEMALE" },
+        { label: t("authPage.other"), value: "OTHER" },
     ];
 
     const cardHeader = (
@@ -194,7 +194,7 @@ const UserProfilePage = () => {
                 <div className="user-warning-section">
                     <Message
                         severity="warn"
-                        text="Please provide more information to personalize user profiles and streamline task assignments or collaborator selection."
+                        text={t("userProfile.profileWarning")}
                     />
                 </div>
             )}
@@ -273,7 +273,7 @@ const UserProfilePage = () => {
                                         ))}
                                 </div>
                             ) : (
-                                <p className="empty-category">No skillset tags added. Click "+Tag" to include tags.</p>
+                                <p className="empty-category">{t("userProfile.noSkillset")}</p>
                             )}
                         </div>
                         {/* Role Tags */}
@@ -301,14 +301,13 @@ const UserProfilePage = () => {
                                         ))}
                                 </div>
                             ) : (
-                                <p className="empty-category">No role tags added. Click "+Tag" to include
-                                    tags.</p>
+                                <p className="empty-category">{t("userProfile.noRole")}</p>
                             )}
                         </div>
                     </div>
 
                     <BasicButton
-                        label="Update"
+                        label={t("userProfile.update")}
                         style={{margin: "auto"}}
                         onClick={handleEditProfile}
                         disabled={isLoading}
@@ -335,7 +334,7 @@ const UserProfilePage = () => {
                 footer={
                     <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
                         <BasicButton
-                            label="Save"
+                            label={t("userProfile.save")}
                             onClick={saveSelectedTags}
                             loading={isLoading}
                             disabled={isLoading}
@@ -387,7 +386,7 @@ const UserProfilePage = () => {
                     )}
                     <BasicButton
                         className="mt-3"
-                        label="Confirm"
+                        label={t("userProfile.confirm")}
                         loading={isLoading}
                         disabled={isLoading}
                         onClick={handleUploadFile}
