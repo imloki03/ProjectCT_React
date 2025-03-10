@@ -8,6 +8,7 @@ import BasicButton from "../../../components/Button";
 import {updateCurrentProject} from "../../../redux/slices/projectSlice";
 import {routeLink} from "../../../router/Router";
 import {useTranslation} from "react-i18next";
+import {ROLE} from "../../../constants/Role";
 export const ProjectCard = ({ project }) => {
     const menuRef = useRef(null);
     const {t} = useTranslation();
@@ -16,10 +17,8 @@ export const ProjectCard = ({ project }) => {
     const navigateToProjectManagement = () => {
         dispatch(updateCurrentProject(project));
         navigate(routeLink.project.replace(":ownerUsername", project.ownerUsername)
-                                    .replace(":projectName", project.name));
-
+                                    .replace(":projectName", project.name.replaceAll(" ", "_")));
     };
-
 
     const handleMenuClick = (e) => {
         e.stopPropagation();
@@ -57,7 +56,9 @@ export const ProjectCard = ({ project }) => {
                         <strong>{t("workspacePage.projectCard.collaborators")}</strong>{" "}
                         <span className="collaboration-content">
                             {project.collaborators?.length > 0 &&
-                                project.collaborators.slice(0, 3).map((collab, index) => (
+                                project.collaborators.slice(0, 3)
+                                    .filter((collab) => (collab.role.name !== ROLE.PROJECT_OWNER))
+                                    .map((collab, index) => (
                                     <span key={index} className="collaborator-avatar">
                                     <Avatar
                                         label={collab.user.username}

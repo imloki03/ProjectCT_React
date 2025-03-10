@@ -45,6 +45,7 @@
 .project-layout-content {
     width: 81%;
     margin-left: 19%;  /* = nav width */
+    height: 100vh;
 }
 
 .project-layout-header {
@@ -65,7 +66,7 @@
 }
 
 .project-layout-outline {
-    padding: 1rem;
+    height: calc(100vh - 3rem);
 }
 
 .nav-logo {
