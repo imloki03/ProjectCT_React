@@ -6,14 +6,14 @@ import {getCurrentCollab} from "../api/collabApi";
 
 export const useFetchProject = () => {
     const dispatch = useDispatch();
-    const { ownerUsername, projectName } = useParams(); // Extract values from URL
+    const { ownerUsername, projectName } = useParams();
 
     return async () => {
         try {
             if (!ownerUsername || !projectName) {
                 throw new Error("Project parameters are missing from the URL");
             }
-            const fetchedProjects = await getProjectByOwnerAndName(ownerUsername, projectName);
+            const fetchedProjects = await getProjectByOwnerAndName(ownerUsername, projectName.replaceAll("_", " "));
             const fetchedCurrentCollab = await getCurrentCollab(fetchedProjects.data.id);
             dispatch(updateCurrentProject(fetchedProjects.data));
             dispatch(updateCurrentCollab(fetchedCurrentCollab.data));
