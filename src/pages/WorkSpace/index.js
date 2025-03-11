@@ -70,7 +70,7 @@ const WorkSpacePage = () => {
 
     const filteredProjects = projects
         .filter((project) =>
-            project.name.toLowerCase().includes(searchQuery.toLowerCase())
+            project.name?.toLowerCase().includes(searchQuery.toLowerCase())
         )
         .sort((a, b) => {
             let comparison = 0;

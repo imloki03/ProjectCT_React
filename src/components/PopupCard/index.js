@@ -2,6 +2,7 @@ import React from "react";
 import { Card } from "primereact/card";
 import './index.css'
 import BasicButton from "../Button";
+import {Button} from "primereact/button";
 
 const PopupCard = ({ title, subTitle, children, footer, style, onClose, className }) => {
     return (
@@ -12,7 +13,7 @@ const PopupCard = ({ title, subTitle, children, footer, style, onClose, classNam
                 style={style}
                 className="custom-card"
             >
-                <BasicButton
+                <Button
                     icon="pi pi-times"
                     className="p-button-rounded p-button-text close-button"
                     onClick={onClose}
