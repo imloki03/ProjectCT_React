@@ -9,6 +9,8 @@ import ProjectLayout from "../layouts/ProjectLayout";
 import UserProfilePage from "../pages/UserProfilePage";
 import WorkSpacePage from "../pages/WorkSpace";
 import StoragePage from "../pages/StoragePage";
+import BacklogPage from "../pages/BacklogPage";
+import PhasePage from "../pages/PhasePage";
 
 export const routeLink = {
     default: '/',
@@ -48,6 +50,8 @@ export const internalRoute = createAppRoutes([
         children: [
             { path: routeLink.projectTabs.default, element: <TestPage /> },
             { path: routeLink.projectTabs.storage, element: <StoragePage /> },
+            { path: routeLink.projectTabs.backlog, element: <BacklogPage /> },
+            { path: routeLink.projectTabs.phase, element: <PhasePage /> },
         ],
     },
 ]);

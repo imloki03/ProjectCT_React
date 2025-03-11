@@ -1,0 +1,9 @@
+.p-speeddial {
+    margin: 0;
+    position: relative;
+    display: inline-flex;
+}
+.p-speeddial-action {
+    width: 2rem;
+    height: 2rem;
+}
