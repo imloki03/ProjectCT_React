@@ -1,0 +1,35 @@
+.file-card{
+    display:flex;
+    width: 5rem;
+    height: 5rem;
+    font-size: 12px;
+    padding-top: 1rem;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+.file-name{
+    max-width: 3rem;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.file-card-container {
+    position: relative;
+    display: inline-block;
+}
+
+.delete-button {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    width: 25px;
+    height: 25px;
+    opacity: 0.8;
+    transition: opacity 0.2s ease-in-out;
+}
+
+.delete-button:hover {
+    opacity: 1;
+}
