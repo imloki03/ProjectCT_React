@@ -35,6 +35,7 @@ const ProjectLayout = () => {
 
     const items = [
         { label: "Dashboard", icon: "pi pi-th-large", command: () => navigate(routeLink.projectTabs.dashboard) },
+        { label: "Statistic", icon: "pi pi-chart-bar", command: () => navigate(routeLink.projectTabs.stat) },
         { label: "Backlog", icon: "pi pi-list", command: () => navigate(routeLink.projectTabs.backlog) },
         { label: "Phase", icon: "pi pi-sitemap", command: () => navigate(routeLink.projectTabs.phase) },
         { label: "Chatbox", icon: "pi pi-comments", command: () => navigate(routeLink.projectTabs.chatbox) },

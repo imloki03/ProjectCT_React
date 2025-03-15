@@ -43,8 +43,9 @@ export default function TextAvatar({ label, size, customSize, onClick, shape }) 
             label={initials}  // Use the initials as the label
             size={size || 'large'}  // Default size is 'large' if no size is provided, example normal, large, xlarge
             style={{
-                backgroundColor: backgroundColor,
-                color: '#ffffff',
+                backgroundColor: initials === "?" ? "#ffffff" : backgroundColor,
+                color: initials === "?" ? "#000000" : "#ffffff",
+                border: initials === "?" ? `${customSize ? parseFloat(customSize) * 0.07 : 0.5}rem solid black` : "none", //default 0.5rem
                 ...(customSize && {
                     width: customSize,
                     height: customSize,

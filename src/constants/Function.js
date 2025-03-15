@@ -22,6 +22,7 @@ export const APP_FUNCTIONS = {
     // TASK related functions
     CREATE_TASK: "Create Task",
     ASSIGN_TASK: "Assign Task",
+    SET_TASK_STATUS: "Set Task Status",
     DELETE_TASK: "Delete Task",
     MOVE_TASK_TO_BACKLOG: "Move Task to Backlog",
     EDIT_TASK: "Edit Task",

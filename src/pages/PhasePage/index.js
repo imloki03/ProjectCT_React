@@ -16,6 +16,7 @@ import EditPhase from "./EditPhase";
 import {hasPermission} from "../../utils/CollabUtil";
 import BarProgress from "../../components/BarProgress";
 import {useTranslation} from "react-i18next";
+import {routeLink} from "../../router/Router";
 
 const PhasePage = () => {
     const toast = useRef(null);
@@ -98,7 +99,7 @@ const PhasePage = () => {
 
     const renderPhaseCard = (item) => {
         return <div style={{cursor: "pointer"}}
-                    onClick={()=>{let id=item.id; }}>
+                    onClick={()=>{let id=item.id; navigate(`${id}`)}}>
             <PhaseCard
                 key={item.id}
                 phase={item}

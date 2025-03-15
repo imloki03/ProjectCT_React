@@ -7,7 +7,7 @@ import {PanelMenu} from "primereact/panelmenu";
 import {Badge} from "primereact/badge";
 import Avatar from "../../components/Avatar";
 import {BreadcrumbProvider, Breadcrumbs} from "../../contexts/BreadCrumbContext";
-import {useEffect, useRef, useState} from "react";
+import {useEffect, useMemo, useRef, useState} from "react";
 import {Menu} from "primereact/menu";
 import {getAllProjects} from "../../api/projectApi";
 import {useTranslation} from "react-i18next";
@@ -173,8 +173,10 @@ const WorkspaceLayout = () => {
 
     const getProjectList = async () => {
         try {
-            const projects = await getAllProjects();
-            setProjects(projects.data);
+            const response = await getAllProjects();
+            if (JSON.stringify(response.data) !== JSON.stringify(projects)) {
+                setProjects(response.data);
+            }
         } catch (e) {
             console.log(e);
         }
@@ -184,7 +186,7 @@ const WorkspaceLayout = () => {
         getProjectList();
     }, []);
 
-    const projectList = [
+    const projectList = useMemo(() => [
         {
             label: t("workspaceLayout.yourProjects"),
             icon: 'pi pi-folder-open',
@@ -198,7 +200,7 @@ const WorkspaceLayout = () => {
                 expanded: true,
             })),
         }
-    ];
+    ],[projects]);
 
     const handleLogout = () => {
         dispatch(logout());

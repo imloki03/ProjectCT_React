@@ -233,7 +233,7 @@
     "deleteTask": "Xóa công việc",
     "deleteConfirm": "Bạn có chắc chắn muốn xóa công việc này không?",
     "confirmation": "Xác nhận",
-    "edit": "Chỉnh sửa",
+    "edit": "Xem và Chỉnh sửa",
     "moveToPhase": "Chuyển đến Phase",
     "delete": "Xóa",
     "newIssue": "Công việc mới",
@@ -272,5 +272,19 @@
     "editPhaseSubtitle": "Chỉnh sửa chi tiết để cập nhật giai đoạn của bạn!",
     "editPhase": "Chỉnh sửa giai đoạn",
     "status": "Trạng thái"
+  },
+  "taskPage": {
+    "assignTask": "Giao công việc",
+    "moveConfirm": "Bạn có chắc chắn muốn di chuyển công việc này về backlog không?",
+    "moveTask": "Di chuyển về backlog",
+    "attachedFile": "Tệp đính kèm",
+    "updateStatus": "Cập nhật trạng thái công việc",
+    "taskList": "Danh Sách Công Việc",
+    "assignee": "Người đảm nhiệm",
+    "taskProof": "Bằng chứng hoàn thành nhiệm vụ",
+    "noPhase": "Không có giai đoạn nào để di chuyển đến!",
+    "provideProof": "Vui lòng cung cấp bằng chứng rằng bạn đã hoàn thành công việc này!",
+    "uploadProof": "Tải lên bằng chứng",
+    "uploadProofSubtitle": "Cung cấp ít nhất 1 tệp để đảm bảo rằng bạn đã hoàn thành nhiệm vụ này."
   }
 }
