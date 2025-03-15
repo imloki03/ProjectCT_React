@@ -233,7 +233,7 @@
     "deleteTask": "Delete Task",
     "deleteConfirm": "Are you sure you want to delete this task?",
     "confirmation": "Confirmation",
-    "edit": "Edit",
+    "edit": "View and Edit",
     "moveToPhase": "Move to phase",
     "delete": "Delete",
     "newIssue": "New issue",
@@ -272,5 +272,19 @@
     "editPhaseSubtitle": "Edit the details to edit your phase!",
     "editPhase": "Edit Phase",
     "status": "Status"
+  },
+  "taskPage": {
+    "assignTask": "Assign Task",
+    "moveConfirm": "Are you sure you want to move this task to backlog?",
+    "moveTask": "Move to backlog",
+    "attachedFile": "Attached file",
+    "updateStatus": "Update Task Status",
+    "taskList": "Task List",
+    "assignee": "Assignee",
+    "taskProof": "DONE Task Proof",
+    "noPhase": "There are no phase to move !",
+    "provideProof": "Please provide the proofs that you have done this task!",
+    "uploadProof": "Upload Proofs",
+    "uploadProofSubtitle": "Provide at least 1 file to ensure that you have done this task."
   }
 }

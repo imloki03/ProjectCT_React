@@ -11,6 +11,8 @@ import WorkSpacePage from "../pages/WorkSpace";
 import StoragePage from "../pages/StoragePage";
 import BacklogPage from "../pages/BacklogPage";
 import PhasePage from "../pages/PhasePage";
+import TaskPhasePage from "../pages/TaskPhasePage";
+import CollabPage from "../pages/CollabPage";
 
 export const routeLink = {
     default: '/',
@@ -23,8 +25,10 @@ export const routeLink = {
     projectTabs: {
         default: "",
         dashboard: "dashboard",
+        stat: "stat",
         backlog: "backlog",
         phase: "phase",
+        taskPhase:"phase/:phaseId",
         chatbox: "chatbox",
         storage: "storage",
         collaborator: "collaborator",
@@ -52,6 +56,8 @@ export const internalRoute = createAppRoutes([
             { path: routeLink.projectTabs.storage, element: <StoragePage /> },
             { path: routeLink.projectTabs.backlog, element: <BacklogPage /> },
             { path: routeLink.projectTabs.phase, element: <PhasePage /> },
+            { path: routeLink.projectTabs.taskPhase, element: <TaskPhasePage /> },
+            { path: routeLink.projectTabs.collaborator, element: <CollabPage /> },
         ],
     },
 ]);

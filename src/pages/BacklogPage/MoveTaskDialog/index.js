@@ -19,16 +19,21 @@ import DateTimePicker from "../../../components/DateTimePicker";
 import BasicButton from "../../../components/Button";
 import DateTimeSelector from "../../../components/DateTimeSelector";
 import {useTranslation} from "react-i18next";
+import MediaCard from "../../../components/MediaCard";
+import {uploadFileToFirebase} from "../../../config/firebaseConfig";
+import {addMedia} from "../../../api/storageApi";
+import MediaPreviewDialog from "../../../components/MediaPreviewDialog";
 
 const MoveTaskDialog = ({onClose, currentData}) => {
     const [name, setName] = useState(currentData?.name);
     const [description, setDescription] = useState(currentData?.description);
     const [tasktype, setTasktype] = useState(currentData.type || taskType[1].value)
     const [taskPriority, setTaskPriority] = useState(currentData.priority || priority[2].value);
-    const [assignee, setAssignee] = useState();
+    const [assignee, setAssignee] = useState(null);
     const [phase, setPhase] = useState("");
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(new Date());
+    const [mediaList, setMediaList] = useState(currentData?.mediaList || []);
 
     const [collabs, setCollabs] = useState([])
     const [phases, setPhases] = useState([])
@@ -40,6 +45,24 @@ const MoveTaskDialog = ({onClose, currentData}) => {
     const dispatch = useDispatch();
     const showNotification = useNotification();
     const { t } = useTranslation();
+
+    const [isMediaPreviewVisible, setIsMediaPreviewVisible] = useState(false);
+    const [currentMedia, setCurrentMedia] = useState();
+
+    const [files, setFiles] = useState([]);
+
+    const handleFileChange = (event) => {
+        const newFiles = Array.from(event.target.files);
+        setFiles((prevFiles) => [...prevFiles, ...newFiles]);
+    };
+
+    const removeFile = (index) => {
+        setFiles(files.filter((_, i) => i !== index));
+    };
+
+    const removeMedia = (index) => {
+        setMediaList(mediaList.filter((_, i) => i !== index));
+    }
 
     useEffect(() => {
         async function fetchData() {
@@ -65,13 +88,18 @@ const MoveTaskDialog = ({onClose, currentData}) => {
         setPhase(phases[0]?.value)
     }, [phases]);
 
-    useEffect(() => {
-        setAssignee(collabs[0]?.value)
-    }, [collabs]);
-
     const handleMoveTaskToPhase = async () => {
         try {
             setLoading(true);
+            const uploadedFiles = await Promise.all(files.map(file => uploadFileToFirebase(file)));
+            const mediaResponses = await Promise.all(
+                uploadedFiles.map(file => addMedia(projectId, {
+                    name: file.fileName,
+                    filename: file.fileName,
+                    link: file.fileUrl,
+                })));
+            const newMediaIdList = mediaResponses.map(res => res.data.id);
+            const mediaIdList = mediaList.map(media => media.id);
             const response = await moveTaskToPhase(currentData.id, phase, {
                 name: name,
                 type: tasktype,
@@ -79,7 +107,8 @@ const MoveTaskDialog = ({onClose, currentData}) => {
                 startTime: formatTimeZone(startDate),
                 endTime: formatTimeZone(endDate),
                 priority: taskPriority,
-                assigneeUsername: assignee
+                assigneeId: assignee,
+                mediaIdList: [...mediaIdList, ...newMediaIdList]
             });
             setLoading(false);
             onClose();
@@ -157,9 +186,11 @@ const MoveTaskDialog = ({onClose, currentData}) => {
                         label={t("backlogPage.assignee")}
                         selected={assignee}
                         options={collabs}
-                        onChange={(value) => {setAssignee(value.value)}}
+                        onChange={(value) => {setAssignee(value.value);}}
                         itemTemplate={avatarItemTemplate}
                         valueTemplate={avatarItemTemplate}
+                        optionLabel="label"
+                        optionValue="value"
                         showClear={true}
                     />
                 </div>
@@ -179,7 +210,57 @@ const MoveTaskDialog = ({onClose, currentData}) => {
                         setStartDate={setStartDate}
                         setEndDate={setEndDate}
                     />
-                    {!enable && <p style={{color:"red"}}>There are no phase to move !</p>}
+
+                    <h3 style={{ marginTop: "0" }}>{t("taskPage.attachedFile")}</h3>
+                    <div>
+                        <div className="task-file-list-container">
+                            {mediaList.map((file, index) => (
+                                <MediaCard
+                                    key={index}
+                                    file={{
+                                        name: file.filename
+                                    }}
+                                    onDelete={() => removeMedia(index)}
+                                    onClick={() => {
+                                        setCurrentMedia(file);
+                                        setIsMediaPreviewVisible(true);
+                                    }}
+                                />
+                            ))}
+
+                            {files.map((file, index) => (
+                                <MediaCard
+                                    key={index}
+                                    file={file}
+                                    onDelete={() => removeFile(index)}
+                                />
+                            ))}
+
+                            <div className="task-file-card-container task-add-file-button"
+                                 onClick={() => document.getElementById("fileInput").click()}
+                            >
+                                <div className="task-file-card">
+                                    <i className="pi pi-plus"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <input
+                            id="fileInput"
+                            type="file"
+                            multiple
+                            style={{ display: "none" }}
+                            onChange={handleFileChange}
+                        />
+
+                        <MediaPreviewDialog
+                            visible={isMediaPreviewVisible}
+                            onHide={() => {if (!isMediaPreviewVisible) return; setIsMediaPreviewVisible(false);}}
+                            media={currentMedia}
+                        />
+                    </div>
+
+                    {!enable && <p style={{color:"red"}}>{t("taskPage.noPhase")}</p>}
                 </div>
                 <BasicButton
                     label={t("backlogPage.move")}

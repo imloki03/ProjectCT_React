@@ -22,4 +22,31 @@ export const hasPermission = (functionList, functionKey) => {
     }
     return functionList.some(func => func.name.valueOf() === APP_FUNCTIONS[functionKey].valueOf());
 }
+
+export const countAssignedTasks = (task) => {
+    let totalChildren = 0;
+    let assignedCount = 0;
+    let assigneeIds = new Set();
+
+    const traverse = (node) => {
+        if (!node || !node.children) return;
+
+        for (const child of node.children) {
+            totalChildren++;
+            if (child.data.assigneeId) {
+                assignedCount++;
+                assigneeIds.add(child.data.assigneeId);
+            }
+            traverse(child);
+        }
+    };
+
+    traverse(task);
+
+    return {
+        assignedCount,
+        totalChildren,
+        assigneeIds: Array.from(assigneeIds),
+    };
+};
 export default getAllCollabsKeyValue;

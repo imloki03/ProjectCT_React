@@ -8,17 +8,6 @@ import {confirmDialog, ConfirmDialog} from "primereact/confirmdialog";
 import {useFetchProject} from "../../hooks/useFetchProject";
 import {useSelector} from "react-redux";
 import {deleteTask, getTasksInBacklog, updateTask} from "../../api/taskApi";
-import {taskType} from "../../constants/TaskType";
-import DropDownField from "../../components/DropDownField";
-import TaskIcon from '../../assets/icons/task_icon.png'
-import StoryIcon from '../../assets/icons/story_icon.png'
-import BugIcon from '../../assets/icons/bug_icon.png'
-import VeryHighIcon from '../../assets/icons/very_high_icon.png'
-import HighIcon from '../../assets/icons/high_icon.png'
-import MediumIcon from '../../assets/icons/medium_icon.png'
-import LowIcon from '../../assets/icons/low_icon.png'
-import VeryLowIcon from '../../assets/icons/very_low_icon.png'
-import {priority} from "../../constants/Priority";
 import {Paginator} from "primereact/paginator";
 import {Button} from "primereact/button";
 import AddTaskDialog from "./AddTaskDialog";
@@ -29,6 +18,8 @@ import MoveTaskDialog from "./MoveTaskDialog";
 import {hasPermission} from "../../utils/CollabUtil";
 import {useTranslation} from "react-i18next";
 import BarProgress from "../../components/BarProgress";
+import TypeBody from "../../components/TaskComponent/TypeBody";
+import PriorityBody from "../../components/TaskComponent/PriorityBody";
 
 const SIZE_PER_PAGE = 10;
 const BacklogPage = () => {
@@ -139,87 +130,26 @@ const BacklogPage = () => {
     };
 
     const typeBody = (rowData) => {
-        const getTypeIcon = (type) => {
-            switch(type) {
-                case 'STORY':
-                    return StoryIcon;
-                case 'TASK':
-                    return TaskIcon;
-                case 'BUG':
-                    return BugIcon;
-            }
-        }
-
-        const itemTemplate = (option) => {
-            return (
-                <div className="flex align-items-center">
-                    <img alt={option.value} src={getTypeIcon(option.value)} style={{ width: '1.4rem', marginRight:"0.5rem" }} />
-                    <div>{option.label}</div>
-                </div>
-            );
-        };
-
         return (
-            <div style={{marginRight: "2rem"}}>
-                <DropDownField
-                    selected={rowData.data.type}
-                    options={taskType}
-                    onChange={(e) => {
-                        setCurrentTaskId(rowData.data.id);
-                        rowData.data.type = e.value;
-                        handleUpdateTask(rowData.data);
-                    }}
-                    itemTemplate={itemTemplate}
-                    valueTemplate={itemTemplate}
-                    disabled={!isTaskEditable}
-                />
-            </div>
+            <TypeBody
+                rowData={rowData}
+                setCurrentTaskId={setCurrentTaskId}
+                handleUpdateTask={handleUpdateTask}
+                isTaskEditable={isTaskEditable}
+            />
         );
-    };
+    }
 
     const priorityBody = (rowData) => {
-        const getPriorityIcon = (priority) => {
-            switch(priority) {
-                case 'VERY_HIGH':
-                    return VeryHighIcon;
-                case 'HIGH':
-                    return HighIcon;
-                case 'MEDIUM':
-                    return MediumIcon;
-                case 'LOW':
-                    return LowIcon;
-                case 'VERY_LOW':
-                    return VeryLowIcon;
-            }
-        }
-
-        const itemTemplate = (option) => {
-            return (
-                <div className="flex align-items-center">
-                    <img alt={option.value} src={getPriorityIcon(option.value)} style={{ width: '1.4rem', marginRight:"0.5rem" }} />
-                    <div>{option.label}</div>
-                </div>
-            );
-        };
-
         return (
-            <div style={{ marginRight: "0.8rem" }}>
-                <DropDownField
-                    selected={rowData.data.priority}
-                    options={priority}
-                    onChange={(e) => {
-                        setCurrentTaskId(rowData.data.id);
-                        rowData.data.priority = e.value;
-                        handleUpdateTask(rowData.data);
-                    }}
-                    itemTemplate={itemTemplate}
-                    valueTemplate={itemTemplate}
-                    disabled={!isTaskEditable}
-                />
-            </div>
-        );
-    };
-
+            <PriorityBody
+                rowData={rowData}
+                setCurrentTaskId={setCurrentTaskId}
+                handleUpdateTask={handleUpdateTask}
+                isTaskEditable={isTaskEditable}
+            />
+        )
+    }
 
     const actions = [
         {

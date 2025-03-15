@@ -23,7 +23,7 @@ const fileIcons = new Map([
     ["gif", mediaType],
 ]);
 
-const MediaCard = ({ file, onDelete }) => {
+const MediaCard = ({ file, onDelete, onClick }) => {
     const [isHovered, setIsHovered] = useState(false);
 
     if (!file) return null;
@@ -45,11 +45,12 @@ const MediaCard = ({ file, onDelete }) => {
                     backgroundPosition: "center top 0.7rem",
                     backgroundRepeat: "no-repeat",
                 }}
+                onClick={onClick}
             >
                 <div className="file-name">{file.name}</div>
             </Card>
 
-            {isHovered && (
+            {isHovered && onDelete && (
                 <Button
                     icon="pi pi-trash"
                     className="delete-button p-button-danger"

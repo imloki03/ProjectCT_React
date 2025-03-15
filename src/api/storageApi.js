@@ -25,7 +25,7 @@ export const deleteMedia = async (mediaId) => {
     return response.data;
 };
 
-export const addMedia = async (projectId, mediaRequest, stored) => {
+export const addMedia = async (projectId, mediaRequest, stored=false) => {
     const response = await axiosInstance.post(`${storagePrefix}/media/${projectId}?stored=${stored}`, mediaRequest);
     return response.data;
 };
