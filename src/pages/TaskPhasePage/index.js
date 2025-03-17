@@ -30,6 +30,7 @@ import {useParams} from "react-router-dom";
 import EditTaskDialog from "./EditTaskDialog";
 import UploadProofDialog from "./UploadProofDialog";
 import MultiAssigneeBody from "../../components/TaskComponent/MultiAssigneeBody";
+import {status} from "../../constants/Status";
 
 const SIZE_PER_PAGE = 10;
 const TaskPhasePage = () => {
@@ -203,7 +204,7 @@ const TaskPhasePage = () => {
                 rowData={rowData}
                 setCurrentTaskId={setCurrentTaskId}
                 handleUpdateTask={handleUpdateTask}
-                isTaskEditable={isTaskEditable}
+                isTaskEditable={isTaskEditable && (rowData.data.status !== status[2].value)} // DONE status
             />
         );
     }
@@ -214,7 +215,7 @@ const TaskPhasePage = () => {
                 rowData={rowData}
                 setCurrentTaskId={setCurrentTaskId}
                 handleUpdateTaskStatus={handleUpdateTaskStatus}
-                isStatusUpdatable={isStatusUpdatable || collabId === rowData.data.assigneeId}
+                isStatusUpdatable={(isStatusUpdatable || collabId === rowData.data.assigneeId) && (rowData.data.status !== status[2].value)}
             />
         )
     }
@@ -228,7 +229,7 @@ const TaskPhasePage = () => {
                     collabs={collabs}
                     setCurrentTaskId={setCurrentTaskId}
                     handleAssignTask={handleAssignTask}
-                    isAssigneeEditable={isAssigneeEditable}
+                    isAssigneeEditable={isAssigneeEditable && (rowData.data.status !== status[2].value)}
                 />
             )
         } else {
@@ -293,18 +294,21 @@ const TaskPhasePage = () => {
 
     const actionBody = (rowData) => {
         return (
-            <div
-                style={{marginLeft:"1rem"}}
-                onClick={()=>{
-                    setCurrentTaskId(rowData.data.id);
-                    setCurrentTask(rowData.data);
-                }}>
-                <ActionMenuButton
-                    items={actions}
-                    direction="right"
-                    customSize="2.4rem"
-                />
-            </div>
+            <div>{
+                rowData.data.status !== status[2].value &&
+                <div
+                    style={{marginLeft:"1rem"}}
+                    onClick={()=>{
+                        setCurrentTaskId(rowData.data.id);
+                        setCurrentTask(rowData.data);
+                    }}>
+                    <ActionMenuButton
+                        items={actions}
+                        direction="right"
+                        customSize="2.4rem"
+                    />
+                </div>
+            }</div>
         );
     };
 

@@ -18,7 +18,7 @@ const storage = getStorage(app);
 
 export const uploadFileToFirebase = async (file) => {
     try {
-        const fileRef = ref(storage, `media/${Date.now()}_${file.name}`);
+        const fileRef = ref(storage, `media/${Date.now()}`);
         await uploadBytes(fileRef, file);
         const fileUrl = await getDownloadURL(fileRef);
         return {
