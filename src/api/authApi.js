@@ -19,3 +19,8 @@ export const verifyOtp = async (email, otp) => {
     const response = await axiosInstance.post(`auth/otp/verify/${email}/${otp}`);
     return response.data;
 };
+
+export const searchUser = async (query) => {
+    const response = await axiosInstance.get(`auth/users/search?query=${query}`);
+    return response.data;
+};

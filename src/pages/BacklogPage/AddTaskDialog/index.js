@@ -76,7 +76,7 @@ const AddTaskDialog = ({onClose, currentTaskId=-1}) => {
     return (
         <PopupCard
             title={t("backlogPage.createNewIssue")}
-            subTitle="Provide the details for your new issue!"
+            subTitle={t("backlogPage.createTaskSubtitle")}
             className="create-task-card"
             onClose={onClose}
         >

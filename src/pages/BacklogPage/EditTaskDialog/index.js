@@ -31,7 +31,6 @@ const EditTaskDialog = ({onClose, currentData}) => {
     const [loading, setLoading] = useState(false);
 
     const projectId = useSelector((state) => state.project.currentProject?.id);
-    const dispatch = useDispatch();
     const { t } = useTranslation();
 
     const [isMediaPreviewVisible, setIsMediaPreviewVisible] = useState(false);

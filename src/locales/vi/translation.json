@@ -286,5 +286,24 @@
     "provideProof": "Vui lòng cung cấp bằng chứng rằng bạn đã hoàn thành công việc này!",
     "uploadProof": "Tải lên bằng chứng",
     "uploadProofSubtitle": "Cung cấp ít nhất 1 tệp để đảm bảo rằng bạn đã hoàn thành nhiệm vụ này."
+  },
+  "collabPage": {
+    "updateRole": "Cập nhật vai trò",
+    "deleteCollab": "Xóa cộng tác viên",
+    "deleteRole": "Xóa vai trò",
+    "deleteCollabConfirm": "Bạn có chắc chắn muốn xóa cộng tác viên này không?",
+    "deleteRoleConfirm": "Bạn có chắc chắn muốn xóa vai trò này không?",
+    "collaborator": "Cộng tác viên",
+    "collabManage": "Quản lý cộng tác viên",
+    "role": "Vai trò",
+    "roles": "Các vai trò",
+    "roleManage": "Quản lý vai trò",
+    "roleName": "Tên vai trò",
+    "addCollab": "Thêm cộng tác viên mới",
+    "addCollabSubtitle": "Nhập tên người dùng hoặc địa chỉ email chính xác để tìm kiếm người bạn muốn thêm vào dự án.",
+    "usernameOrEmail": "Tên người dùng hoặc Email",
+    "noUser": "Không tìm thấy người dùng!",
+    "addRole": "Tạo vai trò mới",
+    "addRoleSubtitle": "Đặt tên cho vai trò mới và chọn các quyền tương ứng!"
   }
 }

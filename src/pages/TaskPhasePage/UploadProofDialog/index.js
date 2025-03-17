@@ -64,7 +64,7 @@ const UploadProofDialog = ({onClose, currentData}) => {
         <PopupCard
             title={t("taskPage.uploadProof")}
             subTitle={t("taskPage.uploadProofSubtitle")}
-            className="upload-proof-card"
+            style={{width: "25rem"}}
             onClose={onClose}
         >
             <div className="task-file-list-container">
