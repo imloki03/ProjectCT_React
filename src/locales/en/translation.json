@@ -286,5 +286,24 @@
     "provideProof": "Please provide the proofs that you have done this task!",
     "uploadProof": "Upload Proofs",
     "uploadProofSubtitle": "Provide at least 1 file to ensure that you have done this task."
+  },
+  "collabPage": {
+    "updateRole": "Update Role",
+    "deleteCollab": "Delete Collaborator",
+    "deleteRole": "Delete Role",
+    "deleteCollabConfirm": "Are you sure you want to remove this collaborator?",
+    "deleteRoleConfirm": "Are you sure you want to delete this role?",
+    "collaborator": "Collaborator",
+    "collabManage": "Collaborators Management",
+    "role": "Role",
+    "roles": "Roles",
+    "roleManage": "Roles Management",
+    "roleName": "Role Name",
+    "addCollab": "Add New Collaborator",
+    "addCollabSubtitle": "Type username or exactly email to find the user you want to add to your project.",
+    "usernameOrEmail": "Username or Email",
+    "noUser": "No user found!",
+    "addRole": "Create New Role",
+    "addRoleSubtitle": "Name the new role and select its permissions!"
   }
 }
