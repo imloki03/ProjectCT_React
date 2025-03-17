@@ -170,7 +170,7 @@ const CollabPage = () => {
                         rowData.data.role = e.value;
                         handleUpdatePermission(rowData.data);
                     }}
-                    disabled={!isPermissionUpdatable}
+                    disabled={!isPermissionUpdatable  || rowData.data.role.name === "PROJECT_OWNER"}
                 />
             </div>
         );
