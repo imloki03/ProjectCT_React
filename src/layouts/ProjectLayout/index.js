@@ -1,4 +1,4 @@
-import {Link, Outlet, useNavigate} from "react-router-dom";
+import {Link, Outlet, useLocation, useNavigate} from "react-router-dom";
 import "./index.css"
 import {LoadingProvider} from "../../contexts/LoadingContext";
 import {NotificationProvider, useNotification} from "../../contexts/NotificationContext";
@@ -13,14 +13,20 @@ import {getAllProjects} from "../../api/projectApi";
 import {useTranslation} from "react-i18next";
 import {logout} from "../../redux/slices/userSlice";
 import {routeLink} from "../../router/Router";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 
 const ProjectLayout = () => {
     const menuRef = useRef(null);
+    const location = useLocation();
     const [projects, setProjects] = useState([]);
     const { t } = useTranslation();
     const navigate = useNavigate();
     const dispatch = useDispatch();
+
+    const user = useSelector((state) => state.user.currentUser);
+
+    const pathSegments = location.pathname.split("/");
+    const activeRoute = pathSegments.length > 2 ? pathSegments[3] : "";
 
     const handleLogout = () => {
         dispatch(logout());
@@ -34,13 +40,13 @@ const ProjectLayout = () => {
     ];
 
     const items = [
-        { label: "Dashboard", icon: "pi pi-th-large", command: () => navigate(routeLink.projectTabs.dashboard) },
-        { label: "Statistic", icon: "pi pi-chart-bar", command: () => navigate(routeLink.projectTabs.stat) },
-        { label: "Backlog", icon: "pi pi-list", command: () => navigate(routeLink.projectTabs.backlog) },
-        { label: "Phase", icon: "pi pi-sitemap", command: () => navigate(routeLink.projectTabs.phase) },
-        { label: "Chatbox", icon: "pi pi-comments", command: () => navigate(routeLink.projectTabs.chatbox) },
-        { label: "Storage", icon: "pi pi-folder", command: () => navigate(routeLink.projectTabs.storage) },
-        { label: "Collaborator", icon: "pi pi-users", command: () => navigate(routeLink.projectTabs.collaborator) },
+        { label: "Dashboard", icon: "pi pi-th-large", command: () => navigate(routeLink.projectTabs.dashboard), className: activeRoute === routeLink.projectTabs.dashboard ? "active-menu-item" : "" },
+        { label: "Statistic", icon: "pi pi-chart-bar", command: () => navigate(routeLink.projectTabs.stat), className: activeRoute === routeLink.projectTabs.stat ? "active-menu-item" : "" },
+        { label: "Backlog", icon: "pi pi-list", command: () => navigate(routeLink.projectTabs.backlog), className: activeRoute === routeLink.projectTabs.backlog ? "active-menu-item" : "" },
+        { label: "Phase", icon: "pi pi-sitemap", command: () => navigate(routeLink.projectTabs.phase), className: activeRoute === routeLink.projectTabs.phase ? "active-menu-item" : "" },
+        { label: "Chatbox", icon: "pi pi-comments", command: () => navigate(routeLink.projectTabs.chatbox), className: activeRoute === routeLink.projectTabs.chatbox ? "active-menu-item" : "" },
+        { label: "Storage", icon: "pi pi-folder", command: () => navigate(routeLink.projectTabs.storage), className: activeRoute === routeLink.projectTabs.storage ? "active-menu-item" : "" },
+        { label: "Collaborator", icon: "pi pi-users", command: () => navigate(routeLink.projectTabs.collaborator), className: activeRoute === routeLink.projectTabs.collaborator ? "active-menu-item" : "" },
     ];
 
     return (
@@ -65,7 +71,8 @@ const ProjectLayout = () => {
                                     <i className="pi pi-bell" style={{ fontSize: '1.3rem' }}></i>
                                     <div>
                                         <Avatar
-                                            label="Loki"
+                                            label={user?.name}
+                                            image={user?.avatarURL}
                                             customSize={"1.6rem"}
                                             onClick={(e) => menuRef.current.toggle(e)}
                                         />

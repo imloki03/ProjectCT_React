@@ -30,6 +30,7 @@ const CollabPage = () => {
     const [roles, setRoles] = useState();
     const [roleList, setRoleList] = useState();
     const [currentRole, setCurrentRole] = useState();
+    const [ownerRoleId, setOwnerRoleId] = useState(null);
 
     const [isAddCollabModalOpen, setIsAddCollabModalOpen] = useState(false);
     const [isAddRoleModalOpen, setIsAddRoleModalOpen] = useState(false);
@@ -44,7 +45,7 @@ const CollabPage = () => {
     const projectId = useSelector((state) => state.project.currentProject?.id);
 
     const collabId = useSelector((state) => state.project.currentCollab?.id);
-    const collabRole = useSelector((state) => state.project.currentCollab?.role.name);
+    const collabRole = useSelector((state) => state.project.currentCollab?.role.id);
     const functionList = useSelector((state) => state.project.currentCollab?.role?.functionList);
 
     const [isCollabAddable, setIsCollabAddable] = useState(false);
@@ -56,7 +57,7 @@ const CollabPage = () => {
         setIsCollabAddable(hasPermission(functionList, "ADD_COLLABORATOR"));
         setIsPermissionUpdatable(hasPermission(functionList, "UPDATE_COLLABORATOR_ROLE"));
         setIsCollabDeletable(hasPermission(functionList, "REMOVE_COLLABORATOR"));
-        setIsRoleManagable(collabRole === "PROJECT_OWNER");
+        setIsRoleManagable(ownerRoleId === collabRole);
     }, [functionList]);
 
     useEffect(() => {
@@ -88,6 +89,9 @@ const CollabPage = () => {
                 children: []
             }));
             setCollabs(treeData);
+
+            const ownerRole = response.data.find(collab => collab.userId === project.ownerId);
+            setOwnerRoleId(ownerRoleId.role.id);
         } catch (error) {
             console.error('Failed to fetch collaborators:', error);
         }
@@ -161,6 +165,7 @@ const CollabPage = () => {
     }
 
     const roleBody = (rowData) => {
+        console.log(rowData)
         return (
             <div style={{marginRight: "5rem"}}>
                 <DropDownField
@@ -170,7 +175,7 @@ const CollabPage = () => {
                         rowData.data.role = e.value;
                         handleUpdatePermission(rowData.data);
                     }}
-                    disabled={!isPermissionUpdatable  || rowData.data.role.name === "PROJECT_OWNER"}
+                    disabled={!isPermissionUpdatable  || rowData.data.userId === project.ownerId}
                 />
             </div>
         );

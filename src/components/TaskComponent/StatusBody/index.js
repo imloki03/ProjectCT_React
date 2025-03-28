@@ -5,30 +5,29 @@ import ToDoIcon from '../../../assets/icons/to_do_icon.png'
 import InProgressIcon from '../../../assets/icons/in_progress_icon.png'
 import DoneIcon from '../../../assets/icons/done_icon.png'
 
+export const getStatusIcon = (status) => {
+    switch (status) {
+        case 'TODO':
+            return ToDoIcon;
+        case 'IN_PROGRESS':
+            return InProgressIcon;
+        case 'DONE':
+            return DoneIcon;
+    }
+};
+
+export const getStatusColor = (status) => {
+    switch (status) {
+        case 'TODO':
+            return "#33aef6";
+        case 'IN_PROGRESS':
+            return "#fcaa20";
+        case 'DONE':
+            return "#38f842";
+    }
+};
 
 const StatusBody = ({ rowData, setCurrentTaskId, handleUpdateTaskStatus, isStatusUpdatable }) => {
-    const getStatusIcon = (status) => {
-        switch (status) {
-            case 'TODO':
-                return ToDoIcon;
-            case 'IN_PROGRESS':
-                return InProgressIcon;
-            case 'DONE':
-                return DoneIcon;
-        }
-    };
-
-    const getStatusColor = (status) => {
-        switch (status) {
-            case 'TODO':
-                return "#33aef6";
-            case 'IN_PROGRESS':
-                return "#fcaa20";
-            case 'DONE':
-                return "#38f842";
-        }
-    };
-
     const itemTemplate = (option) => {
         return (
             <div className="flex align-items-center">

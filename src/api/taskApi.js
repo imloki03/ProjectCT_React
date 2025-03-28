@@ -14,6 +14,16 @@ export const getTasksInPhase = async (phaseId, page, size) => {
     return response.data;
 };
 
+export const getAllPhaseTask = async (projectId) => {
+    const response = await axiosInstance.get(`project/tasks/phase/a/${projectId}`);
+    return response.data;
+};
+
+export const getAssignedTasks = async () => {
+    const response = await axiosInstance.get(`project/tasks/assigned`);
+    return response.data;
+};
+
 export const createNewTask = async (projectId, taskReq) => {
     const response = await axiosInstance.post(`project/tasks/${projectId}`, taskReq);
     return response.data;

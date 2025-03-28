@@ -3,7 +3,7 @@ import { initReactI18next } from 'react-i18next';
 import translationEN from '../locales/en/translation.json';
 import translationVI from '../locales/vi/translation.json';
 
-const savedLanguage = localStorage.getItem('language') || 'en';
+export const savedLanguage = localStorage.getItem('language') || 'en';
 
 const resources = {
     en: {

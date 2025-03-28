@@ -12,15 +12,20 @@ import {Menu} from "primereact/menu";
 import {getAllProjects} from "../../api/projectApi";
 import {useTranslation} from "react-i18next";
 import {routeLink} from "../../router/Router";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {logout} from "../../redux/slices/userSlice";
+import {getAssignedTasks} from "../../api/taskApi";
 
 const WorkspaceLayout = () => {
     const menuRef = useRef(null);
     const [projects, setProjects] = useState([]);
+    const [dueTaskList, setDueTaskList] = useState();
+    const [overdueTaskList, setOverdueTaskList] = useState();
     const { t } = useTranslation();
     const navigate = useNavigate();
     const dispatch = useDispatch();
+
+    const user = useSelector((state) => state.user.currentUser);
 
     const itemRenderer = (item, options) => (
         <a className="flex align-items-center cursor-pointer workspace-custom-menu-item" onClick={options.onClick}>
@@ -53,7 +58,10 @@ const WorkspaceLayout = () => {
                 {item.icon && <span className={`${item.icon} text-primary`} />}
                 <span className={`mx-2 ${item.items && 'font-semibold'}`}>{item.label}</span>
             </div>
-            <small className="pl-4">
+            <small
+                className="pl-4"
+                style={{ color: item.dl && new Date(item.dl) < new Date() ? "red" : "inherit" }}
+            >
                 {t("workspaceLayout.to")}: {" "}
                 {item.dl
                     ? new Date(item.dl).toLocaleString("en-GB", {
@@ -83,93 +91,56 @@ const WorkspaceLayout = () => {
         </a>
     );
 
-    const dueTasks = [
-        {
-            label: t("workspaceLayout.dueTasks"),
-            icon: 'pi pi-calendar',
-            template: itemRenderer,
-            expanded: true,
-            items: [
-                {
-                    label: 'Project Name',
-                    img: "https://img.myloview.com/posters/project-icon-700-183025333.jpg",
-                    template: projectTaskRenderer,
-                    expanded: true,
-                    items: [
-                        {
-                            label: 'Task name 1',
-                            icon: 'pi pi-angle-right',
-                            dl: "2025-02-18 15:24:54.025444",
-                            template: taskRenderer,
-                        },
-                        {
-                            label: 'Task name 2',
-                            icon: 'pi pi-angle-right',
-                            dl: "2025-02-18 15:24:54.025444",
-                            template: taskRenderer,
-                        }
-                    ]
-                },
-                {
-                    label: 'Inbox',
-                    template: projectTaskRenderer,
-                    expanded: true,
-                    items: [
-                        {
-                            label: 'Task name 1',
-                            icon: 'pi pi-angle-right',
-                            dl: "2025-02-18 15:24:54.025444",
-                            template: taskRenderer,
-                        }
-                    ]
-                }
-            ]
-        }
-    ];
-
     const overDueTasks = [
         {
             label: t("workspaceLayout.overdueTasks"),
             icon: 'pi pi-calendar-clock',
             template: itemRenderer,
             expanded: true,
-            items: [
-                {
-                    label: 'Project Name',
-                    img: "https://img.myloview.com/posters/project-icon-700-183025333.jpg",
-                    template: projectTaskRenderer,
-                    expanded: true,
-                    items: [
-                        {
-                            label: 'Task name 1',
-                            icon: 'pi pi-angle-right',
-                            dl: "2025-02-18 15:24:54.025444",
-                            template: taskRenderer,
-                        },
-                        {
-                            label: 'Task name 2',
-                            icon: 'pi pi-angle-right',
-                            dl: "2025-02-18 15:24:54.025444",
-                            template: taskRenderer,
-                        }
-                    ]
-                },
-                {
-                    label: 'Inbox',
-                    template: projectTaskRenderer,
-                    expanded: true,
-                    items: [
-                        {
-                            label: 'Task name 1',
-                            icon: 'pi pi-angle-right',
-                            dl: "2025-02-18 15:24:54.025444",
-                            template: taskRenderer,
-                        }
-                    ]
-                }
-            ]
+            items: [],
         }
     ];
+
+    const getAssignedTaskList = async () => {
+        try {
+            const response = await getAssignedTasks();
+            setDueTaskList(
+                [
+                    {
+                        label: t("workspaceLayout.dueTasks"),
+                        icon: 'pi pi-calendar',
+                        template: itemRenderer,
+                        expanded: true,
+                        items: response.data?.map(project => ({
+                            label: project.project.name,
+                            img: project.project.avatarURL,
+                            template: projectTaskRenderer,
+                            expanded: true,
+                            items: project.taskList
+                                .filter(task => !task.parentTaskId)
+                                .map(task => ({
+                                    label: task.name,
+                                    icon: 'pi pi-angle-right',
+                                    dl: task.endTime,
+                                    projectName: project.project.name,
+                                    owner: project.project.ownerUsername,
+                                    phaseId: task.phaseId,
+                                    command: () => {
+                                        navigate(routeLink.project.replace(":ownerUsername", project.project.ownerUsername)
+                                            .replace(":projectName", project.project.name.replaceAll(" ", "_"))
+                                            + "/phase/" + task.phaseId
+                                        );
+                                    },
+                                    template: taskRenderer
+                                }))
+                        }))
+                    }
+                ]
+            );
+        } catch (e) {
+            console.log(e);
+        }
+    }
 
     const getProjectList = async () => {
         try {
@@ -183,6 +154,7 @@ const WorkspaceLayout = () => {
     }
 
     useEffect(() => {
+        getAssignedTaskList();
         getProjectList();
     }, []);
 
@@ -197,6 +169,10 @@ const WorkspaceLayout = () => {
                 owner: project.ownerUsername,
                 img: project.avatarURL,
                 template: projectRenderer,
+                command: () => {
+                    navigate(routeLink.project.replace(":ownerUsername", project.ownerUsername)
+                            .replace(":projectName", project.name.replaceAll(" ", "_")));
+                },
                 expanded: true,
             })),
         }
@@ -226,8 +202,8 @@ const WorkspaceLayout = () => {
                                 <img src={LogoWithName} alt="Logo" className="nav-logo"/>
                             </Link>
 
-                            <PanelMenu model={dueTasks} className="workspace-custom-menu" />
-                            <PanelMenu model={overDueTasks} className="workspace-custom-menu" />
+                            <PanelMenu model={dueTaskList} className="workspace-custom-menu" />
+                            {/*<PanelMenu model={overdueTaskList} className="workspace-custom-menu" />*/}
                             <PanelMenu model={projectList} className="workspace-custom-menu" />
                         </div>
                         <div className="workspace-layout-content">
@@ -237,7 +213,8 @@ const WorkspaceLayout = () => {
                                     <i className="pi pi-bell" style={{ fontSize: '1.3rem' }}></i>
                                     <div>
                                         <Avatar
-                                            label="Loki"
+                                            label={user?.name}
+                                            image={user?.avatarURL}
                                             customSize={"1.6rem"}
                                             onClick={(e) => menuRef.current.toggle(e)}
                                         />
