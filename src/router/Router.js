@@ -13,6 +13,7 @@ import BacklogPage from "../pages/BacklogPage";
 import PhasePage from "../pages/PhasePage";
 import TaskPhasePage from "../pages/TaskPhasePage";
 import CollabPage from "../pages/CollabPage";
+import StatisticPage from "../pages/StatisticPage";
 
 export const routeLink = {
     default: '/',
@@ -58,6 +59,7 @@ export const internalRoute = createAppRoutes([
             { path: routeLink.projectTabs.phase, element: <PhasePage /> },
             { path: routeLink.projectTabs.taskPhase, element: <TaskPhasePage /> },
             { path: routeLink.projectTabs.collaborator, element: <CollabPage /> },
+            { path: routeLink.projectTabs.stat, element: <StatisticPage /> },
         ],
     },
 ]);

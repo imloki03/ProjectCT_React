@@ -74,7 +74,7 @@ const TaskPhasePage = () => {
         setIsAssigneeEditable(hasPermission(functionList, "ASSIGN_TASK"));
         setIsTaskDeletable(hasPermission(functionList, "DELETE_TASK"));
         setIsTaskMovable(hasPermission(functionList, "MOVE_TASK_TO_BACKLOG"));
-        setIsStatusUpdatable(collabRole === "PROJECT_OWNER");
+        setIsStatusUpdatable(hasPermission(functionList, "UPDATE_TASK_STATUS"));
     }, [functionList]);
 
     const loadTasks = async () => {

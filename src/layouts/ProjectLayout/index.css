@@ -81,6 +81,11 @@
     margin-top:0.5rem;
 }
 
+.project-custom-menu .active-menu-item {
+    background-color: rgba(196, 194, 194, 0.2);
+    border-bottom: 0.18rem solid #e3e3e3;
+}
+
 .project-custom-menu-item {
     padding: 0.5rem 1rem;
 }
