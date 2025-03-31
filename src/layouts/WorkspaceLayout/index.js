@@ -15,6 +15,8 @@ import {routeLink} from "../../router/Router";
 import {useDispatch, useSelector} from "react-redux";
 import {logout} from "../../redux/slices/userSlice";
 import {getAssignedTasks} from "../../api/taskApi";
+import AssitantICon from "../../assets/icons/assistant_icon.png"
+import AssistantChat from "../../components/AssistantChat";
 
 const WorkspaceLayout = () => {
     const menuRef = useRef(null);
@@ -24,6 +26,8 @@ const WorkspaceLayout = () => {
     const { t } = useTranslation();
     const navigate = useNavigate();
     const dispatch = useDispatch();
+
+    const [isAssistantOpen, setIsAssistantOpen] = useState(false);
 
     const user = useSelector((state) => state.user.currentUser);
 
@@ -227,6 +231,27 @@ const WorkspaceLayout = () => {
                             </div>
                         </div>
                     </div>
+                    <div style={{
+                        position: "fixed",
+                        bottom: "1.5rem",
+                        right: "1.5rem",
+                        backgroundImage: `url(${AssitantICon})`,
+                        backgroundSize: "cover",
+                        backgroundPosition: "center",
+                        borderRadius: "50%",
+                        width: "3.2rem",
+                        height: "3.2rem",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
+                        cursor: "pointer",
+                        zIndex: 1000
+                    }}
+                        onClick={()=>setIsAssistantOpen(true)}
+                    >
+                    </div>
+                    {isAssistantOpen && <AssistantChat onClose={() => setIsAssistantOpen(false)}/>}
                 </BreadcrumbProvider>
             </LoadingProvider>
         </NotificationProvider>

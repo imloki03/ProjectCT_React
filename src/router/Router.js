@@ -14,6 +14,7 @@ import PhasePage from "../pages/PhasePage";
 import TaskPhasePage from "../pages/TaskPhasePage";
 import CollabPage from "../pages/CollabPage";
 import StatisticPage from "../pages/StatisticPage";
+import PageNotFound from "../pages/PageNotFound";
 
 export const routeLink = {
     default: '/',
@@ -34,10 +35,11 @@ export const routeLink = {
         storage: "storage",
         collaborator: "collaborator",
     },
+    pageNotFound: "/404PageNotFound"
 }
 
 const createAppRoutes = (routes) => {
-    return createBrowserRouter([...routes]);
+    return createBrowserRouter([...routes, { path: '*', element: <PageNotFound /> }]);
 };
 
 export const internalRoute = createAppRoutes([

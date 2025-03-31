@@ -20,6 +20,8 @@ import AddCollabDialog from "./AddCollabDialog";
 import AddRoleDialog from "./AddRoleDialog";
 import EditRoleDialog from "./EditRoleDialog";
 import {hasPermission} from "../../utils/CollabUtil";
+import {useBreadcrumb} from "../../contexts/BreadCrumbContext";
+import {routeLink} from "../../router/Router";
 
 const CollabPage = () => {
     const toast = useRef(null);
@@ -53,6 +55,8 @@ const CollabPage = () => {
     const [isCollabDeletable, setIsCollabDeletable] = useState(false);
     const [isRoleManagable, setIsRoleManagable] = useState(false);
 
+    const { setBreadcrumbs } = useBreadcrumb();
+
     useEffect(() => {
         setIsCollabAddable(hasPermission(functionList, "ADD_COLLABORATOR"));
         setIsPermissionUpdatable(hasPermission(functionList, "UPDATE_COLLABORATOR_ROLE"));
@@ -63,6 +67,16 @@ const CollabPage = () => {
     useEffect(() => {
         fetchProject();
     }, []);
+
+    useEffect(() => {
+        const projectPath = routeLink.project.replace(":ownerUsername", project?.ownerUsername)
+            .replace(":projectName", project?.name.replaceAll(" ", "_"));
+
+        setBreadcrumbs([
+            {label: project?.name, url: projectPath},
+            {label: t("collabPage.collaborator"), url: projectPath + "/" + routeLink.projectTabs.collaborator}
+        ]);
+    }, [project]);
 
     useEffect(() => {
         if (projectId){
@@ -91,7 +105,7 @@ const CollabPage = () => {
             setCollabs(treeData);
 
             const ownerRole = response.data.find(collab => collab.userId === project.ownerId);
-            setOwnerRoleId(ownerRoleId.role.id);
+            setOwnerRoleId(ownerRole.role.id);
         } catch (error) {
             console.error('Failed to fetch collaborators:', error);
         }
@@ -165,7 +179,6 @@ const CollabPage = () => {
     }
 
     const roleBody = (rowData) => {
-        console.log(rowData)
         return (
             <div style={{marginRight: "5rem"}}>
                 <DropDownField
@@ -211,15 +224,19 @@ const CollabPage = () => {
 
     const deleteBody = (rowData) => {
         return (
-            <Button
-                icon="pi pi-trash"
-                rounded={true}
-                text={true}
-                raised={false}
-                onClick={()=>{setSelectedCollab(rowData.data);
-                    console.log(rowData.data); confirmDelete(rowData.data.id)}}
-                style={{color: "#fc5353", marginLeft: "0.8rem"}}
-            />
+            <div>
+                {rowData.data.userId !== project.ownerId &&
+                    <Button
+                        icon="pi pi-trash"
+                        rounded={true}
+                        text={true}
+                        raised={false}
+                        onClick={()=>{setSelectedCollab(rowData.data);
+                            console.log(rowData.data); confirmDelete(rowData.data.id)}}
+                        style={{color: "#fc5353", marginLeft: "0.8rem"}}
+                    />
+                }
+            </div>
         );
     };
 

@@ -20,6 +20,8 @@ import {useTranslation} from "react-i18next";
 import BarProgress from "../../components/BarProgress";
 import TypeBody from "../../components/TaskComponent/TypeBody";
 import PriorityBody from "../../components/TaskComponent/PriorityBody";
+import {useBreadcrumb} from "../../contexts/BreadCrumbContext";
+import {routeLink} from "../../router/Router";
 
 const SIZE_PER_PAGE = 10;
 const BacklogPage = () => {
@@ -40,8 +42,9 @@ const BacklogPage = () => {
     const [loading, setLoading] = useState(true);
     const showNotification = useNotification();
     const { t } = useTranslation();
+    const { setBreadcrumbs } = useBreadcrumb();
 
-    const projectId = useSelector((state) => state.project.currentProject?.id);
+    const project = useSelector((state) => state.project.currentProject);
     const functionList = useSelector((state) => state.project.currentCollab?.role?.functionList);
 
     const [isTaskAddable, setIsTaskAddable] = useState(false);
@@ -54,6 +57,16 @@ const BacklogPage = () => {
     }, []);
 
     useEffect(() => {
+        const projectPath = routeLink.project.replace(":ownerUsername", project.ownerUsername)
+            .replace(":projectName", project.name.replaceAll(" ", "_"));
+
+        setBreadcrumbs([
+            {label: project.name, url: projectPath},
+            {label: "Backlog", url: projectPath + "/" + routeLink.projectTabs.backlog}
+        ]);
+    }, [project]);
+
+    useEffect(() => {
         setIsTaskAddable(hasPermission(functionList, "EDIT_TASK"));
         setIsTaskEditable(hasPermission(functionList, "EDIT_TASK"));
         setIsTaskDeletable(hasPermission(functionList, "DELETE_TASK"));
@@ -63,7 +76,7 @@ const BacklogPage = () => {
     const loadTasks = async () => {
         try {
             setLoading(true);
-            const response = await getTasksInBacklog(projectId, page, SIZE_PER_PAGE).finally(() => setLoading(false));
+            const response = await getTasksInBacklog(project.id, page, SIZE_PER_PAGE).finally(() => setLoading(false));
             const taskList = response.data.content;
             setTasks(taskList);
             setTotalTasks(response.data.totalTasks)
@@ -74,7 +87,7 @@ const BacklogPage = () => {
 
     useEffect(() => {
         loadTasks();
-    }, [projectId, page]);
+    }, [project, page]);
 
     const handleUpdateTask = async (data) => {
         try {
@@ -216,7 +229,7 @@ const BacklogPage = () => {
     return (
         <div className="task-tree-page" style={{ padding: "2rem" }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <h2>Backlogs</h2>
+                <h2>Backlog</h2>
                 <BasicButton
                     label={t("backlogPage.newIssue")}
                     icon="pi pi-plus"

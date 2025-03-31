@@ -17,6 +17,7 @@ import {hasPermission} from "../../utils/CollabUtil";
 import BarProgress from "../../components/BarProgress";
 import {useTranslation} from "react-i18next";
 import {routeLink} from "../../router/Router";
+import {useBreadcrumb} from "../../contexts/BreadCrumbContext";
 
 const PhasePage = () => {
     const toast = useRef(null);
@@ -41,6 +42,8 @@ const PhasePage = () => {
     const [isPhaseEditable, setIsPhaseEditable] = useState(false);
     const [isPhaseDeletable, setIsPhaseDeletable] = useState(false);
 
+    const { setBreadcrumbs } = useBreadcrumb();
+
     const loadPhases = async () => {
         setLoading(true);
         const allPhases = await getAllPhases(project.id).finally(() => setLoading(false));
@@ -58,10 +61,18 @@ const PhasePage = () => {
     }, [functionList]);
 
     useEffect(() => {
+        const projectPath = routeLink.project.replace(":ownerUsername", project.ownerUsername)
+            .replace(":projectName", project.name.replaceAll(" ", "_"));
+
+        setBreadcrumbs([
+            {label: project.name, url: projectPath},
+            {label: t("backlogPage.phase"), url: projectPath + "/" + routeLink.projectTabs.phase}
+        ]);
+
         if (project?.id) {
             loadPhases();
         }
-    }, [project?.id]);
+    }, [project]);
 
     const handleDeletePhase= async () => {
         try {
