@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
     currentUser: null,
     token: localStorage.getItem("token") || null,
+    assistantMsg: [],
 };
 
 const userSlice = createSlice({
@@ -20,8 +21,11 @@ const userSlice = createSlice({
             state.currentUser = null;
             state.token = null;
         },
+        addMessage: (state, action) => {
+            state.assistantMsg = [...state.assistantMsg, action.payload];
+        }
     },
 });
 
-export const { loginSuccess, logout ,updateUser} = userSlice.actions;
+export const { loginSuccess, logout ,updateUser, addMessage} = userSlice.actions;
 export default userSlice.reducer;
