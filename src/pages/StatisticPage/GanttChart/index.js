@@ -13,8 +13,9 @@ import {getAllPhases} from "../../../api/phaseApi";
 import getAllPhasesKeyValue, {sortPhaseByStartDate} from "../../../utils/PhaseUtil";
 import {taskType} from "../../../constants/TaskType";
 import DateTimePicker from "../../../components/DateTimePicker";
+import {useTranslation} from "react-i18next";
 
-const GanttChart = () => {
+const GanttChart = ({ phaseTaskList }) => {
     const ganttRef = useRef(null);
     const ganttInstance = useRef(null);
 
@@ -23,6 +24,8 @@ const GanttChart = () => {
 
     const [phases, setPhases] = useState([]);
     const [currentPhase, setCurrentPhase] = useState(-1)
+
+    const { t } = useTranslation();
 
     const [startDateFilter, setStartDateFilter] = useState(() => {
         const date = new Date();
@@ -65,8 +68,8 @@ const GanttChart = () => {
 
     const loadTaskList = async () => {
         try {
-            const response = await getAllPhaseTask(projectId);
-            const sortedTasks = sortTasksByStartTime(response.data);
+            // const response = await getAllPhaseTask(projectId);
+            const sortedTasks = sortTasksByStartTime(phaseTaskList);
             const mappedTask = sortedTasks.map((task) => ({
                 id: String(task.id),
                 name: task.name,
@@ -93,14 +96,17 @@ const GanttChart = () => {
     const loadPhases = async () => {
         const allPhases = await getAllPhasesKeyValue(projectId);
         setPhases([{
-            label: "All",
+            label: t("statPage.all"),
             value: -1
         }, ...allPhases]);
     }
 
     useEffect(() => {
-        if (!projectId) return;
         loadTaskList();
+    }, [phaseTaskList]);
+
+    useEffect(() => {
+        if (!projectId) return;
         loadPhases();
     }, [projectId]);
 
@@ -141,17 +147,17 @@ const GanttChart = () => {
         return (
             <div>
                 <Badge value={getStatusDetails(task.status)} style={{ backgroundColor: getStatusBadgeColor(task.status), color: "white", borderRadius: "0.5rem", padding: "3px" }} />
-                <p>Start date: {task.start}</p>
-                <p>End date: {task.end}</p>
+                <p>{t("statPage.startDate")}: {task.start}</p>
+                <p>{t("statPage.endDate")}: {task.end}</p>
             </div>
         );
     };
     
     return (
-        <div>
+        <div className="pb-2">
             <div className="gantt-chart-filter">
                 <DropDownField
-                    label="Phase Filter"
+                    label={t("statPage.phaseFilter")}
                     selected={currentPhase}
                     options={phases}
                     onChange={(value)=>{setCurrentPhase(value.value)}}
@@ -159,14 +165,14 @@ const GanttChart = () => {
                 />
                 <div className="gantt-date-filter">
                     <DateTimePicker
-                        label="From"
+                        label={t("statPage.from")}
                         value={startDateFilter}
                         onChange={(e) => {
                             setStartDateFilter(e.target.value)
                         }}
                     />
                     <DateTimePicker
-                        label="To"
+                        label={t("statPage.to")}
                         value={endDateFilter}
                         onChange={(e) => {
                             setEndDateFilter(e.target.value)
