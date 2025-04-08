@@ -61,11 +61,11 @@ const PhasePage = () => {
     }, [functionList]);
 
     useEffect(() => {
-        const projectPath = routeLink.project.replace(":ownerUsername", project.ownerUsername)
-            .replace(":projectName", project.name.replaceAll(" ", "_"));
+        const projectPath = routeLink.project.replace(":ownerUsername", project?.ownerUsername)
+            .replace(":projectName", project?.name.replaceAll(" ", "_"));
 
         setBreadcrumbs([
-            {label: project.name, url: projectPath},
+            {label: project?.name, url: projectPath},
             {label: t("backlogPage.phase"), url: projectPath + "/" + routeLink.projectTabs.phase}
         ]);
 
