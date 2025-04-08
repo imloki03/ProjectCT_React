@@ -66,7 +66,10 @@
 }
 
 .project-layout-outline {
-    height: calc(100vh - 3rem);
+    min-height: calc(100vh - 3rem);
+    background-image: url('../../assets/images/layout_background.jpg');
+    background-repeat: repeat-y;
+    background-size: 100% auto;
 }
 
 .nav-logo {
