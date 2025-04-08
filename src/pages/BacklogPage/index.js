@@ -57,11 +57,11 @@ const BacklogPage = () => {
     }, []);
 
     useEffect(() => {
-        const projectPath = routeLink.project.replace(":ownerUsername", project.ownerUsername)
-            .replace(":projectName", project.name.replaceAll(" ", "_"));
+        const projectPath = routeLink.project.replace(":ownerUsername", project?.ownerUsername)
+            .replace(":projectName", project?.name.replaceAll(" ", "_"));
 
         setBreadcrumbs([
-            {label: project.name, url: projectPath},
+            {label: project?.name, url: projectPath},
             {label: "Backlog", url: projectPath + "/" + routeLink.projectTabs.backlog}
         ]);
     }, [project]);
@@ -77,7 +77,7 @@ const BacklogPage = () => {
         try {
             setLoading(true);
             const response = await getTasksInBacklog(project.id, page, SIZE_PER_PAGE).finally(() => setLoading(false));
-            const taskList = response.data.content;
+            const taskList = response?.data?.content;
             setTasks(taskList);
             setTotalTasks(response.data.totalTasks)
         } catch (error) {
