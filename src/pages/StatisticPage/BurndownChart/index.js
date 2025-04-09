@@ -16,10 +16,6 @@ const BurndownChart = ({phases, taskList}) => {
         setCurrentPhase(phases[0]?.id);
     }, [phases]);
 
-    // useEffect(() => {
-    //     console.log([...plannedRemaining, ...actualRemaining])
-    // }, [plannedRemaining]);
-
     useEffect(() => {
         if (!currentPhase || currentPhase === 0)
             return;
@@ -82,65 +78,68 @@ const BurndownChart = ({phases, taskList}) => {
                         optionValue="id"
                     />
 
-                    <ResponsiveLine
-                        data={[...plannedRemaining, ...actualRemaining]}
-                        margin={{ top: 50, right: 160, bottom: 100, left: 60 }}
-                        xScale={{ type: 'point' }}
-                        yScale={{
-                            type: 'linear',
-                            min: 0,
-                            max: 'auto',
-                            stacked: false,
-                        }}
-                        axisBottom={{
-                            orient: 'bottom',
-                            legend: t("statPage.date"),
-                            legendOffset: 60,
-                            legendPosition: 'middle',
-                            tickRotation: -45,
-                        }}
-                        axisLeft={{
-                            orient: 'left',
-                            legend: t("statPage.taskRemaining"),
-                            legendOffset: -40,
-                            legendPosition: 'middle',
-                        }}
-                        colors={{ scheme: 'category10' }}
-                        pointSize={8}
-                        pointColor={{ theme: 'background' }}
-                        pointBorderWidth={2}
-                        pointBorderColor={{ from: 'serieColor' }}
-                        useMesh={true}
-                        tooltip={({ point }) => (
-                            <div
-                                style={{
-                                    background: 'white',
-                                    padding: '8px 12px',
-                                    border: '1px solid #ccc',
-                                    borderRadius: '4px',
-                                    fontSize: '0.875rem'
-                                }}
-                            >
-                                {t("statPage.date")}: <strong>{point.data.xFormatted}</strong><br />
-                                {t("statPage.taskRemaining")}: <strong>{point.data.yFormatted}</strong>
-                            </div>
-                        )}
+                    {
+                        plannedRemaining[0].data.length > 0 && actualRemaining[0].data.length > 0 &&
+                        <ResponsiveLine
+                            data={[...plannedRemaining, ...actualRemaining]}
+                            margin={{ top: 50, right: 160, bottom: 100, left: 60 }}
+                            xScale={{ type: 'point' }}
+                            yScale={{
+                                type: 'linear',
+                                min: 0,
+                                max: 'auto',
+                                stacked: false,
+                            }}
+                            axisBottom={{
+                                orient: 'bottom',
+                                legend: t("statPage.date"),
+                                legendOffset: 60,
+                                legendPosition: 'middle',
+                                tickRotation: -45,
+                            }}
+                            axisLeft={{
+                                orient: 'left',
+                                legend: t("statPage.taskRemaining"),
+                                legendOffset: -40,
+                                legendPosition: 'middle',
+                            }}
+                            colors={{ scheme: 'category10' }}
+                            pointSize={8}
+                            pointColor={{ theme: 'background' }}
+                            pointBorderWidth={2}
+                            pointBorderColor={{ from: 'serieColor' }}
+                            useMesh={true}
+                            tooltip={({ point }) => (
+                                <div
+                                    style={{
+                                        background: 'white',
+                                        padding: '8px 12px',
+                                        border: '1px solid #ccc',
+                                        borderRadius: '4px',
+                                        fontSize: '0.875rem'
+                                    }}
+                                >
+                                    {t("statPage.date")}: <strong>{point.data.xFormatted}</strong><br />
+                                    {t("statPage.taskRemaining")}: <strong>{point.data.yFormatted}</strong>
+                                </div>
+                            )}
 
-                        legends={[
-                            {
-                                anchor: 'top-right',
-                                direction: 'column',
-                                justify: false,
-                                translateX: 120,
-                                translateY: 0,
-                                itemWidth: 100,
-                                itemHeight: 20,
-                                itemTextColor: '#999',
-                                symbolSize: 12,
-                                symbolShape: 'circle',
-                            },
-                        ]}
-                    />
+                            legends={[
+                                {
+                                    anchor: 'top-right',
+                                    direction: 'column',
+                                    justify: false,
+                                    translateX: 120,
+                                    translateY: 0,
+                                    itemWidth: 100,
+                                    itemHeight: 20,
+                                    itemTextColor: '#999',
+                                    symbolSize: 12,
+                                    symbolShape: 'circle',
+                                },
+                            ]}
+                        />
+                    }
                 </div>
                 <h5 style={{textAlign: "center", color: "#656565", marginTop: "1rem"}}>{t("statPage.burndownTitle")}</h5>
             </BlankCard>
