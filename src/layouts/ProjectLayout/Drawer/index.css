@@ -1,0 +1,49 @@
+.project-layout-drawer {
+    position: fixed;
+    top: 0;
+    right: -26%; /* Initial position off-screen */
+    width: 26%;
+    height: 100%;
+    background-color: white;
+    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+    transition: right 0.3s ease;
+    z-index: 1000;
+    border-left: 1px solid #e3e3e3;
+    overflow-y: auto;
+}
+
+.project-layout-drawer.open {
+    right: 0;
+}
+
+.drawer-header {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 1rem;
+    border-bottom: 1px solid #e3e3e3;
+    height: 3rem;
+    position: relative;
+}
+
+.drawer-title {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    margin: 0;
+    font-size: 1.2rem;
+    font-weight: bold;
+    opacity: 70%;
+}
+
+.drawer-close-button {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    color: #666;
+}
+
+.drawer-content {
+    padding: 1rem;
+}

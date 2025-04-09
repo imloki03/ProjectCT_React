@@ -10,6 +10,8 @@ import { uploadFileToFirebase } from "../../../config/firebaseConfig";
 import { updateMediaVersion } from "../../../api/storageApi";
 import { useNotification } from "../../../contexts/NotificationContext";
 import { useTranslation } from "react-i18next";
+import {formatFileSize} from "../../../utils/MediaUtil";
+import {allowedFileExtensions} from "../../../constants/FileType";
 
 const UpdateMediaVersionDialog = ({ visible, onHide, projectId, selectedMedia, onUpdateSuccess }) => {
     const { t } = useTranslation();
@@ -37,16 +39,11 @@ const UpdateMediaVersionDialog = ({ visible, onHide, projectId, selectedMedia, o
     }, [selectedMedia]);
 
     const validateInputs = () => {
-        console.log(isFileChanged)
-        console.log(file)
         if (!name.trim()) {
             showNotification("error", t("storagePage.updateMediaVersionDialog.validationError"), t("storagePage.updateMediaVersionDialog.nameRequired"));
             return false;
         }
-        if (!description.trim()) {
-            showNotification("error", t("storagePage.updateMediaVersionDialog.validationError"), t("storagePage.updateMediaVersionDialog.descriptionRequired"));
-            return false;
-        }
+
         if (isFileChanged && !file) {
             showNotification("error", t("storagePage.updateMediaVersionDialog.validationError"), t("storagePage.updateMediaVersionDialog.fileRequired"));
             return false;
@@ -89,11 +86,6 @@ const UpdateMediaVersionDialog = ({ visible, onHide, projectId, selectedMedia, o
         }
     };
 
-    const allowedFileExtensions = [
-        ".mp4", ".avi", ".mkv", ".jpg", ".jpeg", ".png", ".gif",
-        ".doc", ".docx", ".pdf", ".ppt", ".pptx", ".xls", ".xlsx"
-    ];
-
     const onFileSelect = (e) => {
         if (!e.files || e.files.length === 0) return;
         const selectedFile = e.files[0];
@@ -107,20 +99,6 @@ const UpdateMediaVersionDialog = ({ visible, onHide, projectId, selectedMedia, o
 
         setFile(selectedFile);
         setIsFileChanged(true);
-    };
-
-    const formatFileSize = (size) => {
-        if (!size || isNaN(size)) return t("storagePage.updateMediaVersionDialog.unknownSize");
-
-        const units = ["B", "KB", "MB", "GB", "TB"];
-        let unitIndex = 0;
-
-        while (size >= 1024 && unitIndex < units.length - 1) {
-            size /= 1024;
-            unitIndex++;
-        }
-
-        return `${size.toFixed(2)} ${units[unitIndex]}`;
     };
 
     const dialogFooter = (

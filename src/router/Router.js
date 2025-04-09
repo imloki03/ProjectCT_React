@@ -9,6 +9,7 @@ import ProjectLayout from "../layouts/ProjectLayout";
 import UserProfilePage from "../pages/UserProfilePage";
 import WorkSpacePage from "../pages/WorkSpace";
 import StoragePage from "../pages/StoragePage";
+import ChatBoxPage from "../pages/ChatboxPage";
 import BacklogPage from "../pages/BacklogPage";
 import PhasePage from "../pages/PhasePage";
 import TaskPhasePage from "../pages/TaskPhasePage";
@@ -57,6 +58,7 @@ export const internalRoute = createAppRoutes([
         children: [
             { path: routeLink.projectTabs.default, element: <TestPage /> },
             { path: routeLink.projectTabs.storage, element: <StoragePage /> },
+            { path: routeLink.projectTabs.chatbox, element: <ChatBoxPage/> },
             { path: routeLink.projectTabs.backlog, element: <BacklogPage /> },
             { path: routeLink.projectTabs.phase, element: <PhasePage /> },
             { path: routeLink.projectTabs.taskPhase, element: <TaskPhasePage /> },

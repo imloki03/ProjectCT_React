@@ -10,6 +10,8 @@ import {useNotification} from "../../../contexts/NotificationContext";
 import {addMedia, updateMedia} from "../../../api/storageApi";
 import {uploadFileToFirebase} from "../../../config/firebaseConfig";
 import {useTranslation} from "react-i18next";
+import {formatFileSize} from "../../../utils/MediaUtil";
+import {allowedFileExtensions} from "../../../constants/FileType";
 
 
 const MediaDialog = ({ visible, onHide, projectId, mediaToEdit, onUploadSuccess }) => {
@@ -37,7 +39,7 @@ const MediaDialog = ({ visible, onHide, projectId, mediaToEdit, onUploadSuccess 
             setDescription("");
             setFile(null);
         }
-    }, [mediaToEdit]);
+    }, [visible, mediaToEdit]);
 
     const validateInputs = () => {
         if (!name.trim()) {
@@ -60,6 +62,7 @@ const MediaDialog = ({ visible, onHide, projectId, mediaToEdit, onUploadSuccess 
             let fileName = media?.filename;
             let fileSize = media?.size;
 
+
             if (isFileChanged && file) {
                 const { fileUrl: uploadedFileUrl, fileName: uploadedFileName, fileSize: uploadedFileSize } = await uploadFileToFirebase(file);
                 fileUrl = uploadedFileUrl;
@@ -71,9 +74,10 @@ const MediaDialog = ({ visible, onHide, projectId, mediaToEdit, onUploadSuccess 
                 name,
                 description,
                 filename: fileName,
-                size: formatFileSize(fileSize),
+                size: typeof fileSize === "number" ? formatFileSize(fileSize) : fileSize,
                 link: fileUrl,
             };
+
 
             let response;
             if (mediaToEdit) {
@@ -90,11 +94,6 @@ const MediaDialog = ({ visible, onHide, projectId, mediaToEdit, onUploadSuccess 
             setIsSubmitting(false);
         }
     };
-
-    const allowedFileExtensions = [
-        ".mp4", ".avi", ".mkv", ".jpg", ".jpeg", ".png", ".gif",
-        ".doc", ".docx", ".pdf", ".ppt", ".pptx", ".xls", ".xlsx"
-    ];
 
     const onFileSelect = (e) => {
         if (!e.files || e.files.length === 0) return;
@@ -114,20 +113,6 @@ const MediaDialog = ({ visible, onHide, projectId, mediaToEdit, onUploadSuccess 
     const handleChangeFile = () => {
         setIsFileChanged(true);
         setFile(null);
-    };
-
-    const formatFileSize = (size) => {
-        if (!size || isNaN(size)) return t("storagePage.mediaDialog.unknownSize"); // Handle invalid sizes
-
-        const units = ["B", "KB", "MB", "GB", "TB"];
-        let unitIndex = 0;
-
-        while (size >= 1024 && unitIndex < units.length - 1) {
-            size /= 1024;
-            unitIndex++;
-        }
-
-        return `${size.toFixed(2)} ${units[unitIndex]}`;
     };
 
 

@@ -44,8 +44,13 @@
 
 .project-layout-content {
     width: 81%;
-    margin-left: 19%;  /* = nav width */
+    margin-left: 19%; /* = nav width */
     height: 100vh;
+    transition: width 0.3s ease, margin-right 0.3s ease;
+}
+
+.project-layout-content.drawer-open {
+    width: 55%;
 }
 
 .project-layout-header {
@@ -54,7 +59,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 2px solid #e3e3e3;
+    border-bottom: 1px solid #e3e3e3;
 }
 
 .project-layout-header-action {

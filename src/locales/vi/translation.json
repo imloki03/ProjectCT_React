@@ -334,5 +334,82 @@
     "completedLateTask": "Công việc hoàn thành trễ",
     "unfinishedLateTask": "Công việc chưa hoàn thành bị trễ",
     "delayedTaskTitle": "Biểu đồ cột chồng công việc trễ theo từng cộng tác viên"
+  },
+  "chatboxPage": {
+    "header": {
+      "collaborators": "{{count}} cộng tác viên",
+      "collaborators_plural": "{{count}} cộng tác viên"
+    },
+    "actions": {
+      "search": "Tìm kiếm tin nhắn",
+      "storage": "Kho lưu trữ",
+      "pinnedMessages": "Tin nhắn đã ghim"
+    },
+    "input": {
+      "placeholder": "Nhập tin nhắn của bạn...",
+      "send": "Gửi tin nhắn",
+      "triggerMedia": "Thêm phương tiện",
+      "triggerFiles": "Thêm tệp",
+      "removeAll": "Xóa tất cả"
+    },
+    "files": {
+      "fileCount": "{{count}} tệp",
+      "fileCount_plural": "{{count}} tệp",
+      "documents": "{{count}} tài liệu",
+      "documents_plural": "{{count}} tài liệu",
+      "images": "{{count}} ảnh",
+      "images_plural": "{{count}} ảnh",
+      "videos": "{{count}} video",
+      "videos_plural": "{{count}} video"
+    },
+    "errors": {
+      "unsupportedFiles": "Một số tệp không được hỗ trợ và đã bị bỏ qua."
+    },
+    "messageDrawer": {
+      "contentType": {
+        "file": "TỆP",
+        "text": "VĂN BẢN"
+      },
+      "dateTime": {
+        "format": "{{date}}, lúc {{time}}"
+      },
+      "actions": {
+        "goToSource": "Đi đến tin nhắn gốc",
+        "unpin": "Bỏ ghim tin nhắn"
+      },
+      "fileInfo": {
+        "format": "{{size}} • {{type}}"
+      }
+    },
+    "emptyStates": {
+      "noMedia": "Chưa có tin nhắn phương tiện nào."
+    },
+    "search": {
+      "placeholder": "Nhập từ khóa để tìm kiếm",
+      "tabs": {
+        "messages": "Tin nhắn",
+        "files": "Tệp"
+      },
+      "emptyStates": {
+        "noMessages": "Không tìm thấy tin nhắn nào cho \"{{query}}\"",
+        "noFiles": "Không tìm thấy tệp nào cho \"{{query}}\"",
+        "initial": "Nhập từ khóa để bắt đầu tìm kiếm tin nhắn và tệp trong chatbox."
+      }
+    },
+    "mediaCard": {
+      "fileStatus": {
+        "stored": "Tệp đã được thêm vào kho lưu trữ dự án.",
+        "notStored": "Tệp chưa được thêm vào kho lưu trữ dự án."
+      },
+      "actions": {
+        "preview": "Xem trước",
+        "download": "Tải xuống",
+        "toSource": "Đến tin nhắn gốc",
+        "addToStorage": "Thêm vào kho lưu trữ dự án"
+      },
+      "fileInfo": {
+        "format": "{{size}} • {{type}} • "
+      }
+    }
   }
 }

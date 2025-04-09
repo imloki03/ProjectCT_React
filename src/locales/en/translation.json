@@ -334,5 +334,82 @@
     "completedLateTask": "Completed Late Tasks",
     "unfinishedLateTask": "Unfinished Late Tasks",
     "delayedTaskTitle": "Delayed Tasks Per Collaborator Stacked Bar Chart"
+  },
+  "chatboxPage": {
+    "header": {
+      "collaborators": "{{count}} collaborator",
+      "collaborators_plural": "{{count}} collaborators"
+    },
+    "actions": {
+      "search": "Search Messages",
+      "storage": "Chat Storage",
+      "pinnedMessages": "Pinned Messages"
+    },
+    "input": {
+      "placeholder": "Type your message...",
+      "send": "Send Message",
+      "triggerMedia": "Add Media",
+      "triggerFiles": "Add Files",
+      "removeAll": "Remove all"
+    },
+    "files": {
+      "fileCount": "{{count}} file",
+      "fileCount_plural": "{{count}} files",
+      "documents": "{{count}} document",
+      "documents_plural": "{{count}} documents",
+      "images": "{{count}} image",
+      "images_plural": "{{count}} images",
+      "videos": "{{count}} video",
+      "videos_plural": "{{count}} videos"
+    },
+    "errors": {
+      "unsupportedFiles": "Some files are not supported and were ignored."
+    },
+    "messageDrawer": {
+      "contentType": {
+        "file": "FILE",
+        "text": "TEXT"
+      },
+      "dateTime": {
+        "format": "{{date}}, at {{time}}"
+      },
+      "actions": {
+        "goToSource": "Go to source message",
+        "unpin": "Unpin message"
+      },
+      "fileInfo": {
+        "format": "{{size}} • {{type}}"
+      }
+    },
+    "emptyStates": {
+      "noMedia": "No media messages yet."
+    },
+    "search": {
+      "placeholder": "Type a keyword to search",
+      "tabs": {
+        "messages": "Messages",
+        "files": "Files"
+      },
+      "emptyStates": {
+        "noMessages": "No messages found for \"{{query}}\"",
+        "noFiles": "No files found for \"{{query}}\"",
+        "initial": "Enter a keyword to start searching for messages and files in the chatbox."
+      }
+    },
+    "mediaCard": {
+      "fileStatus": {
+        "stored": "File has been added to project storage.",
+        "notStored": "File has not been added to project storage yet."
+      },
+      "actions": {
+        "preview": "Preview",
+        "download": "Download",
+        "toSource": "To Source Message",
+        "addToStorage": "Add to project storage"
+      },
+      "fileInfo": {
+        "format": "{{size}} • {{type}} • "
+      }
+    }
   }
 }

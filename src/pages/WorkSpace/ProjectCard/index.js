@@ -1,15 +1,16 @@
 import React, { useRef } from "react";
 import { Card } from "primereact/card";
 import "./index.css";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom";
 import Avatar from "../../../components/Avatar";
 import BasicButton from "../../../components/Button";
 import {updateCurrentProject} from "../../../redux/slices/projectSlice";
 import {routeLink} from "../../../router/Router";
 import {useTranslation} from "react-i18next";
-import {ROLE} from "../../../constants/Role";
+
 export const ProjectCard = ({ project }) => {
+    const user = useSelector((state) => state.user.currentUser);
     const menuRef = useRef(null);
     const {t} = useTranslation();
     const dispatch = useDispatch();
@@ -46,10 +47,10 @@ export const ProjectCard = ({ project }) => {
                         {project.name}
                     </div>
                     <div>
-                        <strong>{t("workspacePage.projectCard.projectOwner")}</strong> {project.ownerUsername}
+                        <strong>{t("workspacePage.projectCard.projectOwner")}</strong> {project?.ownerUsername === user?.username ? user?.name : project?.collaborators.find((c) => (c.user.username === project?.ownerUsername))?.user.name}
                     </div>
                     <div>
-                        <strong>{t("workspacePage.projectCard.createdDate")}:</strong>{" "}
+                        <strong>{t("workspacePage.projectCard.createdDate")}</strong>{" "}
                         {new Date(project.createdDate).toLocaleDateString("en-GB")}
                     </div>
                     <div>
@@ -57,11 +58,11 @@ export const ProjectCard = ({ project }) => {
                         <span className="collaboration-content">
                             {project.collaborators?.length > 0 &&
                                 project.collaborators.slice(0, 3)
-                                    .filter((collab) => (collab.role.name !== ROLE.PROJECT_OWNER))
+                                    .filter((collab) => (collab?.user.username !== project?.ownerUsername))
                                     .map((collab, index) => (
                                     <span key={index} className="collaborator-avatar">
                                     <Avatar
-                                        label={collab.user.username}
+                                        label={collab.user.name}
                                         image={collab.user.avatarURL}
                                         shape="circle"
                                         customSize="1.5rem"

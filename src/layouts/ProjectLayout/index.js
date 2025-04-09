@@ -14,6 +14,7 @@ import {useTranslation} from "react-i18next";
 import {logout} from "../../redux/slices/userSlice";
 import {routeLink} from "../../router/Router";
 import {useDispatch, useSelector} from "react-redux";
+import Drawer from "./Drawer";
 
 const ProjectLayout = () => {
     const menuRef = useRef(null);
@@ -22,6 +23,21 @@ const ProjectLayout = () => {
     const { t } = useTranslation();
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+    const [drawerTitle, setDrawerTitle] = useState('');
+    const [drawerContent, setDrawerContent] = useState(null);
+
+    const openDrawer = (title = 'Details', content = null) => {
+        setDrawerTitle(title);
+        setDrawerContent(content);
+        setIsDrawerOpen(true);
+    };
+
+    const closeDrawer = () => {
+        setDrawerTitle(null);
+        setDrawerContent(null);
+        setIsDrawerOpen(false);
+    }
 
     const user = useSelector((state) => state.user.currentUser);
 
@@ -64,7 +80,7 @@ const ProjectLayout = () => {
 
                             <PanelMenu model={items} className="project-custom-menu" />
                         </div>
-                        <div className="project-layout-content">
+                        <div className={`project-layout-content ${isDrawerOpen ? 'drawer-open' : ''}`}>
                             <div className="project-layout-header">
                                 <Breadcrumbs/>
                                 <div className="project-layout-header-action">
@@ -81,9 +97,12 @@ const ProjectLayout = () => {
                                 </div>
                             </div>
                             <div className="project-layout-outline">
-                                <Outlet/>
+                                <Outlet context={{ openDrawer, closeDrawer, isDrawerOpen}}/>
                             </div>
                         </div>
+                        <Drawer isOpen={isDrawerOpen} title={drawerTitle} content={drawerContent}
+                            onClose={() => closeDrawer()}
+                        />
                     </div>
                 </BreadcrumbProvider>
             </LoadingProvider>
