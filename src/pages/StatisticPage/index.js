@@ -20,6 +20,7 @@ const StatisticPage = () => {
     const fetchProject = useFetchProject();
 
     const [phaseTasks, setPhaseTasks] = useState([]);
+    const [rawTaskStatus, setRawTaskStatus] = useState([]);
     const [taskStatus, setTaskStatus] = useState([]);
     const [phases, setPhases] = useState([]);
     const [collabs, setCollabs] = useState([]);
@@ -49,36 +50,40 @@ const StatisticPage = () => {
         loadData();
     }, [projectId]);
 
-    const loadData = async () => {
-        const phaseTasksList = await getAllPhaseTask(projectId);
-        setPhaseTasks(phaseTasksList.data);
-        const stat = await getTaskStatistic(projectId);
+    useEffect(() => {
         setTaskStatus([
             {
                 "id": t("statPage.upComing"),
                 "label": t("statPage.upComing"),
-                "value": stat.data.upcoming,
+                "value": rawTaskStatus.upcoming,
                 "color": "#caccce"
             },
             {
                 "id": t("statPage.toDo"),
                 "label": t("statPage.toDo"),
-                "value": stat.data.toDo,
+                "value": rawTaskStatus.toDo,
                 "color": "hsl(195,97%,53%)"
             },
             {
                 "id": t("statPage.inProgress"),
                 "label": t("statPage.inProgress"),
-                "value": stat.data.inProgress,
+                "value": rawTaskStatus.inProgress,
                 "color": "hsl(30,92%,56%)"
             },
             {
                 "id": t("statPage.done"),
                 "label": t("statPage.done"),
-                "value": stat.data.completed,
+                "value": rawTaskStatus.completed,
                 "color": "hsl(112,92%,53%)"
             }
         ])
+    }, [rawTaskStatus, t]);
+
+    const loadData = async () => {
+        const phaseTasksList = await getAllPhaseTask(projectId);
+        setPhaseTasks(phaseTasksList.data);
+        const stat = await getTaskStatistic(projectId);
+        setRawTaskStatus(stat.data);
 
         const phaseList = await getAllPhases(projectId);
         setPhases(phaseList.data);

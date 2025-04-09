@@ -141,7 +141,7 @@ const GanttChart = ({ phaseTaskList }) => {
                 language: savedLanguage,
             });
         }
-    }, [ganttTasks]);
+    }, [ganttTasks, t]);
 
     const TaskPopup = ({ task }) => {
         return (

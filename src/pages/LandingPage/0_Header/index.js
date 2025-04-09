@@ -8,42 +8,12 @@ import {useTranslation} from "react-i18next";
 import {changeLanguage} from "../../../config/i18n";
 import {Dropdown} from "primereact/dropdown";
 import {Button} from "primereact/button";
-
-const languages = [
-    { name: "English", code: "en", flag: "https://flagcdn.com/w40/gb.png" },
-    { name: "Tiếng Việt", code: "vi", flag: "https://flagcdn.com/w40/vn.png" },
-];
+import {languages} from "../../../constants/Languages";
+import LanguageSelector from "../../../components/LanguageSelector";
 
 const Header = () => {
     const [sticky, setSticky] = useState(false);
     const { t } = useTranslation();
-
-    const [selectedLanguage, setSelectedLanguage] = useState(languages[0]);
-
-    useEffect(() => {
-        const currentLanguage = localStorage.getItem('language') || 'en';
-        if (currentLanguage === "vi"){
-            setSelectedLanguage(languages[1]);
-        }
-    }, []);
-
-    const handleLanguageChange = (e) => {
-        setSelectedLanguage(e.value);
-        changeLanguage(e.value.code);
-    };
-
-    const selectedTemplate = (option) => (
-        <div className="flex align-items-center">
-            <img src={option.flag} alt={option.name} width="30" height="20" />
-        </div>
-    );
-
-    const languageTemplate = (option) => (
-        <div className="flex align-items-center">
-            <img src={option.flag} alt={option.name} className="mr-2" width="20" height="15" />
-            <span>{option.name}</span>
-        </div>
-    );
 
     useEffect(() => {
         const handleScroll = () => {
@@ -61,16 +31,7 @@ const Header = () => {
                 </Link>
 
                 <div className="flex align-items-center gap-3">
-                    <Dropdown
-                        value={selectedLanguage}
-                        options={languages}
-                        onChange={handleLanguageChange}
-                        optionLabel="name"
-                        className="p-0 border-none bg-transparent shadow-none"
-                        itemTemplate={languageTemplate}
-                        valueTemplate={selectedTemplate}
-                        showClear={false}
-                    />
+                    <LanguageSelector/>
                     <Link to="/auth">
                         <Button label={t("landingPage.signin")} className="p-button-outlined p-button-sm text-white border-white sign-in-btn" />
                     </Link>

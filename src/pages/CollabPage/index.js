@@ -61,8 +61,11 @@ const CollabPage = () => {
         setIsCollabAddable(hasPermission(functionList, "ADD_COLLABORATOR"));
         setIsPermissionUpdatable(hasPermission(functionList, "UPDATE_COLLABORATOR_ROLE"));
         setIsCollabDeletable(hasPermission(functionList, "REMOVE_COLLABORATOR"));
-        setIsRoleManagable(ownerRoleId === collabRole);
     }, [functionList]);
+
+    useEffect(() => {
+        setIsRoleManagable(ownerRoleId === collabRole);
+    }, [ownerRoleId, collabRole]);
 
     useEffect(() => {
         fetchProject();
