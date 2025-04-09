@@ -17,11 +17,13 @@ import {logout} from "../../redux/slices/userSlice";
 import {getAssignedTasks} from "../../api/taskApi";
 import AssitantICon from "../../assets/icons/assistant_icon.png"
 import AssistantChat from "../../components/AssistantChat";
+import LanguageSelector from "../../components/LanguageSelector";
 
 const WorkspaceLayout = () => {
     const menuRef = useRef(null);
     const [projects, setProjects] = useState([]);
-    const [dueTaskList, setDueTaskList] = useState();
+    const [rawTaskData, setRawTaskData] = useState([]);
+    // const [dueTaskList, setDueTaskList] = useState();
     const [overdueTaskList, setOverdueTaskList] = useState();
     const { t } = useTranslation();
     const navigate = useNavigate();
@@ -108,43 +110,43 @@ const WorkspaceLayout = () => {
     const getAssignedTaskList = async () => {
         try {
             const response = await getAssignedTasks();
-            setDueTaskList(
-                [
-                    {
-                        label: t("workspaceLayout.dueTasks"),
-                        icon: 'pi pi-calendar',
-                        template: itemRenderer,
-                        expanded: true,
-                        items: response.data?.map(project => ({
-                            label: project.project.name,
-                            img: project.project.avatarURL,
-                            template: projectTaskRenderer,
-                            expanded: true,
-                            items: project.taskList
-                                .filter(task => !task.parentTaskId)
-                                .map(task => ({
-                                    label: task.name,
-                                    icon: 'pi pi-angle-right',
-                                    dl: task.endTime,
-                                    projectName: project.project.name,
-                                    owner: project.project.ownerUsername,
-                                    phaseId: task.phaseId,
-                                    command: () => {
-                                        navigate(routeLink.project.replace(":ownerUsername", project.project.ownerUsername)
-                                            .replace(":projectName", project.project.name.replaceAll(" ", "_"))
-                                            + "/phase/" + task.phaseId
-                                        );
-                                    },
-                                    template: taskRenderer
-                                }))
-                        }))
-                    }
-                ]
-            );
+            setRawTaskData(response.data);
         } catch (e) {
             console.log(e);
         }
     }
+
+    const dueTaskList = useMemo(() => ([
+        {
+            label: t("workspaceLayout.dueTasks"),
+            icon: 'pi pi-calendar',
+            template: itemRenderer,
+            expanded: true,
+            items: rawTaskData.map(project => ({
+                label: project.project.name,
+                img: project.project.avatarURL,
+                template: projectTaskRenderer,
+                expanded: true,
+                items: project.taskList
+                    .filter(task => !task.parentTaskId)
+                    .map(task => ({
+                        label: task.name,
+                        icon: 'pi pi-angle-right',
+                        dl: task.endTime,
+                        projectName: project.project.name,
+                        owner: project.project.ownerUsername,
+                        phaseId: task.phaseId,
+                        command: () => {
+                            navigate(routeLink.project.replace(":ownerUsername", project.project.ownerUsername)
+                                    .replace(":projectName", project.project.name.replaceAll(" ", "_"))
+                                + "/phase/" + task.phaseId
+                            );
+                        },
+                        template: taskRenderer
+                    }))
+            }))
+        }
+    ]), [rawTaskData, t]);
 
     const getProjectList = async () => {
         try {
@@ -180,7 +182,7 @@ const WorkspaceLayout = () => {
                 expanded: true,
             })),
         }
-    ],[projects]);
+    ],[projects, t]);
 
     const handleLogout = () => {
         dispatch(logout());
@@ -214,6 +216,7 @@ const WorkspaceLayout = () => {
                             <div className="workspace-layout-header">
                                 <Breadcrumbs/>
                                 <div className="workspace-layout-header-action">
+                                    <LanguageSelector/>
                                     <i className="pi pi-bell" style={{ fontSize: '1.3rem' }}></i>
                                     <div>
                                         <Avatar

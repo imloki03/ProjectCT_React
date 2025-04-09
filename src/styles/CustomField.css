@@ -9,6 +9,7 @@
     padding-left: 0.2rem;
     padding-right: 0.2rem;
     background: white;
+    border-radius: 0.25rem;
 }
 .p-inputtext:enabled:focus {
     box-shadow: 0 0 0 0.15rem #8eecfc;

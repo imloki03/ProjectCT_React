@@ -29,10 +29,10 @@ header::before {
 }
 
 .sign-in-btn {
-    width: 6rem;
+    width: 8rem;
 }
 
 .sign-up-btn {
     background: linear-gradient(90deg, rgba(220, 64, 239, 0.9), rgba(64, 176, 246, 0.9) 97.15%);
-    width: 6rem;
+    width: 8rem;
 }

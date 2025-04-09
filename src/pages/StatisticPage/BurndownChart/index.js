@@ -60,7 +60,7 @@ const BurndownChart = ({phases, taskList}) => {
         });
         setPlannedRemaining([{ id: t("statPage.plannedRemaining"), data: planned }]);
         setActualRemaining([{ id: t("statPage.actualRemaining"), data: actual }]);
-    }, [currentPhase]);
+    }, [currentPhase, t]);
 
     return (
         <div style={{width: "100%", height: " 40rem", padding: "2rem", paddingTop: "0"}}>

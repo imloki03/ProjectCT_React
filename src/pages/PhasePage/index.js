@@ -124,7 +124,7 @@ const PhasePage = () => {
     };
 
     return (
-        <div style={{ margin: "2rem"}}>
+        <div style={{ padding: "2rem"}}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <h2>Project Timeline</h2>
                 <BasicButton
