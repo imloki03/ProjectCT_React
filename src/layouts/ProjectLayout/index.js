@@ -110,26 +110,29 @@ const ProjectLayout = () => {
                             onClose={() => closeDrawer()}
                         />
                     </div>
-                    <div style={{
-                        position: "fixed",
-                        bottom: "1.5rem",
-                        right: "1.5rem",
-                        backgroundImage: `url(${AssitantICon})`,
-                        backgroundSize: "cover",
-                        backgroundPosition: "center",
-                        borderRadius: "50%",
-                        width: "3.2rem",
-                        height: "3.2rem",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
-                        cursor: "pointer",
-                        zIndex: 1000
-                    }}
-                         onClick={()=>setIsAssistantOpen(true)}
-                    >
-                    </div>
+                    {
+                        activeRoute !== routeLink.projectTabs.chatbox &&
+                        <div style={{
+                            position: "fixed",
+                            bottom: "1.5rem",
+                            right: "1.5rem",
+                            backgroundImage: `url(${AssitantICon})`,
+                            backgroundSize: "cover",
+                            backgroundPosition: "center",
+                            borderRadius: "50%",
+                            width: "3.2rem",
+                            height: "3.2rem",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
+                            cursor: "pointer",
+                            zIndex: 1000
+                        }}
+                             onClick={()=>setIsAssistantOpen(true)}
+                        >
+                        </div>
+                    }
                     {isAssistantOpen && <AssistantChat onClose={() => setIsAssistantOpen(false)}/>}
                 </BreadcrumbProvider>
             </LoadingProvider>
