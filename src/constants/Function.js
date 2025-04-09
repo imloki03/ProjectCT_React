@@ -18,6 +18,7 @@ export const APP_FUNCTIONS = {
     UPDATE_MEDIA_INFO: "Update Media Info",
     UPDATE_MEDIA_VERSION: "Update Media Version",
     DELETE_MEDIA: "Delete Media",
+    ADD_MEDIA_FROM_CHAT: "Add Media from Chat",
 
     // COLLABORATOR related functions
     ADD_COLLABORATOR: "Add Collaborator",

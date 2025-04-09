@@ -13,8 +13,13 @@ import TextFieldIcon from "../../components/TextFieldIcon";
 import MediaDialog from "./MediaDialog";
 import UpdateMediaVersionDialog from "./UpdateMediaVersionDialog";
 import {useTranslation} from "react-i18next";
-// import MediaModal from "../MediaModal/MediaModal";
-// import UpdateMediaVersionModal from "../../MediaStorage/UpdateVersionModal/UpdateVersionModal";
+import {APP_FUNCTIONS} from "../../constants/Function";
+import DocViewer, { DocViewerRenderers } from "react-doc-viewer";
+import {downloadMedia} from "../../utils/MediaUtil";
+import MediaPreviewDialog from "../../components/MediaPreviewDialog";
+import BarProgress from "../../components/BarProgress";
+import {useBreadcrumb} from "../../contexts/BreadCrumbContext";
+import {routeLink} from "../../router/Router";
 
 const StoragePage = () => {
     const { t } = useTranslation();
@@ -32,8 +37,16 @@ const StoragePage = () => {
     const [previewDialogVisible, setPreviewDialogVisible] = useState(false);
     const fetchProject = useFetchProject();
     const project = useSelector((state) => state.project.currentProject);
+    const functionList = useSelector((state) => state.project.currentCollab?.role.functionList)
+    const [totalRecords, setTotalRecords] = useState(0);
+    const [first, setFirst] = useState(0); //search
+    const { setBreadcrumbs } = useBreadcrumb();
 
-    const openModal = () => setModalVisible(true);
+    const size = 8;
+    const openModal = () => {
+        setModalVisible(true);
+    };
+
     const closeModal = () => {
         setModalVisible(false);
         setMediaToEdit(null);
@@ -45,11 +58,19 @@ const StoragePage = () => {
         setMediaToUpdate(null);
     };
 
-    const refreshMedia = async () => {
+    const refreshMedia = async (page = 0, size = 0) => {
         setLoading(true);
         try {
-            const response = await getStorageMedia(project?.id);
-            const formattedData = response.data.map((file) => ({
+            const response = await getStorageMedia(project?.id, page, size);
+            const mediaPage = response.data;
+
+            const mainMediaList = mediaPage.mediaList.content || [];
+            setTotalRecords(mediaPage.mediaList.totalElements);
+
+            const previousVersionsList = mediaPage.additionalMediaList || [];
+
+            const combinedList = [...mainMediaList, ...previousVersionsList];
+            const formattedData = combinedList.map((file) => ({
                 key: file.id,
                 data: {
                     id: file.id,
@@ -66,8 +87,6 @@ const StoragePage = () => {
                 },
                 children: [],
             }));
-
-            // Store the IDs of files pushed as children
             const childIds = new Set();
 
             formattedData.forEach((file) => {
@@ -81,11 +100,7 @@ const StoragePage = () => {
                 }
             });
 
-            // Filter out files that are in the childIds set
             const rootNodes = formattedData.filter((file) => !childIds.has(file.key));
-
-            // Sort by upload time (latest to oldest)
-            rootNodes.sort((a, b) => new Date(b.data.uploadTime) - new Date(a.data.uploadTime));
 
             setMediaTree(rootNodes);
             setFilteredMediaTree(rootNodes);
@@ -96,14 +111,25 @@ const StoragePage = () => {
         }
     };
 
-
     useEffect(() => {
         fetchProject();
     }, []);
 
     useEffect(() => {
+        if (project){
+            const projectPath = routeLink.project.replace(":ownerUsername", project?.ownerUsername)
+                .replace(":projectName", project?.name.replaceAll(" ", "_"));
+
+            setBreadcrumbs([
+                {label: project?.name, url: projectPath},
+                {label: "Storage", url: projectPath + "/" + routeLink.projectTabs.storage}
+            ]);
+        }
+    }, [project]);
+
+    useEffect(() => {
         if (project?.id) {
-            refreshMedia();
+            refreshMedia(0, size);
         }
     }, [project]);
 
@@ -151,54 +177,65 @@ const StoragePage = () => {
         }
     };
 
-    const handleDownloadMedia = async (media) => {
+    const handleDownloadMedia = (media) => {
         try {
-            const response = await fetch(media.link, { method: 'GET' });
-            if (!response.ok) {
-                throw new Error('Failed to fetch file');
-            }
-
-            // Create a blob from the response
-            const blob = await response.blob();
-
-            // Create a temporary URL for the blob
-            const url = window.URL.createObjectURL(blob);
-
-            // Create a download link and trigger it
-            const link = document.createElement('a');
-            link.href = url;
-            link.download = media.name || 'downloaded_file'; // Set a custom name if available
-            document.body.appendChild(link);
-            link.click();
-
-            // Cleanup
-            document.body.removeChild(link);
-            window.URL.revokeObjectURL(url);
+            downloadMedia(media);
         } catch (error) {
             console.error('Error downloading file:', error);
             alert('Failed to download file. Please try again later.');
         }
     };
 
-    const renderActionButtons = (node) => (
-        <div className="action-buttons">
-            <Button icon="pi pi-eye" className="p-button-text" tooltip={t('storagePage.actionPreview')} onClick={() => handlePreviewMedia(node.data)} />
-            <Button icon="pi pi-pencil" className="p-button-text" tooltip={t('storagePage.actionEdit')} onClick={() => { setMediaToEdit(node.data); openModal(); }} />
-            {node.data.isOutdated === false && (
-                <Button icon="pi pi-arrow-up" className="p-button-text" tooltip={t('storagePage.actionUpdateVersion')} onClick={() => { setMediaToUpdate(node.data); openUpdateModal(); }} />
-            )}
-            <Button icon="pi pi-trash" className="p-button-text" tooltip={t('storagePage.actionDelete')} onClick={() => handleDeleteMedia(node.data)} />
-            <Button icon="pi pi-download" className="p-button-text" tooltip={t('storagePage.actionDownload')} onClick={() => handleDownloadMedia(node.data)} />
-        </div>
-    );
+    const allowedFunctions = new Set(functionList?.map(f => f.name));
+    const renderActionButtons = (node) => {
+        const buttonActions = [
+            {
+                function: APP_FUNCTIONS.UPDATE_MEDIA_INFO,
+                icon: "pi pi-pencil",
+                tooltip: t('storagePage.actionEdit'),
+                onClick: () => { setMediaToEdit(node.data); openModal(); },
+            },
+            {
+                function: APP_FUNCTIONS.UPDATE_MEDIA_VERSION,
+                icon: "pi pi-arrow-up",
+                tooltip: t('storagePage.actionUpdateVersion'),
+                onClick: () => { setMediaToUpdate(node.data); openUpdateModal(); },
+            },
+            {
+                function: APP_FUNCTIONS.DELETE_MEDIA,
+                icon: "pi pi-trash",
+                tooltip: t('storagePage.actionDelete'),
+                onClick: () => handleDeleteMedia(node.data),
+            },
+            {
+                icon: "pi pi-download",
+                tooltip: t('storagePage.actionDownload'),
+                onClick: () => handleDownloadMedia(node.data),
+            },
+            {
+                icon: "pi pi-eye",
+                tooltip: t('storagePage.actionPreview'),
+                onClick: () => handlePreviewMedia(node.data),
+            }
+        ];
+
+        return (
+            <div className="action-buttons">
+                {buttonActions
+                    .filter(action => !action.function || allowedFunctions.has(action.function))
+                    .map((action, index) => (
+                        <Button key={index} icon={action.icon} className="p-button-text"
+                                tooltip={action.tooltip} onClick={action.onClick} />
+                    ))
+                }
+            </div>
+        );
+    };
+
 
     const handlePreviewMedia = (media) => {
-        if (media.type === "IMAGE" || media.type === "VIDEO") {
-            setPreviewMedia(media);
-            setPreviewDialogVisible(true);
-        } else {
-            window.open(media.link, "_blank");
-        }
+        setPreviewMedia(media);
+        setPreviewDialogVisible(true);
     };
 
     return (
@@ -210,11 +247,19 @@ const StoragePage = () => {
                                    placeholder={t('storagePage.searchPlaceholder')} name="search" value={searchValue}
                                    onChange={(e) => setSearchValue(e.target.value)} icon="pi-search"
                                    iconPosition="left"/>
-                    <BasicButton label={t('storagePage.newMediaButton')} onClick={openModal}/>
+                    {allowedFunctions.has(APP_FUNCTIONS.ADD_MEDIA) && (
+                        <BasicButton label={t('storagePage.newMediaButton')} onClick={openModal} />
+                    )}
                 </div>
             </div>
-
-            <TreeTable value={filteredMediaTree} paginator rows={6}>
+            {loading && <BarProgress />}
+            <TreeTable
+                value={filteredMediaTree} lazy paginator rows={size} first={first} totalRecords={totalRecords}
+                onPage={(event) => {
+                    setFirst(event.first);  //
+                    refreshMedia(event.first / event.rows, event.rows);
+                }}
+            >
                 <Column expander field="icon" body={(node) => <i className={node.data.icon} style={{ fontSize: '24px' }} />} header={t('storagePage.tableFile')} />
                 <Column field="name" header={t('storagePage.tableName')} />
                 <Column field="type" header={t('storagePage.tableType')} />
@@ -233,7 +278,7 @@ const StoragePage = () => {
                 onHide={closeModal}
                 projectId={project?.id}
                 mediaToEdit={mediaToEdit}
-                onUploadSuccess={refreshMedia}
+                onUploadSuccess={() => refreshMedia(first / size, size)} 
             />
 
             <UpdateMediaVersionDialog
@@ -241,7 +286,7 @@ const StoragePage = () => {
                 onHide={closeUpdateModal}
                 projectId={project?.id}
                 selectedMedia={mediaToUpdate}
-                onUpdateSuccess={refreshMedia}
+                onUpdateSuccess={() => refreshMedia(first / size, size)}
             />
 
             <Dialog visible={showConfirmDialog} header={t('storagePage.dialogConfirmDeletionHeader')} modal footer={
@@ -253,21 +298,11 @@ const StoragePage = () => {
                 <p>{t('storagePage.dialogConfirmDeletionMessage')}</p>
             </Dialog>
 
-            <Dialog
+            <MediaPreviewDialog
                 visible={previewDialogVisible}
-                header={`Preview: ${previewMedia?.filename}`}
-                modal
                 onHide={() => setPreviewDialogVisible(false)}
-                style={{width: "70vw"}}
-            >
-                {previewMedia?.type === "IMAGE" ? (
-                    <img src={previewMedia.link} alt={previewMedia.name} style={{width: "100%"}}/>
-                ) : previewMedia?.type === "VIDEO" ? (
-                    <video src={previewMedia.link} controls style={{width: "100%"}}/>
-                ) : (
-                    <p>{t('storagePage.dialogPreviewUnsupported')}</p>
-                )}
-            </Dialog>
+                media={previewMedia}
+            />
 
         </div>
     );

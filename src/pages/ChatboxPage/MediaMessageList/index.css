@@ -1,0 +1,25 @@
+.media-message-list{
+    display: flex;
+    gap: 1rem;
+    flex-direction: column;
+}
+
+.message-group {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.date-divider {
+    color: #666;
+    font-size: 1.2rem;
+    font-weight: bold;
+    padding: 0.3rem;
+}
+
+.empty-media-message{
+    text-align: center;
+    color: #999;
+    margin: 2rem 0;
+    font-style: italic;
+}

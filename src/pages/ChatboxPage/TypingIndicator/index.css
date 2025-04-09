@@ -1,0 +1,69 @@
+.typing-indicator-container{
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+    max-width: 15rem;
+    margin-bottom: 0.5rem;
+}
+
+.avatar-typing-indicator{
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+}
+
+.avatar-typing-indicator > *:not(:last-child) {
+    margin-right: -1rem;
+}
+
+.chat-bubble {
+    background-color: #f0f0f0;
+    padding: 1rem;
+    border-radius: 20px 20px 20px 20px;
+    width: 4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.chat-bubble .dot {
+    animation: mercuryTypingAnimation 1.8s infinite ease-in-out;
+    background-color: #999;
+    border-radius: 50%;
+    margin-right: 4px;
+    vertical-align: middle;
+    height: 0.36rem;
+    width: 0.36rem;
+    display: inline-block;
+}
+
+.chat-bubble .dot:nth-child(1) {
+    animation-delay: 200ms;
+}
+
+.chat-bubble .dot:nth-child(2) {
+    animation-delay: 300ms;
+}
+
+.chat-bubble .dot:nth-child(3) {
+    animation-delay: 400ms;
+}
+
+.chat-bubble .dot:last-child {
+    margin-right: 0;
+}
+
+@keyframes mercuryTypingAnimation {
+    0% {
+        transform: translateY(0px);
+        background-color: #999;
+    }
+    28% {
+        transform: translateY(-7px);
+        background-color: #bbb;
+    }
+    44% {
+        transform: translateY(0px);
+        background-color: #ddd;
+    }
+}

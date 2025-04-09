@@ -1,22 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 import "./index.css";
-import { IconField } from "primereact/iconfield";
-import { InputIcon } from "primereact/inputicon";
-import { InputText } from "primereact/inputtext";
 import { Dropdown } from "primereact/dropdown";
-import {getAllProjects} from "../../api/projectApi";
+import { getAllProjects } from "../../api/projectApi";
 import CreateProjectPopUp from "./CreateProjectPopUp";
 import BasicButton from "../../components/Button";
-import {ProjectCard} from "./ProjectCard";
-import {getAllCollabOfProject} from "../../api/collabApi";
+import { ProjectCard } from "./ProjectCard";
+import { getAllCollabOfProject } from "../../api/collabApi";
 import TextFieldIcon from "../../components/TextFieldIcon";
+import BarProgress from "../../components/BarProgress";
 
-// import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-// import { library } from '@fortawesome/fontawesome-svg-core'
-// import { fas } from '@fortawesome/free-solid-svg-icons'
 const WorkSpacePage = () => {
+    const { t } = useTranslation();
     const [searchQuery, setSearchQuery] = useState("");
     const [sortOption, setSortOption] = useState("Sort by create date");
     const [isAscending, setIsAscending] = useState(false);
@@ -26,47 +23,30 @@ const WorkSpacePage = () => {
     const [loading, setLoading] = useState(true);
     const username = useSelector((state) => state.user.currentUser?.username);
 
-    // library.add(fas)
-    const fetchProjects = async () => {
+    const fetchProjectsAndCollaborators = async () => {
+        if (!username) return;
+
+        setLoading(true);
         try {
             const fetchedProjects = await getAllProjects();
             setProjects(fetchedProjects.data);
-        } catch (error) {
-            console.error("Failed to fetch projects", error);
-        }
-    };
-
-    const fetchCollaborators = async (projectId) => {
-        try {
-            const response = await getAllCollabOfProject(projectId);
-            return response.data;
-        } catch (error) {
-            console.error(`Failed to fetch collaborators for project ${projectId}`, error);
-            return [];
-        }
-    };
-
-
-    useEffect(() => {
-        if (username) {
-            setLoading(true);
-            fetchProjects().finally(() => setLoading(false));
-        }
-    }, [username]);
-
-    useEffect(() => {
-        const loadCollaborators = async () => {
             const collabMap = {};
-            for (const project of projects) {
-                const projectCollabs = await fetchCollaborators(project.id);
-                collabMap[project.id] = projectCollabs;
+            for (const project of fetchedProjects.data) {
+                const projectCollabs = await getAllCollabOfProject(project.id);
+                collabMap[project.id] = projectCollabs.data;
             }
             setCollaborators(collabMap);
-        };
-        if (projects.length > 0) {
-            loadCollaborators();
+        } catch (error) {
+            console.error("Failed to fetch projects or collaborators", error);
+        } finally {
+            setLoading(false);
         }
-    }, [projects]);
+    };
+
+
+    useEffect(() => {
+        fetchProjectsAndCollaborators();
+    }, [username]);
 
     const filteredProjects = projects
         .filter((project) =>
@@ -84,52 +64,19 @@ const WorkSpacePage = () => {
         });
 
     const sortOptions = [
-        { name: "Created date", value: "Sort by create date", icon: "fa-clock" },
-        { name: "Project name", value: "Sort by name", icon: "fa-font" },
+        { name: t("workspacePage.sortByCreateDate"), value: "Sort by create date" },
+        { name: t("workspacePage.sortByName"), value: "Sort by name" },
     ];
-
-    const handleSortToggle = () => {
-        setIsAscending((prev) => !prev);
-    };
-
-    const handleOpenModal = () => {
-        setIsCreateProjectModalOpen(true);
-    };
-
-    const handleCloseModal = () => {
-        setIsCreateProjectModalOpen(false);
-        setLoading(true);
-        fetchProjects().finally(() => setLoading(false))
-    };
-
-    const valueTemplate = (option) => {
-        return (
-            <span>
-                <span style={{ fontWeight: "normal" }}>Sort by: </span>
-                <span style={{ fontWeight: "bold" }}>{option?.name || "create date"}</span>
-            </span>
-        );
-    };
-
-    const itemTemplate = (option) => {
-        return (
-            <div style={{ display: "flex", alignItems: "center" }}>
-                {/*<FontAwesomeIcon icon={option.icon} className={"mr-2"} />*/}
-                <span style={{ fontWeight: "bold" }}>{option.name}</span>
-            </div>
-        );
-    };
 
     return (
         <div className="workspace-container">
-            {/*{loading && <BarProgress />}*/}
             <div className="workspace-header">
-                <h1 className="workspace-title">Projects</h1>
+                <h1 className="workspace-title">{t("workspacePage.projects")}</h1>
                 <div className="workspace-actions">
                     <div className="search-container">
                         <TextFieldIcon
-                            label="Search"
-                            placeholder={"Search"}
+                            label={t("workspacePage.searchPlaceholder")}
+                            placeholder={t("workspacePage.searchPlaceholder")}
                             name="search"
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
@@ -142,10 +89,8 @@ const WorkSpacePage = () => {
                             value={sortOption}
                             onChange={(e) => setSortOption(e.value)}
                             options={sortOptions}
-                            valueTemplate={valueTemplate}
-                            itemTemplate={itemTemplate}
                             optionLabel="name"
-                            placeholder="Select a sort option"
+                            placeholder={t("workspacePage.sortPlaceholder")}
                             className="w-full md:w-14rem"
                             checkmark
                             highlightOnSelect={false}
@@ -154,27 +99,24 @@ const WorkSpacePage = () => {
                     <BasicButton
                         icon={isAscending ? "pi pi-sort-amount-up" : "pi pi-sort-amount-down"}
                         className="p-button-text p-button-plain"
-                        onClick={handleSortToggle}
-                        tooltip={isAscending ? "Ascending" : "Descending"}
+                        onClick={() => setIsAscending((prev) => !prev)}
+                        tooltip={t(isAscending ? "workspacePage.ascending" : "workspacePage.descending")}
                     />
-                    <BasicButton label={"+ Project"} onClick={handleOpenModal} />
+                    <BasicButton label={t("workspacePage.addProject")} onClick={() => setIsCreateProjectModalOpen(true)} />
                 </div>
             </div>
+            {loading && <BarProgress />}
             {!loading && (
                 <div className="workspace-grid">
-                    {filteredProjects.map((project) => {
-                        const projectCollaborators = collaborators[project.id] || [];
-                        return (
-                            <ProjectCard
-                                key={project.id}
-                                project={{ ...project, collaborators: projectCollaborators }}
-                            />
-                        );
-                    })}
+                    {filteredProjects.map((project) => (
+                        <ProjectCard
+                            key={project.id}
+                            project={{ ...project, collaborators: collaborators[project.id] || [] }}
+                        />
+                    ))}
                 </div>
             )}
-
-            {isCreateProjectModalOpen && <CreateProjectPopUp onClose={handleCloseModal} />}
+            {isCreateProjectModalOpen && <CreateProjectPopUp onClose={() => setIsCreateProjectModalOpen(false)} />}
         </div>
     );
 };

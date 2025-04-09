@@ -15,9 +15,11 @@ export const uploadFileToCloudinary = async (file, stored = false) => {
     return response.data;
 };
 
-export const getStorageMedia = async (projectId) => {
-    const response = await axiosInstance.get(`${storagePrefix}/all/${projectId}`);
-    return response.data;
+export const getStorageMedia = async (projectId, page = 0, size = 6) => {
+    const response = await axiosInstance.get(`${storagePrefix}/all/${projectId}`, {
+        params: { page, size, sort: "uploadTime,desc" } // Sorting by uploadTime in descending order
+    });
+    return response.data; // Return full paginated response
 };
 
 export const deleteMedia = async (mediaId) => {

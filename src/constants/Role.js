@@ -1,4 +1,0 @@
-export const ROLE = {
-    PROJECT_OWNER : "PROJECT_OWNER",
-    CONTRIBUTOR: "CONTRIBUTOR",
-}
