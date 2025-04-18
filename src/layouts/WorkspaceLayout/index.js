@@ -18,6 +18,7 @@ import {getAssignedTasks} from "../../api/taskApi";
 import AssitantICon from "../../assets/icons/assistant_icon.png"
 import AssistantChat from "../../components/AssistantChat";
 import LanguageSelector from "../../components/LanguageSelector";
+import UpdateOAuth from "../../components/UpdateOAuth";
 
 const WorkspaceLayout = () => {
     const menuRef = useRef(null);
@@ -32,6 +33,7 @@ const WorkspaceLayout = () => {
     const [isAssistantOpen, setIsAssistantOpen] = useState(false);
 
     const user = useSelector((state) => state.user.currentUser);
+    const updated = useSelector((state) => state.user.oAuthUpdated);
 
     const itemRenderer = (item, options) => (
         <a className="flex align-items-center cursor-pointer workspace-custom-menu-item" onClick={options.onClick}>
@@ -255,6 +257,7 @@ const WorkspaceLayout = () => {
                     >
                     </div>
                     {isAssistantOpen && <AssistantChat onClose={() => setIsAssistantOpen(false)}/>}
+                    {!updated && <UpdateOAuth/>}
                 </BreadcrumbProvider>
             </LoadingProvider>
         </NotificationProvider>

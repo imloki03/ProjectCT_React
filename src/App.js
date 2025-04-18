@@ -34,7 +34,6 @@ function App() {
 
 
   const getRouter = () => {
-    console.log("getRouter")
     return user !== null || token !== null ? internalRoute : externalRoute;
   };
 
