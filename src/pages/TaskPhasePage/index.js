@@ -295,7 +295,7 @@ const TaskPhasePage = () => {
     const actionBody = (rowData) => {
         return (
             <div>{
-                rowData.data.status !== status[2].value &&
+                // rowData.data.status !== status[2].value &&
                 <div
                     style={{marginLeft:"1rem"}}
                     onClick={()=>{

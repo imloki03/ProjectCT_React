@@ -24,3 +24,8 @@ export const searchUser = async (query) => {
     const response = await axiosInstance.get(`auth/users/search?query=${query}`);
     return response.data;
 };
+
+export const updateOAuthUser = async (updatedUser) => {
+    const response = await axiosInstance.put(`auth/users/oauth`, updatedUser);
+    return response.data;
+};

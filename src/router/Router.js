@@ -16,6 +16,7 @@ import TaskPhasePage from "../pages/TaskPhasePage";
 import CollabPage from "../pages/CollabPage";
 import StatisticPage from "../pages/StatisticPage";
 import PageNotFound from "../pages/PageNotFound";
+import OAuthRedirectPage from "../pages/OAuthRedirectPage";
 
 export const routeLink = {
     default: '/',
@@ -36,7 +37,9 @@ export const routeLink = {
         storage: "storage",
         collaborator: "collaborator",
     },
-    pageNotFound: "/404PageNotFound"
+    pageNotFound: "/404PageNotFound",
+    oauthGithub: "/oauth2/github/redirect",
+    oauthGoogle: "/oauth2/google/redirect"
 }
 
 const createAppRoutes = (routes) => {
@@ -66,6 +69,14 @@ export const internalRoute = createAppRoutes([
             { path: routeLink.projectTabs.stat, element: <StatisticPage /> },
         ],
     },
+    {
+        path: routeLink.default,
+        element: <AuthLayout />,
+        children: [
+            { path: routeLink.oauthGithub, element: <OAuthRedirectPage /> },
+            { path: routeLink.oauthGoogle, element: <OAuthRedirectPage /> },
+        ]
+    },
 ]);
 
 export const externalRoute = createAppRoutes([
@@ -79,6 +90,8 @@ export const externalRoute = createAppRoutes([
         children: [
             { path: routeLink.auth, element: <AuthPage /> },
             { path: routeLink.forgotPassword, element: <ForgotPasswordPage /> },
+            { path: routeLink.oauthGithub, element: <OAuthRedirectPage /> },
+            { path: routeLink.oauthGoogle, element: <OAuthRedirectPage /> },
             { path: routeLink.test, element: <TestPage /> },
         ],
     },

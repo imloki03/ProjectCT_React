@@ -51,7 +51,6 @@ const UserProfilePage = () => {
     }, [user]);
 
     const validateUserData = () => {
-        console.log("aa"+userData.name+"aa")
         if (userData.name.trim()==="") {
             showNotification("error", t("userProfile.updateAvatar"), t("userProfile.nameRequired"));
             return false;

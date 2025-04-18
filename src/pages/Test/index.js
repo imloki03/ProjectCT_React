@@ -32,11 +32,11 @@ const TestPage = () => {
 
     const [showPopup, setShowPopup] = useState(false);
 
-    const { setBreadcrumbs } = useBreadcrumb();
+    // const { setBreadcrumbs } = useBreadcrumb();
 
-    useEffect(() => {
-        setBreadcrumbs([{ label: "Test", url: "/test"}]);
-    }, []);
+    // useEffect(() => {
+    //     setBreadcrumbs([{ label: "Test", url: "/test"}]);
+    // }, []);
 
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -93,6 +93,12 @@ const TestPage = () => {
             <button onClick={handleNavFW}>Forgot-pasword</button>
             <button onClick={handleLoading}>Loading</button>
             <button onClick={handleNoti}>Noti</button>
+            <a href="http://localhost:8888/oauth2/authorization/github">
+                <button>Login with GitHub</button>
+            </a>
+            <a href="http://localhost:8888/oauth2/authorization/google">
+                <button>Login with Google</button>
+            </a>
 
             <div style={{width: "300px", height: "600px", marginTop: "40px", marginLeft: "50px", display: "flex", flexDirection: "column", justifyContent: "space-between"}}>
                 <TextField
