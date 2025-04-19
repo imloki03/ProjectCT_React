@@ -16,6 +16,8 @@ import TaskPhasePage from "../pages/TaskPhasePage";
 import CollabPage from "../pages/CollabPage";
 import StatisticPage from "../pages/StatisticPage";
 import PageNotFound from "../pages/PageNotFound";
+import DashboardPage from "../pages/DashboardPage";
+import EditProject from "../pages/EditProjectPage";
 import OAuthRedirectPage from "../pages/OAuthRedirectPage";
 
 export const routeLink = {
@@ -28,7 +30,8 @@ export const routeLink = {
     project: "/:ownerUsername/:projectName",
     projectTabs: {
         default: "",
-        dashboard: "dashboard",
+        // dashboard: "dashboard",
+        editProject: "edit",
         stat: "stat",
         backlog: "backlog",
         phase: "phase",
@@ -59,7 +62,9 @@ export const internalRoute = createAppRoutes([
         path: routeLink.project,
         element: <ProjectLayout />,
         children: [
-            { path: routeLink.projectTabs.default, element: <TestPage /> },
+            { path: routeLink.projectTabs.default, element: <DashboardPage /> },
+            // { path: routeLink.projectTabs.dashboard, element: <DashboardPage/> },
+            { path: routeLink.projectTabs.editProject, element: <EditProject/> },
             { path: routeLink.projectTabs.storage, element: <StoragePage /> },
             { path: routeLink.projectTabs.chatbox, element: <ChatBoxPage/> },
             { path: routeLink.projectTabs.backlog, element: <BacklogPage /> },

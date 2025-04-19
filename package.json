@@ -5,6 +5,8 @@
   "dependencies": {
     "@dhaiwat10/react-link-preview": "^1.15.0",
     "@nivo/bar": "^0.88.0",
+    "@nivo/bump": "^0.88.0",
+    "@nivo/calendar": "^0.88.0",
     "@nivo/core": "^0.88.0",
     "@nivo/line": "^0.88.0",
     "@nivo/pie": "^0.88.0",
@@ -21,6 +23,7 @@
     "firebase": "^11.4.0",
     "frappe-gantt": "^1.0.3",
     "i18next": "^23.16.8",
+    "lottie-react": "^2.4.1",
     "primeflex": "^4.0.0",
     "primeicons": "^7.0.0",
     "primereact": "^10.9.2",

@@ -209,3 +209,80 @@ h2 {
 .clickable-text{
     cursor: pointer;
 }
+
+
+
+
+
+/*Social login button*/
+/* Add these styles to your index.css file */
+
+.social-login-container {
+    width: 100%;
+}
+
+.social-divider-text {
+    color: #767676;
+    font-size: 0.875rem;
+    padding: 0 0.5rem;
+}
+
+.social-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+.social-login-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    background-color: white;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #333;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    width: 50%;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.social-login-button:hover {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+.social-login-button:active {
+    transform: translateY(1px);
+}
+
+.social-login-button:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.social-icon {
+    flex-shrink: 0;
+}
+
+.google-button {
+    color: #4285f4;
+    border-color: #4285f4;
+}
+
+.google-button:hover {
+    background-color: #f8f9ff;
+}
+
+.github-button {
+    color: #24292e;
+    border-color: #24292e;
+}
+
+.github-button:hover {
+    background-color: #f6f8fa;
+}

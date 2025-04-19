@@ -1,0 +1,47 @@
+.edit-project-container {
+    display: flex;
+    justify-content: center;
+    padding: 2rem;
+    min-height: 100vh;
+    background-color: #f4f4f4;
+}
+
+.edit-project-container .p-card {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.p-card .p-card-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.avatar-container {
+    position: relative;
+    display: inline-block;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.avatar-hover-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.5);
+    height: 100%;
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    padding: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: #fff;
+    transition: opacity 0.3s ease;
+    opacity: 0;
+}
+
+.avatar-container:hover .avatar-hover-icon {
+    opacity: 1;
+}
+

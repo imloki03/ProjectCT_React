@@ -23,16 +23,20 @@ export const ProjectCard = ({ project }) => {
 
     const handleMenuClick = (e) => {
         e.stopPropagation();
-        // dispatch(updateCurrentProject(project))
-        // const urlName = project.urlName;
-        // navigate(`/project/${urlName}/edit`);
+        dispatch(updateCurrentProject(project));
+        navigate(
+            `${routeLink.project.replace(":ownerUsername", project.ownerUsername)
+                .replace(":projectName", project.name.replaceAll(" ", "_"))}/${routeLink.projectTabs.editProject}`
+        );
     };
 
     function handleAddCollaborator(e) {
         e.stopPropagation();
-        // dispatch(updateCurrentProject(project))
-        // const urlName = project.urlName;
-        // navigate(`/project/${urlName}/collaborators`);
+        dispatch(updateCurrentProject(project));
+        navigate(
+            `${routeLink.project.replace(":ownerUsername", project.ownerUsername)
+                .replace(":projectName", project.name.replaceAll(" ", "_"))}/${routeLink.projectTabs.collaborator}`
+        );
     }
 
     return (

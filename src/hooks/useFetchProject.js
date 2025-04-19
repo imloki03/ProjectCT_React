@@ -1,12 +1,14 @@
 import {useDispatch} from "react-redux";
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import {getProjectByOwnerAndName} from "../api/projectApi";
 import {updateCurrentCollab, updateCurrentProject} from "../redux/slices/projectSlice";
 import {getCurrentCollab} from "../api/collabApi";
+import {routeLink} from "../router/Router";
 
 export const useFetchProject = () => {
     const dispatch = useDispatch();
     const { ownerUsername, projectName } = useParams();
+    const navigate = useNavigate();
 
     return async () => {
         try {
@@ -19,7 +21,7 @@ export const useFetchProject = () => {
             dispatch(updateCurrentCollab(fetchedCurrentCollab.data));
         } catch (error) {
             console.error("Failed to fetch projects", error);
-            throw error;
+            navigate(routeLink.pageNotFound);
         }
     };
 };
