@@ -122,7 +122,7 @@ const StoragePage = () => {
 
             setBreadcrumbs([
                 {label: project?.name, url: projectPath},
-                {label: "Storage", url: projectPath + "/" + routeLink.projectTabs.storage}
+                {label: t('storagePage.title'), url: projectPath + "/" + routeLink.projectTabs.storage}
             ]);
         }
     }, [project]);

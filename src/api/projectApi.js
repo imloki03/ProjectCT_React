@@ -23,3 +23,12 @@ export const createNewProject = async (projectRequest) => {
     return response.data;
 };
 
+export const updateProject = async (updateProjectRequest, projectId) => {
+    const response = await axiosInstance.put(`${projectPrefix}/${projectId}`, updateProjectRequest);
+    return response.data;
+};
+
+export const deleteProject = async (projectId) => {
+    const response = await axiosInstance.delete(`${projectPrefix}/${projectId}`);
+    return response.data;
+};

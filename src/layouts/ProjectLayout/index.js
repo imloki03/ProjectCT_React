@@ -61,7 +61,7 @@ const ProjectLayout = () => {
     ];
 
     const items = [
-        { label: "Dashboard", icon: "pi pi-th-large", command: () => navigate(routeLink.projectTabs.dashboard), className: activeRoute === routeLink.projectTabs.dashboard ? "active-menu-item" : "" },
+        { label: "Dashboard", icon: "pi pi-th-large", command: () => navigate(routeLink.projectTabs.default), className: activeRoute === routeLink.projectTabs.default ? "active-menu-item" : "" },
         { label: "Statistic", icon: "pi pi-chart-bar", command: () => navigate(routeLink.projectTabs.stat), className: activeRoute === routeLink.projectTabs.stat ? "active-menu-item" : "" },
         { label: "Backlog", icon: "pi pi-list", command: () => navigate(routeLink.projectTabs.backlog), className: activeRoute === routeLink.projectTabs.backlog ? "active-menu-item" : "" },
         { label: "Phase", icon: "pi pi-sitemap", command: () => navigate(routeLink.projectTabs.phase), className: activeRoute === routeLink.projectTabs.phase ? "active-menu-item" : "" },

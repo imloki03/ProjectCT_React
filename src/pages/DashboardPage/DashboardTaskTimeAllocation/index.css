@@ -1,0 +1,16 @@
+.dashboard-task-time-container{
+    width: 100%;
+    height: 100%;
+    padding: 1rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.dashboard-task-time-title{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.dashboard-task-time-content{
+
+}

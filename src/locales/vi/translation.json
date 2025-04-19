@@ -68,7 +68,8 @@
     "unexpectedError": "Đã xảy ra lỗi không mong muốn",
     "loginError": "Lỗi đăng nhập",
     "usernamePasswordRequired": "Tên người dùng và mật khẩu là bắt buộc",
-    "loginFailed": "Đăng nhập thất bại"
+    "loginFailed": "Đăng nhập thất bại",
+    "orSignInWith": "Bạn cũng có thể đăng nhập với"
   },
   "forgotPasswordPage": {
     "enterEmail": "Nhập Email",
@@ -142,7 +143,7 @@
     "sortPlaceholder": "Chọn một tùy chọn sắp xếp",
     "ascending": "Tăng dần",
     "descending": "Giảm dần",
-    "projects": "Dự án",
+    "projects": "Dự án của bạn",
     "addProject": "+ Dự án",
     "projectCard": {
       "projectOwner": "Chủ dự án:",
@@ -411,5 +412,115 @@
         "format": "{{size}} • {{type}} • "
       }
     }
+  },
+  "dashboardPage": {
+    "welcome": "Chào mừng bạn đến với dashboard, {{name}}",
+    "ownerMotivation": "Chìa khóa không nằm ở việc ưu tiên những gì có trong lịch trình, mà là sắp xếp lịch trình cho những điều quan trọng.",
+    "collaboratorMessage": "Xin chào các quản lý dự án, bạn có thể xem bảng dashboard của cộng tác viên.",
+    "selectCollaborator": "Chọn cộng tác viên",
+    "loadingIndicator": "Đang tải...",
+    "projectCard": {
+      "editButton": "Chỉnh sửa dự án",
+      "deadline": {
+        "daysLeft": "Còn {{days}} ngày",
+        "daysOverdue": "Trễ hạn {{days}} ngày"
+      },
+      "progress": {
+        "tasksCount": "{{completionRate}}% hoàn thành | {{totalTasks}} công việc"
+      }
+    },
+    "collabStatus": {
+      "totalCollaborators": "Tổng số cộng tác viên",
+      "upcomingTasks": "Công việc sắp tới",
+      "inProgressTasks": "Công việc đang thực hiện",
+      "completedTasks": "Công việc đã hoàn thành",
+      "altText": {
+        "team": "nhóm",
+        "upcoming": "công việc sắp tới",
+        "working": "công việc đang thực hiện",
+        "completed": "công việc đã hoàn thành"
+      }
+    },
+    "ganttChart": {
+      "title": "Biểu đồ Gantt",
+      "from": "Từ",
+      "to": "Đến",
+      "phase": "Giai đoạn",
+      "startDate": "Ngày bắt đầu",
+      "endDate": "Ngày kết thúc"
+    },
+    "progressCard": {
+      "title": "Tiến độ của bạn",
+      "view": "Xem",
+      "date": "Ngày",
+      "tasksCompleted": "Công việc đã hoàn thành",
+      "tasks": "công việc",
+      "user": "Người dùng",
+      "viewOptions": {
+        "you": "Bạn",
+        "allCollaborators": "Tất cả cộng tác viên"
+      }
+    },
+    "taskCard": {
+      "title": "Công việc của bạn",
+      "status": "Trạng thái",
+      "icon": "biểu tượng",
+      "keepUpGoodWork": "Tiếp tục phát huy nhé!",
+      "noTasksAvailable": "Không có công việc nào.",
+      "statusOptions": {
+        "inProgress": "Đang thực hiện",
+        "overdue": "Quá hạn"
+      }
+    },
+    "priorityCard": {
+      "title": "Phân bổ mức độ ưu tiên của công việc",
+      "emptyState": "Hiện chưa có công việc nào."
+    },
+    "taskTimeAllocation": {
+      "title": "Phân bổ thời gian của bạn",
+      "phaseLabel": "Giai đoạn",
+      "emptyState": "Không có nhiệm vụ nào cho giai đoạn đã chọn",
+      "allPhase": "Tất cả",
+      "hour": "giờ",
+      "tooltip": {
+        "startTime": "Thời gian bắt đầu",
+        "status": "Trạng thái",
+        "timeSpent": "Thời gian thực hiện",
+        "state": "Tình trạng",
+        "completed": "Đã hoàn thành",
+        "inProgress": "Đang tiến hành"
+      },
+      "axis": {
+        "tasks": "Nhiệm vụ",
+        "hoursSpent": "Giờ đã dùng"
+      },
+      "legend": {
+        "inProgress": "Đang tiến hành",
+        "completed": "Đã hoàn thành"
+      }
+    }
+  },
+  "editProject": {
+    "title": "Chỉnh sửa Dự án",
+    "breadcrumb": {
+      "edit": "Chỉnh sửa Dự án"
+    },
+    "nameLabel": "Tên",
+    "descriptionLabel": "Mô tả",
+    "saveButton": "Lưu",
+    "deleteButton": "Xóa Dự án",
+    "uploadDialogTitle": "Chọn Hình ảnh Dự án Mới",
+    "confirmDeleteMessage": "Bạn chắc chắn muốn xóa dự án này không?",
+    "confirmDeleteHeader": "Xác nhận",
+    "updateFailedTitle": "Cập nhật thất bại",
+    "updateFailedDesc": "Có gì đó không ổn.",
+    "updatedTitle": "Dự án đã được cập nhật",
+    "updatedDesc": "Dự án đã được cập nhật thành công.",
+    "deleteSuccessTitle": "Dự án đã được xóa",
+    "deleteSuccessDesc": "Dự án đã được xóa thành công.",
+    "deleteFailedTitle": "Xóa thất bại",
+    "deleteFailedDesc": "Không thể xóa dự án.",
+    "uploadSuccessTitle": "Tải lên thành công",
+    "uploadFailedTitle": "Tải lên avatar thất bại"
   }
 }

@@ -68,7 +68,8 @@
     "unexpectedError": "An unexpected error occurred",
     "loginError": "Login Error",
     "usernamePasswordRequired": "Username and password are required",
-    "loginFailed": "Login Failed"
+    "loginFailed": "Login Failed",
+    "orSignInWith": "You can login with"
   },
   "forgotPasswordPage": {
     "enterEmail": "Enter Email",
@@ -142,7 +143,7 @@
     "sortPlaceholder": "Select a sort option",
     "ascending": "Ascending",
     "descending": "Descending",
-    "projects": "Projects",
+    "projects": "Your Projects",
     "addProject": "+ Project",
     "projectCard": {
       "projectOwner": "Project Owner:",
@@ -411,5 +412,115 @@
         "format": "{{size}} • {{type}} • "
       }
     }
+  },
+  "dashboardPage": {
+    "welcome": "Welcome to your dashboard, {{name}}",
+    "ownerMotivation": "The key is not to prioritize what's on your schedule, but to schedule your priorities.",
+    "collaboratorMessage": "Dear project owners, you can view your collaborators dashboard.",
+    "selectCollaborator": "Select Collaborator",
+    "loadingIndicator": "Loading...",
+    "projectCard": {
+      "editButton": "Edit project",
+      "deadline": {
+        "daysLeft": "{{days}} days left",
+        "daysOverdue": "{{days}} days overdue"
+      },
+      "progress": {
+        "tasksCount": "{{completionRate}}% | {{totalTasks}} tasks"
+      }
+    },
+    "collabStatus": {
+      "totalCollaborators": "Total collaborators",
+      "upcomingTasks": "Upcoming tasks",
+      "inProgressTasks": "In progress tasks",
+      "completedTasks": "Completed tasks",
+      "altText": {
+        "team": "team",
+        "upcoming": "upcoming task",
+        "working": "working task",
+        "completed": "completed task"
+      }
+    },
+    "ganttChart": {
+      "title": "Gantt chart",
+      "from": "From",
+      "to": "To",
+      "phase": "Phase",
+      "startDate": "Start Date",
+      "endDate": "End Date"
+    },
+    "progressCard": {
+      "title": "Your progress",
+      "view": "View",
+      "date": "Date",
+      "tasksCompleted": "Tasks Completed",
+      "tasks": "tasks",
+      "user": "User",
+      "viewOptions": {
+        "you": "You",
+        "allCollaborators": "All collaborators"
+      }
+    },
+    "taskCard": {
+      "title": "Your tasks",
+      "status": "Status",
+      "icon": "icon",
+      "keepUpGoodWork": "Keep up the good work!",
+      "noTasksAvailable": "No tasks available.",
+      "statusOptions": {
+        "inProgress": "In-progress",
+        "overdue": "Overdue"
+      }
+    },
+    "priorityCard": {
+      "title": "Your tasks priority distribution",
+      "emptyState": "No tasks available yet."
+    },
+    "taskTimeAllocation": {
+      "title": "Your time allocation",
+      "phaseLabel": "Phase",
+      "emptyState": "No tasks available for the selected phase",
+      "allPhase": "All",
+      "hour": "hour",
+      "tooltip": {
+        "startTime": "Start Time",
+        "status": "Status",
+        "timeSpent": "Time spent",
+        "state": "State",
+        "completed": "Completed",
+        "inProgress": "In Progress"
+      },
+      "axis": {
+        "tasks": "Tasks",
+        "hoursSpent": "Hours Spent"
+      },
+      "legend": {
+        "inProgress": "In Progress",
+        "completed": "Completed"
+      }
+    }
+  },
+  "editProject": {
+    "title": "Edit Project",
+    "breadcrumb": {
+      "edit": "Edit Project"
+    },
+    "nameLabel": "Name",
+    "descriptionLabel": "Description",
+    "saveButton": "Save",
+    "deleteButton": "Delete Project",
+    "uploadDialogTitle": "Select New Project Image",
+    "confirmDeleteMessage": "Are you sure you want to delete this project?",
+    "confirmDeleteHeader": "Confirmation",
+    "updateFailedTitle": "Update failed",
+    "updateFailedDesc": "Something went wrong.",
+    "updatedTitle": "Project updated",
+    "updatedDesc": "Project updated successfully.",
+    "deleteSuccessTitle": "Project deleted",
+    "deleteSuccessDesc": "Project has been successfully deleted.",
+    "deleteFailedTitle": "Delete failed",
+    "deleteFailedDesc": "Failed to delete the project.",
+    "uploadSuccessTitle": "Upload successfully",
+    "uploadFailedTitle": "Upload avatar failed"
   }
 }

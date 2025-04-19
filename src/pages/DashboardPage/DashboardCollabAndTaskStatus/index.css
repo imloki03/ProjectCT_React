@@ -1,0 +1,39 @@
+.dashboard-collab-task-status-container{
+    flex: 1;
+}
+
+.dashboard-collab-task-status-grid{
+    display: grid;
+    width: 100%;
+    height: 100%;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap : 1rem;
+}
+
+.dashboard-collab-task-box {
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    border-radius: 0.8rem;
+    gap: 1rem;
+}
+
+.dashboard-collab-task-box-content{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.dashboard-collab-task-box-value{
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.dashboard-collab-task-box-icon{
+    width: 5rem;
+    height: auto;
+}
