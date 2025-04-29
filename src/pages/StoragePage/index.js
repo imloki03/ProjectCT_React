@@ -3,23 +3,21 @@ import { TreeTable } from 'primereact/treetable';
 import { Column } from 'primereact/column';
 import { Button } from 'primereact/button';
 import { Dialog } from 'primereact/dialog';
-import { InputText } from 'primereact/inputtext';
 import './index.css';
-import {deleteMedia, getStorageMedia} from "../../api/storageApi";
-import {useSelector} from "react-redux";
+import { deleteMedia, getStorageMedia, searchMedia } from "../../api/storageApi";
+import { useSelector } from "react-redux";
 import BasicButton from "../../components/Button";
-import {useFetchProject} from "../../hooks/useFetchProject";
+import { useFetchProject } from "../../hooks/useFetchProject";
 import TextFieldIcon from "../../components/TextFieldIcon";
 import MediaDialog from "./MediaDialog";
 import UpdateMediaVersionDialog from "./UpdateMediaVersionDialog";
-import {useTranslation} from "react-i18next";
-import {APP_FUNCTIONS} from "../../constants/Function";
-import DocViewer, { DocViewerRenderers } from "react-doc-viewer";
-import {downloadMedia} from "../../utils/MediaUtil";
+import { useTranslation } from "react-i18next";
+import { APP_FUNCTIONS } from "../../constants/Function";
+import { downloadMedia } from "../../utils/MediaUtil";
 import MediaPreviewDialog from "../../components/MediaPreviewDialog";
 import BarProgress from "../../components/BarProgress";
-import {useBreadcrumb} from "../../contexts/BreadCrumbContext";
-import {routeLink} from "../../router/Router";
+import { useBreadcrumb } from "../../contexts/BreadCrumbContext";
+import { routeLink } from "../../router/Router";
 
 const StoragePage = () => {
     const { t } = useTranslation();
@@ -37,12 +35,14 @@ const StoragePage = () => {
     const [previewDialogVisible, setPreviewDialogVisible] = useState(false);
     const fetchProject = useFetchProject();
     const project = useSelector((state) => state.project.currentProject);
-    const functionList = useSelector((state) => state.project.currentCollab?.role.functionList)
+    const functionList = useSelector((state) => state.project.currentCollab?.role.functionList);
     const [totalRecords, setTotalRecords] = useState(0);
-    const [first, setFirst] = useState(0); //search
+    const [first, setFirst] = useState(0);
     const { setBreadcrumbs } = useBreadcrumb();
+    const [isSearchActive, setIsSearchActive] = useState(false);
 
     const size = 8;
+
     const openModal = () => {
         setModalVisible(true);
     };
@@ -58,56 +58,83 @@ const StoragePage = () => {
         setMediaToUpdate(null);
     };
 
-    const refreshMedia = async (page = 0, size = 0) => {
+    const processMediaData = (mediaPage) => {
+        const mainMediaList = mediaPage.mediaList.content || [];
+        setTotalRecords(mediaPage.mediaList.totalElements);
+
+        const previousVersionsList = mediaPage.additionalMediaList || [];
+
+        const combinedList = [...mainMediaList, ...previousVersionsList];
+        const formattedData = combinedList.map((file) => ({
+            key: file.id,
+            data: {
+                id: file.id,
+                name: file.name,
+                description: file.description,
+                type: file.type,
+                filename: file.filename,
+                size: file.size,
+                icon: getIconForType(file.type),
+                link: file.link,
+                uploadTime: new Date(file.uploadTime).toISOString(),
+                previousVersion: file.previousVersion,
+                isOutdated: false
+            },
+            children: [],
+        }));
+
+        const childIds = new Set();
+
+        formattedData.forEach((file) => {
+            if (file.data.previousVersion) {
+                const child = formattedData.find((f) => f.key === file.data.previousVersion);
+                if (child) {
+                    child.data.isOutdated = true;
+                    file.children.push(child);
+                    childIds.add(child.key);
+                }
+            }
+        });
+
+        const rootNodes = formattedData.filter((file) => !childIds.has(file.key));
+
+        setMediaTree(rootNodes);
+        setFilteredMediaTree(rootNodes);
+    };
+
+    const fetchMedia = async (page = 0, size = 8) => {
         setLoading(true);
         try {
-            const response = await getStorageMedia(project?.id, page, size);
-            const mediaPage = response.data;
-
-            const mainMediaList = mediaPage.mediaList.content || [];
-            setTotalRecords(mediaPage.mediaList.totalElements);
-
-            const previousVersionsList = mediaPage.additionalMediaList || [];
-
-            const combinedList = [...mainMediaList, ...previousVersionsList];
-            const formattedData = combinedList.map((file) => ({
-                key: file.id,
-                data: {
-                    id: file.id,
-                    name: file.name,
-                    description: file.description,
-                    type: file.type,
-                    filename: file.filename,
-                    size: file.size,
-                    icon: getIconForType(file.type),
-                    link: file.link,
-                    uploadTime: new Date(file.uploadTime).toISOString(),
-                    previousVersion: file.previousVersion,
-                    isOutdated: false
-                },
-                children: [],
-            }));
-            const childIds = new Set();
-
-            formattedData.forEach((file) => {
-                if (file.data.previousVersion) {
-                    const child = formattedData.find((f) => f.key === file.data.previousVersion);
-                    if (child) {
-                        child.data.isOutdated = true;
-                        file.children.push(child);
-                        childIds.add(child.key);
-                    }
-                }
-            });
-
-            const rootNodes = formattedData.filter((file) => !childIds.has(file.key));
-
-            setMediaTree(rootNodes);
-            setFilteredMediaTree(rootNodes);
+            let response;
+            if (isSearchActive && searchValue.trim()) {
+                response = await searchMedia(project?.id, page, size);
+            } else {
+                response = await getStorageMedia(project?.id, page, size);
+            }
+            processMediaData(response.data);
         } catch (error) {
             console.error("Failed to fetch media files:", error);
         } finally {
             setLoading(false);
+        }
+    };
+
+    const handleSearch = async () => {
+        if (searchValue.trim()) {
+            setIsSearchActive(true);
+            setFirst(0); // Reset to first page when searching
+            setLoading(true);
+            try {
+                const response = await searchMedia(project?.id, searchValue.trim(), 0, size);
+                processMediaData(response.data);
+            } catch (error) {
+                console.error("Failed to search media files:", error);
+            } finally {
+                setLoading(false);
+            }
+        } else {
+            setIsSearchActive(false);
+            fetchMedia(0, size);
         }
     };
 
@@ -116,7 +143,7 @@ const StoragePage = () => {
     }, []);
 
     useEffect(() => {
-        if (project){
+        if (project) {
             const projectPath = routeLink.project.replace(":ownerUsername", project?.ownerUsername)
                 .replace(":projectName", project?.name.replaceAll(" ", "_"));
 
@@ -129,17 +156,19 @@ const StoragePage = () => {
 
     useEffect(() => {
         if (project?.id) {
-            refreshMedia(0, size);
+            fetchMedia(0, size);
         }
     }, [project]);
 
     useEffect(() => {
-        const filteredData = mediaTree.filter((node) =>
-            node.data.name.toLowerCase().includes(searchValue.toLowerCase()) ||
-            node.data.type.toLowerCase().includes(searchValue.toLowerCase())
-        );
-        setFilteredMediaTree(filteredData);
-    }, [searchValue, mediaTree]);
+        const timer = setTimeout(() => {
+            if (project?.id) {
+                handleSearch();
+            }
+        }, 500); // Debounce search input
+
+        return () => clearTimeout(timer);
+    }, [searchValue, project?.id]);
 
     const getIconForType = (type) => {
         switch (type) {
@@ -168,12 +197,10 @@ const StoragePage = () => {
             if (mediaToDelete) {
                 await deleteMedia(mediaToDelete.id);
                 setShowConfirmDialog(false);
-                refreshMedia();
+                fetchMedia(first / size, size);
             }
         } catch (error) {
             setShowConfirmDialog(false);
-        }
-        finally {
         }
     };
 
@@ -184,6 +211,11 @@ const StoragePage = () => {
             console.error('Error downloading file:', error);
             alert('Failed to download file. Please try again later.');
         }
+    };
+
+    const handlePreviewMedia = (media) => {
+        setPreviewMedia(media);
+        setPreviewDialogVisible(true);
     };
 
     const allowedFunctions = new Set(functionList?.map(f => f.name));
@@ -232,21 +264,20 @@ const StoragePage = () => {
         );
     };
 
-
-    const handlePreviewMedia = (media) => {
-        setPreviewMedia(media);
-        setPreviewDialogVisible(true);
-    };
-
     return (
         <div className="media-container">
             <div className="workspace-header">
                 <h1 className="workspace-title">{t('storagePage.title')}</h1>
                 <div className="workspace-actions">
-                    <TextFieldIcon label={t('storagePage.searchPlaceholder')}
-                                   placeholder={t('storagePage.searchPlaceholder')} name="search" value={searchValue}
-                                   onChange={(e) => setSearchValue(e.target.value)} icon="pi-search"
-                                   iconPosition="left"/>
+                    <TextFieldIcon
+                        label={t('storagePage.searchPlaceholder')}
+                        placeholder={t('storagePage.searchPlaceholder')}
+                        name="search"
+                        value={searchValue}
+                        onChange={(e) => setSearchValue(e.target.value)}
+                        icon="pi-search"
+                        iconPosition="left"
+                    />
                     {allowedFunctions.has(APP_FUNCTIONS.ADD_MEDIA) && (
                         <BasicButton label={t('storagePage.newMediaButton')} onClick={openModal} />
                     )}
@@ -254,10 +285,15 @@ const StoragePage = () => {
             </div>
             {loading && <BarProgress />}
             <TreeTable
-                value={filteredMediaTree} lazy paginator rows={size} first={first} totalRecords={totalRecords}
+                value={filteredMediaTree}
+                lazy
+                paginator
+                rows={size}
+                first={first}
+                totalRecords={totalRecords}
                 onPage={(event) => {
-                    setFirst(event.first);  //
-                    refreshMedia(event.first / event.rows, event.rows);
+                    setFirst(event.first);
+                    fetchMedia(event.first / event.rows, event.rows);
                 }}
             >
                 <Column expander field="icon" body={(node) => <i className={node.data.icon} style={{ fontSize: '24px' }} />} header={t('storagePage.tableFile')} />
@@ -278,7 +314,7 @@ const StoragePage = () => {
                 onHide={closeModal}
                 projectId={project?.id}
                 mediaToEdit={mediaToEdit}
-                onUploadSuccess={() => refreshMedia(first / size, size)} 
+                onUploadSuccess={() => fetchMedia(first / size, size)}
             />
 
             <UpdateMediaVersionDialog
@@ -286,7 +322,7 @@ const StoragePage = () => {
                 onHide={closeUpdateModal}
                 projectId={project?.id}
                 selectedMedia={mediaToUpdate}
-                onUpdateSuccess={() => refreshMedia(first / size, size)}
+                onUpdateSuccess={() => fetchMedia(first / size, size)}
             />
 
             <Dialog visible={showConfirmDialog} header={t('storagePage.dialogConfirmDeletionHeader')} modal footer={
@@ -303,7 +339,6 @@ const StoragePage = () => {
                 onHide={() => setPreviewDialogVisible(false)}
                 media={previewMedia}
             />
-
         </div>
     );
 };

@@ -114,7 +114,7 @@ const DashboardPage = () => {
                     <div className={"dashboard-welcome-content"}>
                         <h1>{t('dashboardPage.welcome', { name: user.name })}</h1>
                         <div className={"dashboard-welcome-sub-content"}>
-                            {!user.username === project.ownerUsername ?
+                            {user.username === project.ownerUsername ?
                                 <div>{t('dashboardPage.ownerMotivation')}</div> :
                                 <div>{t('dashboardPage.collaboratorMessage')}</div>
                             }

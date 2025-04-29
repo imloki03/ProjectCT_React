@@ -1,0 +1,161 @@
+.activation-checker-container {
+    position: relative;
+    height: 100%;
+    width: 100%;
+}
+
+.activation-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(8px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.activation-card {
+    background-image: url("../../../assets/images/forgetpassword-card-background.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 70%;
+    height: 70%;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 10px 10px 10px rgba(0, 0, 0, 0.22);
+    position: relative;
+}
+
+.logo-container {
+    margin-bottom: 0.5rem;
+}
+
+/*.otp-step, .activation-complete {*/
+/*    width: 100%;*/
+/*    text-align: center;*/
+/*    padding: 1rem;*/
+/*}*/
+
+.logout-button-container {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+}
+
+.logout-button {
+    font-weight: bold;
+}
+
+.activation-complete {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Reusing styles from forgetpassword component */
+.custom-otp-input-sample {
+    width: 3rem;
+    height: 3rem;
+    font-size: 1.5rem;
+    appearance: none;
+    text-align: center;
+    border: 1px solid var(--surface-400);
+    background: transparent;
+    outline: none;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    transition: outline-color 0.3s, box-shadow 0.3s;
+    color: var(--text-color);
+}
+
+.custom-otp-input-sample:focus {
+    outline: 2px solid var(--primary-color);
+    box-shadow: 0 0 4px var(--primary-color);
+}
+
+.custom-otp-input-sample:first-child {
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
+}
+
+.custom-otp-input-sample:last-child {
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
+}
+
+.custom-otp-input-sample:not(:last-child) {
+    margin-right: 8px;
+}
+
+.otp-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    text-align: center;
+}
+
+.otp-subtitle {
+    text-align: center;
+    color: black;
+    margin-bottom: 1.5rem;
+}
+
+.otp-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1.5rem;
+}
+
+.next-button {
+    margin-top: 1rem;
+}
+
+.next-button.p-button {
+    background-color: #800080 !important;
+    border-color: #800080 !important;
+}
+
+.next-button.p-button:hover {
+    background-color: rgba(236, 42, 244, 0.97) !important;
+}
+
+/* Styles for the Steps component */
+.p-steps .p-steps-item {
+    margin-right: 1rem;
+}
+
+.p-steps .p-steps-item:last-child {
+    margin-right: 0;
+}
+
+.p-steps .p-steps-item:last-child::after {
+    display: none;
+}
+
+.p-steps .p-steps-item::after {
+    content: "";
+    position: absolute;
+    top: 22.8%;
+    left: 100%;
+    width: 1rem;
+    height: 0.5px;
+    opacity: 15%;
+    background-color: currentColor;
+    transform: translateY(-50%);
+}
+
+.p-steps .p-steps-item .p-menuitem-link .p-steps-number {
+    background-color: #800080 !important;
+    color: white !important;
+}

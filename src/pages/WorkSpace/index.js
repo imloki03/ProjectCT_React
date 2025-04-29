@@ -11,6 +11,7 @@ import { ProjectCard } from "./ProjectCard";
 import { getAllCollabOfProject } from "../../api/collabApi";
 import TextFieldIcon from "../../components/TextFieldIcon";
 import BarProgress from "../../components/BarProgress";
+import ActivationChecker from "./ActivationChecker";
 
 const WorkSpacePage = () => {
     const { t } = useTranslation();
@@ -69,6 +70,7 @@ const WorkSpacePage = () => {
     ];
 
     return (
+        <ActivationChecker>
         <div className="workspace-container">
             <div className="workspace-header">
                 <h1 className="workspace-title">{t("workspacePage.projects")}</h1>
@@ -118,6 +120,7 @@ const WorkSpacePage = () => {
             )}
             {isCreateProjectModalOpen && <CreateProjectPopUp onClose={() => setIsCreateProjectModalOpen(false)} />}
         </div>
+        </ActivationChecker>
     );
 };
 

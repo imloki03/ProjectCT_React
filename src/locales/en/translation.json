@@ -522,5 +522,27 @@
     "deleteFailedDesc": "Failed to delete the project.",
     "uploadSuccessTitle": "Upload successfully",
     "uploadFailedTitle": "Upload avatar failed"
+  },
+  "accountActivation": {
+    "logout": "Log out",
+    "verifyOtp": "Verify OTP",
+    "activationComplete": "Activation Complete",
+    "activateAccount": "Activate Your Account",
+    "enterOtpSent": "Enter the OTP sent to",
+    "resendCode": "Resend Code",
+    "verifying": "Verifying...",
+    "submitCode": "Submit Code",
+    "congratulations": "Congratulations!",
+    "accountActivated": "Your account has been successfully activated",
+    "redirecting": "You will be redirected shortly...",
+    "otpSent": "OTP Sent",
+    "checkEmail": "Please check your email for the verification code",
+    "sendOtpFailed": "Failed to send OTP",
+    "activationSuccess": "Activation Successful",
+    "verificationFailed": "Verification Failed",
+    "invalidOtp": "Invalid OTP",
+    "enterComplete": "Please enter the complete 6-digit OTP",
+    "updateStatusFailed": "Status Update Failed",
+    "getUserInfoFailed": "Failed to Retrieve User Information"
   }
 }
