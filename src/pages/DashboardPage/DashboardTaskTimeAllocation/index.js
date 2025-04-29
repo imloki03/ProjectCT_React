@@ -38,7 +38,9 @@ const DashboardTaskTimeAllocation = ({ taskList, phaseList }) => {
             return startTime <= today;
         });
 
-        return startedTasks.map(task => {
+        return startedTasks
+            .filter(task => task.doneTime || task.status === "IN_PROGRESS")
+            .map(task => {
             const startTime = new Date(task.startTime);
             let endTime;
             let status;
@@ -146,7 +148,7 @@ const DashboardTaskTimeAllocation = ({ taskList, phaseList }) => {
                                     }}></div>
                                     <strong>{data.fullName}</strong>
                                 </div>
-                                <div>{t('dashboardPage.taskTimeAllocation.tooltip.startTime')}: {new Date(data.startTime).toLocaleString()}</div>
+                                <div>{t('dashboardPage.taskTimeAllocation.tooltip.startTime')}: {new Date(data.startTime).toLocaleDateString('en-GB')}</div>
                                 {/*<div>{t('dashboardPage.taskTimeAllocation.tooltip.status')}: {data.taskStatus}</div>*/}
                                 <div>{t('dashboardPage.taskTimeAllocation.tooltip.timeSpent')}: {data.hours} {t('dashboardPage.taskTimeAllocation.hour')}</div>
                                 <div>{t('dashboardPage.taskTimeAllocation.tooltip.state')}: {

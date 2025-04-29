@@ -479,7 +479,7 @@
     "taskTimeAllocation": {
       "title": "Phân bổ thời gian của bạn",
       "phaseLabel": "Giai đoạn",
-      "emptyState": "Không có nhiệm vụ nào cho giai đoạn đã chọn",
+      "emptyState": "Không có công việc nào cho giai đoạn đã chọn",
       "allPhase": "Tất cả",
       "hour": "giờ",
       "tooltip": {
@@ -491,7 +491,7 @@
         "inProgress": "Đang tiến hành"
       },
       "axis": {
-        "tasks": "Nhiệm vụ",
+        "tasks": "Công việc",
         "hoursSpent": "Giờ đã dùng"
       },
       "legend": {

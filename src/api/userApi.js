@@ -22,11 +22,6 @@ export const changePassword = async (username, changePasswordRequest) => {
     return response.data;
 };
 
-export const activateUser = async (username) => {
-    const response = await axiosInstance.patch(`${userPrefix}/${username}/status`);
-    return response.data;
-};
-
 export const getUserInfoViaToken = async () => {
     const response = await axiosInstance.get(`${userPrefix}/t`);
     return response.data;
@@ -34,5 +29,10 @@ export const getUserInfoViaToken = async () => {
 
 export const checkUserExist = async (username) => {
     const response = await axiosInstance.patch(`${userPrefix}/exist/${username}`);
+    return response.data;
+};
+
+export const updateUserStatus = async (updatedUser) => {
+    const response = await axiosInstance.patch(`${userPrefix}/status`, updatedUser);
     return response.data;
 };

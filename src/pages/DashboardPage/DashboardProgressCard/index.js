@@ -54,9 +54,9 @@ const DashboardProgressCard = ({ taskList, collaborators, currentUser, project }
 
         const allCollaboratorsData = [];
 
-        if (currentUser && !userNames[currentUser.id]) {
-            userNames[currentUser.id] = currentUser.name || `${t("dashboardPage.progressCard.user")} ${currentUser.id}`;
-        }
+        // if (currentUser && !userNames[currentUser.id]) {
+        //     userNames[currentUser.id] = currentUser.name || `${t("dashboardPage.progressCard.user")} ${currentUser.id}`;
+        // }
 
         Object.keys(userNames).forEach(userId => {
             const userData = dates.map(date => {
@@ -75,6 +75,10 @@ const DashboardProgressCard = ({ taskList, collaborators, currentUser, project }
         const currentUserData = allCollaboratorsData.filter(
             series => series.id === (userNames[currentUserCollabId] || `${t("dashboardPage.progressCard.user")} ${currentUser.id}`)
         );
+
+        // console.log(collaborators)
+        // console.log("currentUserData", currentUserData)
+        // console.log("all", allCollaboratorsData)
 
         return {
             allCollaborators: allCollaboratorsData,
@@ -170,7 +174,7 @@ const DashboardProgressCard = ({ taskList, collaborators, currentUser, project }
                                     borderRadius: '4px',
                                     boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
                                 }}>
-                                    <strong>{t("dashboardPage.progressCard.date")}: {new Date(slice.points[0].data.x).toLocaleDateString()}</strong>
+                                    <strong>{t("dashboardPage.progressCard.date")}: {new Date(slice.points[0].data.x).toLocaleDateString('en-GB')}</strong>
                                     <div style={{ marginTop: '8px' }}>
                                         {slice.points.map(point => (
                                             <div key={point.serieId} style={{

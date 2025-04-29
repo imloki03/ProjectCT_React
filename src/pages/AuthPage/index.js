@@ -100,7 +100,15 @@ const AuthPage = () => {
             };
             try {
                 await register(requestData);
-                // navigate("/"); nav to workspace
+                try {
+                    const loginResponse = await login(registerData.username, registerData.password);
+                    localStorage.setItem("token", loginResponse.data.token.token);
+                    dispatch(loginSuccess(loginResponse.data));
+                    navigate(`${routeLink.default}`);
+                } catch (loginError) {
+                    console.log(loginError)
+                    showNotification("error", t("authPage.loginFailed"), loginError.response.data.desc);
+                }
             } catch (error) {
                 showNotification("error", t("authPage.signUpFailed"), error.response.data.desc);
             } finally {
@@ -182,7 +190,7 @@ const AuthPage = () => {
                         <div className="social-buttons">
                             <button
                                 className="social-login-button google-button"
-                                onClick={() => handleSocialLogin('google')}
+                                onClick={() => window.location.href = 'http://localhost:8888/oauth2/authorization/google'}
                                 disabled={isProcessingSocial}
                             >
                                 <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20" height="20" viewBox="0 0 48 48">
@@ -192,7 +200,7 @@ const AuthPage = () => {
                             </button>
                             <button
                                 className="social-login-button github-button"
-                                onClick={() => handleSocialLogin('github')}
+                                onClick={() => window.location.href = 'http://localhost:8888/oauth2/authorization/github'}
                                 disabled={isProcessingSocial}
                             >
                                 <svg viewBox="0 0 24 24" width="20" height="20" className="social-icon">

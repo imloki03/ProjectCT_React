@@ -1,12 +1,13 @@
 import { useState, useEffect, useRef } from "react";
 import { Client } from "@stomp/stompjs";
+import {WEBSOCKET_URL} from "../constants/env"
 
-export const useWebSocketChat = (brokerUrl = "ws://localhost:8888/ws") => { //env + env deploy
+export const useWebSocketChat = (brokerUrl = WEBSOCKET_URL) => { //env + env deploy
     const [connected, setConnected] = useState(false);
     const [messages, setMessages] = useState([]);
     const clientRef = useRef(null);
     const subscriptionsRef = useRef(new Map());
-
+    
     useEffect(() => {
         const client = new Client({
             brokerURL: brokerUrl,

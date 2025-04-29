@@ -41,3 +41,10 @@ export const updateMediaVersion = async (mediaId, mediaRequest) => {
     const response = await axiosInstance.put(`${storagePrefix}/${mediaId}`, mediaRequest);
     return response.data;
 };
+
+export const searchMedia = async (projectId, keyword, page = 0, size = 6) => {
+    const response = await axiosInstance.get(`${storagePrefix}/search/p/${projectId}`, {
+        params: { page, keyword, size, sort: "uploadTime,desc" }
+    });
+    return response.data;
+};

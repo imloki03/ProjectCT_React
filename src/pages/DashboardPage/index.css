@@ -38,6 +38,7 @@
 }
 
 .dashboard-welcome-sub-content{
+    gap: 1rem;
     font-size: 1.1rem;
     display: flex;
     justify-content: space-between;
