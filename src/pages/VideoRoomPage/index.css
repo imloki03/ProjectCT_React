@@ -1,0 +1,21 @@
+.video-container {
+    padding: 0.3rem;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: width 1s ease, height 1s ease;
+}
+.video-item {
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    /*background: #797979;*/
+    background: transparent;
+    /*object-fit: cover;*/
+    /*transform: scaleX(-1);*/
+}
+

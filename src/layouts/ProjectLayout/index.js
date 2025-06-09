@@ -66,6 +66,7 @@ const ProjectLayout = () => {
         { label: "Backlog", icon: "pi pi-list", command: () => navigate(routeLink.projectTabs.backlog), className: activeRoute === routeLink.projectTabs.backlog ? "active-menu-item" : "" },
         { label: "Phase", icon: "pi pi-sitemap", command: () => navigate(routeLink.projectTabs.phase), className: activeRoute === routeLink.projectTabs.phase ? "active-menu-item" : "" },
         { label: "Chatbox", icon: "pi pi-comments", command: () => navigate(routeLink.projectTabs.chatbox), className: activeRoute === routeLink.projectTabs.chatbox ? "active-menu-item" : "" },
+        { label: "Meeting", icon: "pi pi-video", command: () => navigate(routeLink.projectTabs.meeting), className: activeRoute === routeLink.projectTabs.meeting ? "active-menu-item" : "" },
         { label: "Storage", icon: "pi pi-folder", command: () => navigate(routeLink.projectTabs.storage), className: activeRoute === routeLink.projectTabs.storage ? "active-menu-item" : "" },
         { label: "Collaborator", icon: "pi pi-users", command: () => navigate(routeLink.projectTabs.collaborator), className: activeRoute === routeLink.projectTabs.collaborator ? "active-menu-item" : "" },
     ];

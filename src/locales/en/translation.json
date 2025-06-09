@@ -544,5 +544,12 @@
     "enterComplete": "Please enter the complete 6-digit OTP",
     "updateStatusFailed": "Status Update Failed",
     "getUserInfoFailed": "Failed to Retrieve User Information"
+  },
+  "meetingPage": {
+    "videoOn": "Turn on camera",
+    "videoOff": "Turn off camera",
+    "micOn": "Voice on",
+    "micOff": "Voice off",
+    "leave": "Leave"
   }
 }
