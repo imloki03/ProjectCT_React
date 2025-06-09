@@ -19,6 +19,7 @@ import PageNotFound from "../pages/PageNotFound";
 import DashboardPage from "../pages/DashboardPage";
 import EditProject from "../pages/EditProjectPage";
 import OAuthRedirectPage from "../pages/OAuthRedirectPage";
+import VideoRoomPage from "../pages/VideoRoomPage";
 
 export const routeLink = {
     default: '/',
@@ -39,6 +40,7 @@ export const routeLink = {
         chatbox: "chatbox",
         storage: "storage",
         collaborator: "collaborator",
+        meeting: "meeting",
     },
     pageNotFound: "/404PageNotFound",
     oauthGithub: "/oauth2/github/redirect",
@@ -72,6 +74,7 @@ export const internalRoute = createAppRoutes([
             { path: routeLink.projectTabs.taskPhase, element: <TaskPhasePage /> },
             { path: routeLink.projectTabs.collaborator, element: <CollabPage /> },
             { path: routeLink.projectTabs.stat, element: <StatisticPage /> },
+            { path: routeLink.projectTabs.meeting, element: <VideoRoomPage /> },
         ],
     },
     {

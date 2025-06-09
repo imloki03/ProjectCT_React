@@ -70,7 +70,7 @@ const WorkSpacePage = () => {
     ];
 
     return (
-        <ActivationChecker>
+        // <ActivationChecker>
         <div className="workspace-container">
             <div className="workspace-header">
                 <h1 className="workspace-title">{t("workspacePage.projects")}</h1>
@@ -120,7 +120,7 @@ const WorkSpacePage = () => {
             )}
             {isCreateProjectModalOpen && <CreateProjectPopUp onClose={() => setIsCreateProjectModalOpen(false)} />}
         </div>
-        </ActivationChecker>
+        // </ActivationChecker>
     );
 };
 
