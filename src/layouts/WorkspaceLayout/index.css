@@ -48,12 +48,15 @@
 }
 
 .workspace-layout-header {
-    width: 100%;
+    width: 81%;
     height: 3rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    background-color: #FFFFFF;
     border-bottom: 2px solid #e3e3e3;
+    position: fixed;
+    z-index: 9999999999
 }
 
 .workspace-layout-header-action {
@@ -65,8 +68,8 @@
 }
 
 .workspace-layout-outline {
-    padding: 1rem;
-    min-height: calc(100vh - 3rem);
+    padding: 3rem 1rem 1rem;
+    min-height: calc(100vh);
     background-image: url('../../assets/images/layout_background.jpg');
     background-repeat: repeat-y;
     background-size: 100% auto;

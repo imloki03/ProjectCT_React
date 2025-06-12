@@ -35,7 +35,7 @@ const Header = () => {
                     <Link to="/auth">
                         <Button label={t("landingPage.signin")} className="p-button-outlined p-button-sm text-white border-white sign-in-btn" />
                     </Link>
-                    <Link to="/auth">
+                    <Link to="/auth?t=sign-up">
                         <BasicButton label={t("landingPage.signup")} className="p-button p-button-sm p-button-primary sign-up-btn" />
                     </Link>
                 </div>
