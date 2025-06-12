@@ -54,12 +54,15 @@
 }
 
 .project-layout-header {
-    width: 100%;
+    width: 81%;
     height: 3rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid #e3e3e3;
+    background-color: #FFFFFF;
+    border-bottom: 2px solid #e3e3e3;
+    position: fixed;
+    z-index: 9999999999
 }
 
 .project-layout-header-action {
@@ -71,7 +74,8 @@
 }
 
 .project-layout-outline {
-    min-height: calc(100vh - 3rem);
+    padding-top: 3rem;
+    min-height: calc(100vh);
     background-image: url('../../assets/images/layout_background.jpg');
     background-repeat: repeat-y;
     background-size: 100% auto;

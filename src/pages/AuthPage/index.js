@@ -15,6 +15,7 @@ import DropDownField from "../../components/DropDownField";
 import { Divider } from "primereact/divider";
 import BasicButton from "../../components/Button";
 import {routeLink} from "../../router/Router";
+import {API_BASE_URL} from "../../constants/env";
 
 const AuthPage = () => {
     const { t } = useTranslation();
@@ -190,7 +191,7 @@ const AuthPage = () => {
                         <div className="social-buttons">
                             <button
                                 className="social-login-button google-button"
-                                onClick={() => window.location.href = 'http://localhost:8888/oauth2/authorization/google'}
+                                onClick={() => window.location.href = `${API_BASE_URL}oauth2/authorization/google`}
                                 disabled={isProcessingSocial}
                             >
                                 <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20" height="20" viewBox="0 0 48 48">
@@ -200,7 +201,7 @@ const AuthPage = () => {
                             </button>
                             <button
                                 className="social-login-button github-button"
-                                onClick={() => window.location.href = 'http://localhost:8888/oauth2/authorization/github'}
+                                onClick={() => window.location.href = `${API_BASE_URL}oauth2/authorization/github`}
                                 disabled={isProcessingSocial}
                             >
                                 <svg viewBox="0 0 24 24" width="20" height="20" className="social-icon">
