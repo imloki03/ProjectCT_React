@@ -1,7 +1,7 @@
 import {Link, Outlet, useLocation, useNavigate} from "react-router-dom";
-import "./index.css"
+import "./index.css";
 import {LoadingProvider} from "../../contexts/LoadingContext";
-import {NotificationProvider, useNotification} from "../../contexts/NotificationContext";
+import {NotificationProvider} from "../../contexts/NotificationContext";
 import LogoWithName from "../../assets/images/logo_with_name.png";
 import {PanelMenu} from "primereact/panelmenu";
 import {Badge} from "primereact/badge";
@@ -9,7 +9,6 @@ import Avatar from "../../components/Avatar";
 import {BreadcrumbProvider, Breadcrumbs} from "../../contexts/BreadCrumbContext";
 import {useEffect, useRef, useState} from "react";
 import {Menu} from "primereact/menu";
-import {getAllProjects} from "../../api/projectApi";
 import {useTranslation} from "react-i18next";
 import {logout} from "../../redux/slices/userSlice";
 import {routeLink} from "../../router/Router";
@@ -18,19 +17,32 @@ import Drawer from "./Drawer";
 import AssitantICon from "../../assets/icons/assistant_icon.png";
 import AssistantChat from "../../components/AssistantChat";
 import LanguageSelector from "../../components/LanguageSelector";
+import {askNotificationPermission, onMessageListener, refreshFcmToken} from "../../config/firebaseConfig";
+import {OverlayPanel} from "primereact/overlaypanel";
+import {TabView, TabPanel} from "primereact/tabview";
+import {
+    getAllNotificationsOfUser,
+    getAllReadNotificationsOfUser,
+    getAllUnReadNotificationsOfUser
+} from "../../api/notiApi";
+import NotificationBell from "../../components/NotificationBell";
 
 const ProjectLayout = () => {
     const menuRef = useRef(null);
+    const op = useRef(null);
     const location = useLocation();
     const [projects, setProjects] = useState([]);
     const { t } = useTranslation();
     const navigate = useNavigate();
     const dispatch = useDispatch();
+
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
     const [drawerTitle, setDrawerTitle] = useState('');
     const [drawerContent, setDrawerContent] = useState(null);
-
     const [isAssistantOpen, setIsAssistantOpen] = useState(false);
+
+    const [unreadNotifications, setUnreadNotifications] = useState([]);
+    const [readNotifications, setReadNotifications] = useState([]);
 
     const openDrawer = (title = 'Details', content = null) => {
         setDrawerTitle(title);
@@ -49,11 +61,12 @@ const ProjectLayout = () => {
     const pathSegments = location.pathname.split("/");
     const activeRoute = pathSegments.length > 2 ? pathSegments[3] : "";
 
-    const handleLogout = () => {
+    const handleLogout = async () => {
         dispatch(logout());
         localStorage.removeItem("token");
-        navigate(routeLink.default)
-    }
+        await refreshFcmToken();
+        navigate(routeLink.default);
+    };
 
     const menuItems = [
         { label: t("workspaceLayout.editProfile"), icon: "pi pi-user-edit", command: () => navigate(routeLink.profile) },
@@ -83,15 +96,14 @@ const ProjectLayout = () => {
                             <Link to="/">
                                 <img src={LogoWithName} alt="Logo" className="nav-logo"/>
                             </Link>
-
                             <PanelMenu model={items} className="project-custom-menu" />
                         </div>
                         <div className={`project-layout-content ${isDrawerOpen ? 'drawer-open' : ''}`}>
                             <div className="project-layout-header">
-                                <Breadcrumbs/>
+                                <Breadcrumbs />
                                 <div className="project-layout-header-action">
-                                    <LanguageSelector/>
-                                    <i className="pi pi-bell" style={{ fontSize: '1.3rem' }}></i>
+                                    <LanguageSelector />
+                                    <NotificationBell/>
                                     <div>
                                         <Avatar
                                             label={user?.name}
@@ -104,37 +116,40 @@ const ProjectLayout = () => {
                                 </div>
                             </div>
                             <div className="project-layout-outline">
-                                <Outlet context={{ openDrawer, closeDrawer, isDrawerOpen}}/>
+                                <Outlet context={{ openDrawer, closeDrawer, isDrawerOpen }} />
                             </div>
                         </div>
-                        <Drawer isOpen={isDrawerOpen} title={drawerTitle} content={drawerContent}
+                        <Drawer
+                            isOpen={isDrawerOpen}
+                            title={drawerTitle}
+                            content={drawerContent}
                             onClose={() => closeDrawer()}
                         />
                     </div>
                     {
                         activeRoute !== routeLink.projectTabs.chatbox &&
-                        <div style={{
-                            position: "fixed",
-                            bottom: "1.5rem",
-                            right: "1.5rem",
-                            backgroundImage: `url(${AssitantICon})`,
-                            backgroundSize: "cover",
-                            backgroundPosition: "center",
-                            borderRadius: "50%",
-                            width: "3.2rem",
-                            height: "3.2rem",
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
-                            cursor: "pointer",
-                            zIndex: 1000
-                        }}
-                             onClick={()=>setIsAssistantOpen(true)}
-                        >
-                        </div>
+                        <div
+                            style={{
+                                position: "fixed",
+                                bottom: "1.5rem",
+                                right: "1.5rem",
+                                backgroundImage: `url(${AssitantICon})`,
+                                backgroundSize: "cover",
+                                backgroundPosition: "center",
+                                borderRadius: "50%",
+                                width: "3.2rem",
+                                height: "3.2rem",
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                                boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
+                                cursor: "pointer",
+                                zIndex: 1000
+                            }}
+                            onClick={() => setIsAssistantOpen(true)}
+                        />
                     }
-                    {isAssistantOpen && <AssistantChat onClose={() => setIsAssistantOpen(false)}/>}
+                    {isAssistantOpen && <AssistantChat onClose={() => setIsAssistantOpen(false)} />}
                 </BreadcrumbProvider>
             </LoadingProvider>
         </NotificationProvider>

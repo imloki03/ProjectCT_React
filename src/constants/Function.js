@@ -12,6 +12,7 @@ export const APP_FUNCTIONS = {
     MOVE_TASK_TO_BACKLOG: "Move Task to Backlog",
     ASSIGN_TASK: "Assign Task",
     DELETE_TASK: "Delete Task",
+    FEED_BACK: "Feedback",
 
     // STORAGE related functions
     ADD_MEDIA: "Add Media",

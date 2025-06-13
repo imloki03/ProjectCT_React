@@ -53,7 +53,10 @@ const AccountActivationOverlay = ({ onActivationComplete }) => {
                     });
                     try {
                         const updatedUserInfo = await getUserInfo(currentUser?.username).data;
-                        dispatch(loginSuccess(updatedUserInfo));
+                        dispatch(loginSuccess({
+                            userData: updatedUserInfo,
+                            token: localStorage.getItem("token"),
+                        }));
                         showNotification("success", t("accountActivation.activationSuccess"), t("accountActivation.accountActivated"));
                         setTimeout(() => {
                             onActivationComplete();

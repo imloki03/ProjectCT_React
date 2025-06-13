@@ -33,6 +33,6 @@ export const checkUserExist = async (username) => {
 };
 
 export const updateUserStatus = async (updatedUser) => {
-    const response = await axiosInstance.patch(`${userPrefix}/status`, updatedUser);
+    const response = await axiosInstance.put(`${userPrefix}/status`, updatedUser);
     return response.data;
 };

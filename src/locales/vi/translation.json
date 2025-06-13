@@ -415,8 +415,8 @@
   },
   "dashboardPage": {
     "welcome": "Chào mừng bạn đến với dashboard, {{name}}",
-    "ownerMotivation": "Chìa khóa không nằm ở việc ưu tiên những gì có trong lịch trình, mà là sắp xếp lịch trình cho những điều quan trọng.",
-    "collaboratorMessage": "Xin chào các quản lý dự án, bạn có thể xem bảng dashboard của cộng tác viên.",
+    "collaboratorMessage": "Chìa khóa không nằm ở việc ưu tiên những gì có trong lịch trình, mà là sắp xếp lịch trình cho những điều quan trọng.",
+    "ownerMotivation": "Xin chào các quản lý dự án, bạn có thể xem bảng dashboard của cộng tác viên.",
     "selectCollaborator": "Chọn cộng tác viên",
     "loadingIndicator": "Đang tải...",
     "projectCard": {
@@ -522,5 +522,34 @@
     "deleteFailedDesc": "Không thể xóa dự án.",
     "uploadSuccessTitle": "Tải lên thành công",
     "uploadFailedTitle": "Tải lên avatar thất bại"
+  },
+  "accountActivation": {
+    "logout": "Đăng xuất",
+    "verifyOtp": "Xác minh OTP",
+    "activationComplete": "Kích hoạt hoàn tất",
+    "activateAccount": "Kích hoạt tài khoản của bạn",
+    "enterOtpSent": "Nhập mã OTP đã được gửi đến",
+    "resendCode": "Gửi lại mã",
+    "verifying": "Đang xác minh...",
+    "submitCode": "Gửi mã",
+    "congratulations": "Chúc mừng!",
+    "accountActivated": "Tài khoản của bạn đã được kích hoạt thành công",
+    "redirecting": "Bạn sẽ được chuyển hướng trong giây lát...",
+    "otpSent": "Mã OTP đã được gửi",
+    "checkEmail": "Vui lòng kiểm tra email để nhận mã xác minh",
+    "sendOtpFailed": "Gửi mã OTP thất bại",
+    "activationSuccess": "Kích hoạt thành công",
+    "verificationFailed": "Xác minh thất bại",
+    "invalidOtp": "Mã OTP không hợp lệ",
+    "enterComplete": "Vui lòng nhập đầy đủ 6 chữ số OTP",
+    "updateStatusFailed": "Cập nhật trạng thái thất bại",
+    "getUserInfoFailed": "Không thể lấy thông tin người dùng"
+  },
+  "meetingPage": {
+    "videoOn": "Bật camera",
+    "videoOff": "Tắt camera",
+    "micOn": "Bật tiếng",
+    "micOff": "Tắt tiếng",
+    "leave": "Rời khỏi"
   }
 }

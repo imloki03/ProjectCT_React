@@ -1,5 +1,5 @@
 .media-message-item {
-    width: 22.5rem;
+    width: 23rem;
     display: flex;
     border: 1px solid #ddd;
     border-radius: 0.5rem;
@@ -8,6 +8,7 @@
     padding: 1rem;
     flex-direction: column;
     justify-content: space-between;
+    background-color: #fff;
 }
 
 .message-file-container{
@@ -95,5 +96,5 @@
     width: 100%;
     height: auto;
     position: relative;
-    z-index: -1; /* GIF-issue */
+    z-index: 999; /* GIF-issue */
 }

@@ -45,6 +45,29 @@ const MediaMessageItemCard = ({message, isLoading, isSneakPeak, file, isSideBar,
     return (
         <div className="media-message-item">
             {/* Sneakpeak container remains unchanged */}
+            {(file.type === "IMAGE" || file.type === "VIDEO") && isSneakPeak && !isLoading && (
+                <div className="file-sneakpeak-container">
+                    {file.type === "IMAGE" && !mediaLoaded && (
+                        <Skeleton width={imageSize.width} height={imageSize.height} borderRadius="8px" />
+                    )}
+                    {file.type === "IMAGE" ? (
+                        <img
+                            src={file.link}
+                            alt={file.name}
+                            className="file-sneakpeak"
+                            onLoad={handleImageLoad}
+                            style={{display: mediaLoaded ? "block" : "none"}}
+                        />
+                    ) : null}
+                    {file.type === "VIDEO" ? (
+                        <video
+                            src={file.link}
+                            controls
+                            className="file-sneakpeak"
+                        />
+                    ) : null}
+                </div>
+            )}
             <div className={`message-file-container`}>
                 <div
                     className="file-type-img"
