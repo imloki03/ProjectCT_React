@@ -10,6 +10,7 @@
     z-index: 1000;
     border-left: 1px solid #e3e3e3;
     overflow-y: auto;
+    padding-top: 3.5rem;
 }
 
 .project-layout-drawer.open {
