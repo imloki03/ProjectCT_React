@@ -3,7 +3,7 @@ import "./index.css";
 import { useDispatch } from "react-redux";
 import { loginSuccess } from "../../redux/slices/userSlice";
 import { login, loginWithSocialProvider } from "../../api/authApi"; // Updated import
-import { register } from "../../api/userApi";
+import {editProfile, register} from "../../api/userApi";
 import {useNavigate, useSearchParams} from "react-router-dom";
 import { useNotification } from "../../contexts/NotificationContext";
 import { useTranslation } from "react-i18next";
@@ -15,6 +15,9 @@ import DropDownField from "../../components/DropDownField";
 import { Divider } from "primereact/divider";
 import BasicButton from "../../components/Button";
 import {routeLink} from "../../router/Router";
+import {requestToken} from "../../config/firebaseConfig";
+import {getAllProjects} from "../../api/projectApi";
+import {subscribeToTopics} from "../../api/notiApi";
 import {API_BASE_URL} from "../../constants/env";
 
 const AuthPage = () => {
@@ -105,7 +108,7 @@ const AuthPage = () => {
                     const loginResponse = await login(registerData.username, registerData.password);
                     localStorage.setItem("token", loginResponse.data.token.token);
                     dispatch(loginSuccess(loginResponse.data));
-                    navigate(`${routeLink.default}`);
+                    // navigate(`${routeLink.default}`);
                 } catch (loginError) {
                     console.log(loginError)
                     showNotification("error", t("authPage.loginFailed"), loginError.response.data.desc);
@@ -125,7 +128,19 @@ const AuthPage = () => {
                 const response = await login(loginData.username, loginData.password);
                 localStorage.setItem("token", response.data.token.token);
                 dispatch(loginSuccess(response.data));
-                navigate(`${routeLink.default}`);
+                const token = await requestToken();
+                const projects = await getAllProjects();
+                const projectNameList= projects.data.map(p => p.name.replaceAll(" ", "_"));
+                const request = {
+                    topics: projectNameList,
+                    token: token
+                }
+                await subscribeToTopics(request)
+                const request2 = {
+                    fcmToken : token
+                }
+                await editProfile(request2);
+                // navigate(`${routeLink.default}`);
             } catch (error) {
                 console.log(error)
                 showNotification("error", t("authPage.loginFailed"), error.response.data.desc);

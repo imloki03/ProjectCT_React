@@ -13,7 +13,7 @@ import { Avatar as PrimeAvatar } from 'primereact/avatar';
 import { Tooltip } from 'primereact/tooltip';
 import {hasPermission} from "../../../utils/CollabUtil";
 
-const MessageItem = ({ msg, index, reversedMessages, user, project, isLoading, readerList, pinMessage, storeMediaMessage }) => {
+const MessageItem = ({ msg, index, reversedMessages, user, project, isLoading, readerList, pinMessage, storeMediaMessage, isFeedback = false }) => {
     const [showTime, setShowTime] = useState(false);
     const [showPin, setShowPin] = useState(false);
     const [pinPosition, setPinPosition] = useState(0);
@@ -159,7 +159,7 @@ const MessageItem = ({ msg, index, reversedMessages, user, project, isLoading, r
                         <p>{msg.content}</p>
                     </div>
                 )}
-                {showPin && (
+                {showPin && !isFeedback && (
                     <img
                         src={msg.isPinned ? thumbtackSlashIcon : thumbtackIcon}
                         alt="pin"

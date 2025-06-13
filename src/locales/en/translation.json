@@ -415,8 +415,8 @@
   },
   "dashboardPage": {
     "welcome": "Welcome to your dashboard, {{name}}",
-    "ownerMotivation": "The key is not to prioritize what's on your schedule, but to schedule your priorities.",
-    "collaboratorMessage": "Dear project owners, you can view your collaborators dashboard.",
+    "collaboratorMessage": "The key is not to prioritize what's on your schedule, but to schedule your priorities.",
+    "ownerMotivation": "Dear project owners, you can view your collaborators dashboard.",
     "selectCollaborator": "Select Collaborator",
     "loadingIndicator": "Loading...",
     "projectCard": {

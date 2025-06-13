@@ -73,7 +73,7 @@ const DateTimeSelector = ({ type, startDate, setStartDate, endDate, setEndDate }
                 <DateTimePicker
                     label={type === "start" ? t("backlogPage.startDate") : t("backlogPage.endDate")}
                     value={type === "start" ? startDate : endDate}
-                    minDate={type === "start" ? new Date() : startDate}
+                    // minDate={type === "start" ? new Date() : startDate}
                     onChange={(e) => {
                         const newDate = e.target.value;
                         if (type === "start") {

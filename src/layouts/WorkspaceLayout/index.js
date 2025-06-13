@@ -19,6 +19,9 @@ import AssitantICon from "../../assets/icons/assistant_icon.png"
 import AssistantChat from "../../components/AssistantChat";
 import LanguageSelector from "../../components/LanguageSelector";
 import UpdateOAuth from "../../components/UpdateOAuth";
+import {askNotificationPermission, refreshFcmToken, onMessageListener, requestToken} from "../../config/firebaseConfig";
+import {editProfile} from "../../api/userApi";
+import NotificationBell from "../../components/NotificationBell";
 
 const WorkspaceLayout = () => {
     const menuRef = useRef(null);
@@ -186,8 +189,14 @@ const WorkspaceLayout = () => {
         }
     ],[projects, t]);
 
-    const handleLogout = () => {
+    const handleLogout = async () => {
         dispatch(logout());
+        const token = await requestToken();
+        const request2 = {
+            fcmToken : token
+        }
+        await editProfile(request2);
+        await refreshFcmToken();
         localStorage.removeItem("token");
         navigate(routeLink.default)
     }
@@ -196,6 +205,13 @@ const WorkspaceLayout = () => {
         { label: t("workspaceLayout.editProfile"), icon: "pi pi-user-edit", command: () => navigate(routeLink.profile) },
         { label: t("workspaceLayout.logout"), icon: "pi pi-sign-out", command: () => handleLogout() }
     ];
+
+    useEffect(() => {
+        askNotificationPermission();
+        const unsubscribe = onMessageListener((payload) => {
+            console.log("📬 Notification Payload:", payload);
+        });
+    }, []);
 
     return (
         <NotificationProvider>
@@ -219,7 +235,7 @@ const WorkspaceLayout = () => {
                                 <Breadcrumbs/>
                                 <div className="workspace-layout-header-action">
                                     <LanguageSelector/>
-                                    <i className="pi pi-bell" style={{ fontSize: '1.3rem' }}></i>
+                                    <NotificationBell/>
                                     <div>
                                         <Avatar
                                             label={user?.name}
