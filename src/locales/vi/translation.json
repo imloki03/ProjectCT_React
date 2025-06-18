@@ -286,7 +286,8 @@
     "noPhase": "Không có giai đoạn nào để di chuyển đến!",
     "provideProof": "Vui lòng cung cấp bằng chứng rằng bạn đã hoàn thành công việc này!",
     "uploadProof": "Tải lên bằng chứng",
-    "uploadProofSubtitle": "Cung cấp ít nhất 1 tệp để đảm bảo rằng bạn đã hoàn thành nhiệm vụ này."
+    "uploadProofSubtitle": "Cung cấp ít nhất 1 tệp để đảm bảo rằng bạn đã hoàn thành nhiệm vụ này.",
+    "feedback": "Phản hồi"
   },
   "collabPage": {
     "updateRole": "Cập nhật vai trò",

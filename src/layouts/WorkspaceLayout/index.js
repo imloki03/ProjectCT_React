@@ -190,7 +190,6 @@ const WorkspaceLayout = () => {
     ],[projects, t]);
 
     const handleLogout = async () => {
-        dispatch(logout());
         const token = await requestToken();
         const request2 = {
             fcmToken : token
@@ -198,7 +197,8 @@ const WorkspaceLayout = () => {
         await editProfile(request2);
         await refreshFcmToken();
         localStorage.removeItem("token");
-        navigate(routeLink.default)
+        // navigate(routeLink.default)
+        dispatch(logout());
     }
 
     const menuItems = [

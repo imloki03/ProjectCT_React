@@ -17,7 +17,7 @@ import Drawer from "./Drawer";
 import AssitantICon from "../../assets/icons/assistant_icon.png";
 import AssistantChat from "../../components/AssistantChat";
 import LanguageSelector from "../../components/LanguageSelector";
-import {askNotificationPermission, onMessageListener, refreshFcmToken} from "../../config/firebaseConfig";
+import {askNotificationPermission, onMessageListener, refreshFcmToken, requestToken} from "../../config/firebaseConfig";
 import {OverlayPanel} from "primereact/overlaypanel";
 import {TabView, TabPanel} from "primereact/tabview";
 import {
@@ -26,6 +26,7 @@ import {
     getAllUnReadNotificationsOfUser
 } from "../../api/notiApi";
 import NotificationBell from "../../components/NotificationBell";
+import {editProfile} from "../../api/userApi";
 
 const ProjectLayout = () => {
     const menuRef = useRef(null);
@@ -62,11 +63,16 @@ const ProjectLayout = () => {
     const activeRoute = pathSegments.length > 2 ? pathSegments[3] : "";
 
     const handleLogout = async () => {
-        dispatch(logout());
-        localStorage.removeItem("token");
+        const token = await requestToken();
+        const request2 = {
+            fcmToken : token
+        }
+        await editProfile(request2);
         await refreshFcmToken();
-        navigate(routeLink.default);
-    };
+        localStorage.removeItem("token");
+        // navigate(routeLink.default)
+        dispatch(logout());
+    }
 
     const menuItems = [
         { label: t("workspaceLayout.editProfile"), icon: "pi pi-user-edit", command: () => navigate(routeLink.profile) },

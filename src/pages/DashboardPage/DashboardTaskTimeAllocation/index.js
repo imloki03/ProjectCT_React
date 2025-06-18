@@ -52,12 +52,12 @@ const DashboardTaskTimeAllocation = ({ taskList, phaseList }) => {
                     endTime = new Date();
                     status = "in-progress";
                 }
-
                 const hoursSpent = Math.max(0, (endTime - startTime) / (1000 * 60 * 60));
                 const roundedHours = Math.round(hoursSpent * 10) / 10;
 
                 return {
-                    task: task.name.length > 15 ? `${task.name.substring(0, 15)}...` : task.name,
+                    id: task.id,
+                    taskName: task.name.length > 15 ? `${task.name.substring(0, 15)}...` : task.name,
                     fullName: task.name,
                     hours: roundedHours,
                     status: status,
@@ -100,7 +100,7 @@ const DashboardTaskTimeAllocation = ({ taskList, phaseList }) => {
                         <ResponsiveBar
                             data={chartData}
                             keys={['hours']}
-                            indexBy="task"
+                            indexBy="id"
                             margin={{ top: 20, right: 30, bottom: 70, left: 60 }}
                             padding={0.3}
                             valueScale={{ type: 'linear' }}
@@ -114,7 +114,11 @@ const DashboardTaskTimeAllocation = ({ taskList, phaseList }) => {
                                 tickPadding: 5,
                                 legend: t('dashboardPage.taskTimeAllocation.axis.tasks'),
                                 legendPosition: 'middle',
-                                legendOffset: 65
+                                legendOffset: 65,
+                                format: (value) => {
+                                    const task = chartData.find(item => item.id.toString() === value.toString());
+                                    return task ? task.taskName : value;
+                                }
                             }}
                             axisLeft={{
                                 tickSize: 5,

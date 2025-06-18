@@ -92,6 +92,28 @@ const AuthPage = () => {
         </>
     );
 
+    const loginUser = async (username, password) => {
+        try {
+            const response = await login(username, password);
+            localStorage.setItem("token", response.data.token.token);
+
+            const token = await requestToken();
+            const projects = await getAllProjects();
+            const projectNameList = projects.data.map(p => p.name.replaceAll(" ", "_"));
+
+            await subscribeToTopics({ topics: projectNameList, token });
+            await editProfile({ fcmToken: token });
+
+            dispatch(loginSuccess(response.data));
+            // navigate(`${routeLink.default}`);
+        } catch (error) {
+            console.log(error);
+            showNotification("error", t("authPage.loginFailed"), error.response?.data?.desc || "Login failed");
+            throw error;
+        }
+    };
+
+
     const handleSignUp = async () => {
         if (validateRegister()) {
             setIsSigningUp(true);
@@ -104,51 +126,27 @@ const AuthPage = () => {
             };
             try {
                 await register(requestData);
-                try {
-                    const loginResponse = await login(registerData.username, registerData.password);
-                    localStorage.setItem("token", loginResponse.data.token.token);
-                    dispatch(loginSuccess(loginResponse.data));
-                    // navigate(`${routeLink.default}`);
-                } catch (loginError) {
-                    console.log(loginError)
-                    showNotification("error", t("authPage.loginFailed"), loginError.response.data.desc);
-                }
+                await loginUser(registerData.username, registerData.password);
             } catch (error) {
-                showNotification("error", t("authPage.signUpFailed"), error.response.data.desc);
+                showNotification("error", t("authPage.signUpFailed"), error.response?.data?.desc || "Sign up failed");
             } finally {
                 setIsSigningUp(false);
             }
         }
     };
 
+
     const handleSignIn = async () => {
         if (validateLogin()) {
             setIsLoggingIn(true);
             try {
-                const response = await login(loginData.username, loginData.password);
-                localStorage.setItem("token", response.data.token.token);
-                dispatch(loginSuccess(response.data));
-                const token = await requestToken();
-                const projects = await getAllProjects();
-                const projectNameList= projects.data.map(p => p.name.replaceAll(" ", "_"));
-                const request = {
-                    topics: projectNameList,
-                    token: token
-                }
-                await subscribeToTopics(request)
-                const request2 = {
-                    fcmToken : token
-                }
-                await editProfile(request2);
-                // navigate(`${routeLink.default}`);
-            } catch (error) {
-                console.log(error)
-                showNotification("error", t("authPage.loginFailed"), error.response.data.desc);
+                await loginUser(loginData.username, loginData.password);
             } finally {
                 setIsLoggingIn(false);
             }
         }
     };
+
 
     // Handle social login insert code here bro
     const handleSocialLogin = async () => {
