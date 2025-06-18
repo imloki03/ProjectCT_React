@@ -11,6 +11,7 @@ import ReactDOMServer from "react-dom/server";
 import {savedLanguage} from "../../../config/i18n";
 import {Badge} from "primereact/badge";
 import {getStatusBadgeColor, getStatusDetails} from "../../PhasePage/PhaseCard";
+import {getAllCollabOfProject} from "../../../api/collabApi";
 
 const DashboardGantt = ({phaseTaskList}) => {
     const ganttRef = useRef(null);
@@ -19,6 +20,7 @@ const DashboardGantt = ({phaseTaskList}) => {
     const [taskList, setTaskList] = useState([]);
     const [ganttTasks, setGanttTasks] = useState([]);
 
+    const [collabs, setCollabs] = useState([]);
     const [phases, setPhases] = useState([]);
     const [currentPhase, setCurrentPhase] = useState(-1)
 
@@ -26,12 +28,12 @@ const DashboardGantt = ({phaseTaskList}) => {
 
     const [startDateFilter, setStartDateFilter] = useState(() => {
         const date = new Date();
-        date.setDate(date.getDate() - 7);
+        date.setDate(date.getDate() - 12);
         return date;
     });
     const [endDateFilter, setEndDateFilter] = useState(() => {
         const date = new Date();
-        date.setDate(date.getDate() + 7);
+        date.setDate(date.getDate() + 2);
         return date;
     });
 
@@ -90,6 +92,27 @@ const DashboardGantt = ({phaseTaskList}) => {
         }
     }
 
+    const loadCollaborators = async () => {
+        try {
+            const response = await getAllCollabOfProject(projectId);
+            const treeData = response.data.map((item) => ({
+                key: item.id.toString(),
+                data: {
+                    id: item.id,
+                    userId: item.userId,
+                    username: item.user.username,
+                    name: item.user.name,
+                    avatarURL: item.user.avatarURL,
+                    role: item.role.id
+                },
+                children: []
+            }));
+            setCollabs(treeData);
+        } catch (error) {
+            console.error('Failed to fetch collaborators:', error);
+        }
+    };
+
     const loadPhases = async () => {
         const allPhases = await getAllPhasesKeyValue(projectId);
         setPhases([{
@@ -105,6 +128,7 @@ const DashboardGantt = ({phaseTaskList}) => {
     useEffect(() => {
         if (!projectId) return;
         loadPhases();
+        loadCollaborators();
     }, [projectId]);
 
     useEffect(() => {
@@ -141,7 +165,7 @@ const DashboardGantt = ({phaseTaskList}) => {
     };
 
     useEffect(() => {
-        if (ganttRef.current && ganttTasks.length >= 0) {
+        if (ganttRef.current && ganttTasks.length >= 0 && collabs.length >0) {
             if (ganttInstance.current) {
                 ganttRef.current.innerHTML = "";
             }
@@ -165,12 +189,13 @@ const DashboardGantt = ({phaseTaskList}) => {
                 width: containerWidth,
             });
         }
-    }, [ganttTasks, t]);
+    }, [ganttTasks, collabs, t]);
 
     const TaskPopup = ({ task }) => {
         return (
             <div>
                 <Badge value={getStatusDetails(task.status)} style={{ backgroundColor: getStatusBadgeColor(task.status), color: "white", borderRadius: "0.5rem", padding: "3px" }} />
+                <p><strong>{collabs.find(item => item.data.id === task.assignee)?.data?.name}</strong></p>
                 <p>{t("dashboardPage.ganttChart.startDate")}: {task.start}</p>
                 <p>{t("dashboardPage.ganttChart.endDate")}: {task.end}</p>
             </div>

@@ -112,13 +112,13 @@ const DashboardPage = () => {
                         <Avatar label={project?.name} image={project?.avatarURL} shape={"square"} customSize={"7rem"}/>
                     </div>
                     <div className={"dashboard-welcome-content"}>
-                        <h1>{t('dashboardPage.welcome', { name: user.name })}</h1>
+                        <h1>{t('dashboardPage.welcome', { name: user?.name })}</h1>
                         <div className={"dashboard-welcome-sub-content"}>
-                            {user.username === project.ownerUsername ?
+                            {user?.username === project.ownerUsername ?
                                 <div>{t('dashboardPage.ownerMotivation')}</div> :
                                 <div>{t('dashboardPage.collaboratorMessage')}</div>
                             }
-                            {user.username === project.ownerUsername &&
+                            {user?.username === project?.ownerUsername &&
                                 <div>
                                     <Dropdown
                                         value={selectedCollabId}
