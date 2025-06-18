@@ -72,6 +72,7 @@ const ProjectLayout = () => {
         localStorage.removeItem("token");
         // navigate(routeLink.default)
         dispatch(logout());
+        navigate('/', { replace: true });
     }
 
     const menuItems = [
