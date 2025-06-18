@@ -286,7 +286,8 @@
     "noPhase": "There are no phase to move !",
     "provideProof": "Please provide the proofs that you have done this task!",
     "uploadProof": "Upload Proofs",
-    "uploadProofSubtitle": "Provide at least 1 file to ensure that you have done this task."
+    "uploadProofSubtitle": "Provide at least 1 file to ensure that you have done this task.",
+    "feedback": "Feedback"
   },
   "collabPage": {
     "updateRole": "Update Role",

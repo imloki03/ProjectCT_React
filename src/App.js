@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './App.css';
 import './styles/index.css'
 import {useTranslation} from "react-i18next";
@@ -32,12 +31,18 @@ function App() {
     }
   }, [token]);
 
-
   const getRouter = () => {
     return user !== null || token !== null ? internalRoute : externalRoute;
   };
 
   useEffect(() => {
+    const isAuthenticated = user !== null || token !== null;
+    const currentPath = window.location.pathname;
+
+    if (isAuthenticated && (currentPath === '/auth')) {
+      window.history.replaceState(null, '', '/');
+    }
+
     setRouterKey((prevKey) => prevKey + 1);
   }, [user, token]);
 
